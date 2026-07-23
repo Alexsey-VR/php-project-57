@@ -28,11 +28,11 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
           fetch-depth: 0
       - name: Setup PHP with XDEBUG
-        uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1
+        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2.37.2
         with:
           php-version: '8.5'
           coverage: xdebug
@@ -51,6 +51,6 @@ jobs:
           DATABASE_URL: postgresql://postgres:password@localhost:5432/test
 
       - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@a31c9398be7ace6bbfaf30c0bd5d415f843d45e9
+        uses: SonarSource/sonarqube-scan-action@7006c4492b2e0ee0f816d36501671557c97f5995 # v8.1.0
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
