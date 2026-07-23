@@ -1,2 +1,37 @@
+### Task Manager Service
+
+_This is a simple task manager service built with Laravel_
+
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/Alexsey-VR/php-project-57/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Alexsey-VR/php-project-57/actions)
+
+This a task manager project built with Laravel. It includes basic CRUD operations for tasks.
+
+View service:
+...
+
+### How to install
+Install Docker on your platform
+[Download Docker](https://docs.docker.com/get-started/get-docker/)
+
+Build image: \
+docker build . --tag php-project-57:v1
+
+
+Define PostgreSQL connection parameters: \
+export DB_PROVIDER=postgresql \
+export DB_USER=... \
+export DB_PASS=... \
+export DB_HOST=... \
+export DB_PORT=... \
+export DB_NAME=...
+
+
+Run container: \
+docker run -it \\ \
+    -e DATABASE_URL="${DB_PROVIDER}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}" \\ \
+    -p 8000:8000 \\ \
+    php-project-57:v1
+
+
+View service on localhost:8000
