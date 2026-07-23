@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    print_r("Привет от Хекслета!");
 });
 
 Route::get('/test-rollbar', function () {
