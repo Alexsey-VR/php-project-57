@@ -16,9 +16,11 @@ RUN apt-get install -y nodejs
 WORKDIR /
 
 COPY . .
-RUN cp .env.example .env
-RUN composer install
+
+RUN rm .npmrc && npm ci
 RUN npm run build
+RUN composer install
+RUN cp .env.example .env
 
 RUN > database/database.sqlite
 
