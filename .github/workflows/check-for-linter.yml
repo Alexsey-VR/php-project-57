@@ -42,8 +42,7 @@ jobs:
 
       - name: Setup environment
         run: cp .env.example .env
-        env:
-          APP_KEY: ${{secrets.APP_KEY}}
+          php artisan key:generate
 
       - name: Validate files for linter
         run: make lint
