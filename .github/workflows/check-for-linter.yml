@@ -41,7 +41,8 @@ jobs:
         run: make install
 
       - name: Setup environment
-        run: cp .env.example .env
+        run: |
+          cp .env.example .env
           php artisan key:generate
 
       - name: Validate files for linter
