@@ -16,7 +16,7 @@ RUN apt-get install -y nodejs
 WORKDIR /
 
 COPY . .
-RUN .env.example .env && php artisan key:generate
+RUN cp .env.example .env && php artisan key:generate
 RUN composer install
 RUN npm ci
 RUN npm run build
