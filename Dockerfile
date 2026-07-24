@@ -13,9 +13,10 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 RUN curl -sL https://deb.nodesource.com/setup_24.x | bash -
 RUN apt-get install -y nodejs
 
-WORKDIR /app
+WORKDIR /
 
 COPY . .
+RUN .env.example .env && php artisan key:generate
 RUN composer install
 RUN npm ci
 RUN npm run build
