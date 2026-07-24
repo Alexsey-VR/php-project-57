@@ -24,7 +24,7 @@ init:
 	php artisan migrate
 
 lint:
-	composer exec --verbose phpcs -- --standard=PSR12 public/ routes/ app/ tests/
+	composer exec --verbose phpcs -- public/ routes/ app/ tests/
 
 analyze:
 	composer exec -v phpstan analyze -- -c vendor/phpstan/phpstan/conf/phpstan.neon --level 8 --ansi public/ app/ tests/
