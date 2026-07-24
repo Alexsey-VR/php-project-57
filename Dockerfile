@@ -19,7 +19,7 @@ COPY package.json ./
 
 RUN npm cache clean --force
 RUN npm install -g npm@latest
-RUN npm ci
+RUN npm ci --workspaces=false
 
 COPY . .
 
