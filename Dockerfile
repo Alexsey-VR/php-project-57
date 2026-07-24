@@ -20,7 +20,7 @@ COPY package-lock.json ./
 
 RUN npm cache clean --force
 RUN npm install -g npm@latest
-RUN npm ci --workspaces=false
+RUN npm install
 
 COPY composer.* ./
 RUN composer install --no-dev --optimize-autoloader
