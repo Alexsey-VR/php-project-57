@@ -17,7 +17,7 @@ WORKDIR /
 
 COPY . .
 
-RUN npm ci --ignore-scripts=false
+RUN npm ci
 RUN npm run build
 RUN composer install
 RUN cp .env.example .env
