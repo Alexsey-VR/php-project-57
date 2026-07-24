@@ -17,7 +17,7 @@ WORKDIR /
 
 COPY . .
 
-RUN npm install -g npm@latest && npm ci
+RUN npm install
 RUN npm run build
 RUN composer install
 RUN cp .env.example .env
