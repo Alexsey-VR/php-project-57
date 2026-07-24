@@ -22,6 +22,7 @@
 /storage/*.key
 /storage/pail
 /vendor
+npm-debug.log
 AGENTS.md
 _ide_helper.php
 Homestead.json

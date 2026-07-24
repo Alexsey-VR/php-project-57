@@ -15,9 +15,14 @@ RUN apt-get install -y nodejs
 
 WORKDIR /
 
+COPY package.json ./
+
+RUN npm cache clean --force
+RUN npm install -g npm@latest
+RUN npm ci
+
 COPY . .
 
-RUN npm ci
 RUN npm run build
 RUN composer install
 RUN cp .env.example .env
