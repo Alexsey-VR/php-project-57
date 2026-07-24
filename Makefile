@@ -21,7 +21,7 @@ test-sonar: init
 	XDEBUG_MODE=coverage vendor/bin/paratest --coverage-clover=coverage.xml tests
 
 init:
-	php artisan migrate
+	php artisan migrate --force
 
 lint:
 	composer exec --verbose phpcs -- public/ routes/ app/ tests/
