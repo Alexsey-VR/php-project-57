@@ -16,7 +16,7 @@ RUN apt-get install -y nodejs
 WORKDIR /
 
 COPY . .
-RUN cp .env.example .env && php artisan key:generate
+RUN cp .env.example .env
 RUN composer install
 RUN npm ci
 RUN npm run build
@@ -26,4 +26,4 @@ RUN > database/database.sqlite
 EXPOSE 8080
 EXPOSE 5432
 
-CMD ["bash", "-c", "php artisan migrate:refresh --seed --force && php artisan serve --host=0.0.0.0 --port=$PORT"]
+CMD ["bash", "-c", "PHP_CLI_SERVER_WORKERS=4 php artisan migrate:refresh --seed --force && php artisan serve --host=0.0.0.0 --port=$PORT"]
