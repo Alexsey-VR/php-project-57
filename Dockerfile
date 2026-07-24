@@ -18,7 +18,6 @@ WORKDIR /
 COPY . .
 RUN cp .env.example .env
 RUN composer install
-RUN rm .npmrc && npm ci
 RUN npm run build
 
 RUN > database/database.sqlite
