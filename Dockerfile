@@ -16,6 +16,7 @@ RUN apt-get install -y nodejs
 WORKDIR /
 
 COPY package.json ./
+COPY package-lock.json ./
 
 RUN npm cache clean --force
 RUN npm install -g npm@latest
