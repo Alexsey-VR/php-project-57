@@ -21,10 +21,12 @@ RUN npm cache clean --force
 RUN npm install -g npm@latest
 RUN npm ci --workspaces=false
 
+COPY composer.* ./
+RUN composer install --no-dev --optimize-autoloader
+
 COPY . .
 
 RUN npm run build
-RUN composer install
 RUN cp .env.example .env
 
 RUN > database/database.sqlite
