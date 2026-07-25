@@ -33,6 +33,4 @@ RUN > database/database.sqlite
 EXPOSE 8080
 EXPOSE 5432
 
-ENV APP_KEY=${APP_KEY}
-
 CMD ["bash", "-c", "PHP_CLI_SERVER_WORKERS=4 php artisan migrate:refresh --seed --force && php artisan serve --host=0.0.0.0 --port=$PORT"]
