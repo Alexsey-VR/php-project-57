@@ -26,11 +26,15 @@ COPY . .
 
 RUN composer install
 RUN npm run build
-RUN cp .env.example .env
+# RUN cp .env.example .env
 
 RUN > database/database.sqlite
 
 EXPOSE 8080
 EXPOSE 5432
+
+RUN php artisan config:clear
+RUN php artisan view:clear
+RUN php artisan route:clear
 
 CMD ["bash", "-c", "PHP_CLI_SERVER_WORKERS=4 php artisan migrate:refresh --seed --force && php artisan serve --host=0.0.0.0 --port=$PORT"]
