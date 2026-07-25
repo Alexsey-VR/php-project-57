@@ -23,7 +23,7 @@ RUN npm install -g npm@latest
 RUN npm install --workspaces=false
 
 COPY composer.* ./
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install
 
 COPY . .
 
