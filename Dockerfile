@@ -22,11 +22,9 @@ RUN npm cache clean --force
 RUN npm install -g npm@latest
 RUN npm install --workspaces=false
 
-COPY composer.* ./
-RUN composer install
-
 COPY . .
 
+RUN composer install
 RUN npm run build
 RUN cp .env.example .env
 
