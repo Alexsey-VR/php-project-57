@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('users.create');
 });
 
 Route::get('/test-rollbar', function () {
@@ -15,3 +16,7 @@ Route::get('/test-rollbar', function () {
 
     return 'Check Rollbar for the test log and exception.';
 });
+
+Route::resource('users', UserController::class)
+    ->only(['create', 'store', 'show', 'edit', 'update', 'destroy'])
+    ->middlewareFor(['show', 'edit', 'update', 'destroy'], 'auth');

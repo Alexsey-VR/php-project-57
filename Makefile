@@ -22,6 +22,7 @@ test-sonar: init
 
 init:
 	php artisan migrate --force
+	npm run build
 
 lint:
 	composer exec --verbose phpcs -- public/ routes/ app/ tests/
