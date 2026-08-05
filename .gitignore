@@ -6,6 +6,8 @@
 .phpactor.json
 .phpunit.result.cache
 .continue
+skills-lock.json
+/.agents/
 /.codex
 /.cursor/
 /.idea
