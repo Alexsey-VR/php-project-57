@@ -1,10 +1,7 @@
 <?php
 
-use App\Providers\AppServiceProvider;
-use Rollbar\Laravel\RollbarServiceProvider;
-
 return [
-    AppServiceProvider::class,
-    RollbarServiceProvider::class
+    App\Providers\AppServiceProvider::class,
+    App\Providers\FortifyServiceProvider::class,
+    Rollbar\Laravel\RollbarServiceProvider::class,
 ];
-
