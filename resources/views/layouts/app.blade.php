@@ -12,5 +12,8 @@
         <div>
             @yield('content')
         </div>
+        <div>
+            @yield('logout')
+        </div>
     </body>
 </html>
