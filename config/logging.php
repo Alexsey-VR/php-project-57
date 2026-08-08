@@ -139,6 +139,12 @@ return [
             'handler' => MonologHandler::class,
             'access_token' => env('ROLLBAR_TOKEN'),
             'level' => 'debug',
+        ],
+
+        'mail' => [
+            'driver' => 'mail',
+            'level' => env('LOG_LEVEL', 'info'),
+            'path' => storage_path('logs/mail.log')
         ]
 
     ],
