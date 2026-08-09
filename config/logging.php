@@ -142,7 +142,7 @@ return [
         ],
 
         'mail' => [
-            'driver' => 'mail',
+            'driver' => 'single',
             'level' => env('LOG_LEVEL', 'info'),
             'path' => storage_path('logs/mail.log')
         ]
