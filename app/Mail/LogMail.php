@@ -11,6 +11,7 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class LogMail extends Mailable
 {
@@ -30,7 +31,7 @@ class LogMail extends Mailable
      */
     public function envelope(): Envelope
     {
-        $user = auth()->user();
+        $user = Auth::user();
 
         if (is_null($user)) {
             throw new \Exception('User not authenticated');
