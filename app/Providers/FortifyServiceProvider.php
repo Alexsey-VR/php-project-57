@@ -11,9 +11,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Fortify;
 use App\Models\User;
+use Laravel\Fortify\Contracts\LoginResponse;
 use Laravel\Fortify\Contracts\LogoutResponse;
 
 class FortifyServiceProvider extends ServiceProvider
@@ -23,6 +25,16 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->instance(LoginResponse::class, new class implements LoginResponse {
+            public function toResponse($request)
+            {
+                $user = Auth::user();
+                flash('С возвращением в сервис!')->success();
+
+                return redirect()->intended('/');
+            }
+        });
+
         $this->app->instance(LogoutResponse::class, new class implements LogoutResponse {
             public function toResponse($request)
             {
@@ -44,6 +56,9 @@ class FortifyServiceProvider extends ServiceProvider
 
         Fortify::registerView(function () {
             $user = new User();
+
+            flash('Добро пожаловать в сервис!')->success();
+
             return view('auth.register', compact('user'));
         });
 

@@ -7,10 +7,6 @@ Route::get('/', function () {
     return view('welcome');
 })->name('index')->middleware('auth');
 
-Route::get('/home', function () {
-    return redirect()->route('index');
-})->name('home');
-
 Route::get('/test-rollbar', function () {
     // Send a test log message
     \Log::debug('Test debug message from laravel');

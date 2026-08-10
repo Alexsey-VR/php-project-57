@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="container" style="margin-top: 2">
+    @include('flash::message')
+</div>  
+
 <h1>Привет от Хекслета!</h1>
 @endsection
 
