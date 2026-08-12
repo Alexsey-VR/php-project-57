@@ -17,6 +17,7 @@ use Laravel\Fortify\Fortify;
 use App\Models\User;
 use Laravel\Fortify\Contracts\LoginResponse;
 use Laravel\Fortify\Contracts\LogoutResponse;
+use Laravel\Fortify\Contracts\RegisterResponse;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -25,20 +26,28 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->instance(RegisterResponse::class, new class implements RegisterResponse {
+            public function toResponse($request)
+            {
+                flash('Добро пожаловать в сервис!')->success();
+                return redirect()->route('page.home');
+            }
+        });
+
         $this->app->instance(LoginResponse::class, new class implements LoginResponse {
             public function toResponse($request)
             {
                 $user = Auth::user();
                 flash('С возвращением в сервис!')->success();
 
-                return redirect()->intended('/');
+                return redirect()->route('page.home');
             }
         });
 
         $this->app->instance(LogoutResponse::class, new class implements LogoutResponse {
             public function toResponse($request)
             {
-                return redirect('/login');
+                return redirect('/');
             }
         });
     }
@@ -56,9 +65,6 @@ class FortifyServiceProvider extends ServiceProvider
 
         Fortify::registerView(function () {
             $user = new User();
-
-            flash('Добро пожаловать в сервис!')->success();
-
             return view('auth.register', compact('user'));
         });
 

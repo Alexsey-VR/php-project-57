@@ -8,12 +8,37 @@
         <meta name="csrf-param" content="_token">
         @vite(['resources/css/app.css'])
     </head>
-    <body>
+    <body class="bg-indigo-100" >
+        <nav class="bg-white border-b border-gray-200 shadow-md">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center">
+                        <a href="{{ route('index') }}"
+                            class="text-xl font-bold text-gray-900 hover:text-indigo-600">
+                            {{ config('app.name') }}
+                        </a>
+                    </div>
+                    @auth
+                        <div class="flex items-center space-x-4">
+                            <a href="{{ route('task_statuses.index') }}" 
+                                class="text-sm text-gray-700 ml-auto hover:text-indigo-600">
+                                Статусы
+                            </a>
+                            @yield('logout')
+                        </div>
+                    @else
+                        <div class="flex items-center space-x-4">
+                            @yield('login')
+                            @yield('register')
+                        </div>
+                    @endauth
+                </div>
+            </div>
+        </nav>
         <div>
-            @yield('content')
-        </div>
-        <div>
-            @yield('logout')
+            <div>
+                @yield('content')
+            </div>
         </div>
     </body>
 </html>

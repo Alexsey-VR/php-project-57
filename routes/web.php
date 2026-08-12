@@ -2,10 +2,18 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TaskStatusController;
+
+Route::get('/home', function () {
+    return view('page.home');
+})->name('page.home')->middleware('auth');
 
 Route::get('/', function () {
-    return view('welcome');
-})->name('index')->middleware('auth');
+    if (auth()->check()) {
+        return redirect()->route('page.home');
+    }
+    return view('index');
+})->name('index');
 
 Route::get('/test-rollbar', function () {
     // Send a test log message
@@ -16,3 +24,6 @@ Route::get('/test-rollbar', function () {
 
     return 'Check Rollbar for the test log and exception.';
 });
+
+Route::resource('task_statuses', TaskStatusController::class)
+    ->middleware(['auth']);
