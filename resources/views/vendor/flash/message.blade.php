@@ -7,25 +7,25 @@
         ])
     @else
         @if ($message['level'] === 'success')
-            <a href="{{ route('login') }}">
-                <button 
+            <div class="w-full flex justify-center">
+                <button
                     class="rounded-md text-sm text-center
                     font-semibold text-white
-                    h-10 w-48 bg-green-600"
+                    min-h-10 bg-green-600 w-full"
                 >
                     {!! $message['message'] !!}
                 </button>
-            </a>
+            </div>
         @elseif ($message['level'] === 'error')
-            <a href="{{ route('login') }}">
-                <button 
+            <div class="w-full flex justify-center">
+                <button
                     class="rounded-md text-sm text-center
                     font-semibold text-white
-                    h-10 w-48 bg-red-600"
+                    min-h-10 bg-red-600 w-full"
                 >
                     {!! $message['message'] !!}
                 </button>
-            </a>
+            </div>    
         @endif
     @endif
 @endforeach
