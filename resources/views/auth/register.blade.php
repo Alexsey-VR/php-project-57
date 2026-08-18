@@ -8,19 +8,14 @@
         <div class="grid gap-4 rounded-md">
             {{ html()->label('Имя', 'name') }}
             <div class="w-full bg-white p-2 rounded-md outline-solid outline-indigo-100">
-                {{ html()->input('text', 'name') }}
+                {{ html()->input('text', 'name')->class('w-full') }}
             </div>
-            {{ html()->label('Email', 'email') }}
-            <div class="w-full bg-white p-2 rounded-md outline-solid outline-indigo-100">
-                {{ html()->input('email', 'email') }}
-            </div>
-            {{ html()->label('Пароль', 'password') }}
-            <div class="w-full bg-white p-2 rounded-md outline-solid outline-indigo-100">
-                {{ html()->input('password', 'password') }}
-            </div>
+
+            @include('auth.form')
+
             {{ html()->label('Подтверждение', 'password_confirmation') }}
             <div class="w-full bg-white p-2 rounded-md outline-solid outline-indigo-100">
-                {{ html()->input('password', 'password_confirmation') }}
+                {{ html()->input('password', 'password_confirmation')->class('w-full') }}
             </div>
             <div class="grid grid-cols-2 gap-4">
                 <a href="{{ route('login') }}" class="underline">Уже зарегистрированы?</a>

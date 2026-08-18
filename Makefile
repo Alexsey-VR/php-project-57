@@ -21,7 +21,7 @@ test-sonar: init
 	XDEBUG_MODE=coverage vendor/bin/paratest --coverage-clover=coverage.xml tests
 
 init:
-	php artisan migrate --force
+	php artisan migrate:fresh
 	npm run build
 
 lint:

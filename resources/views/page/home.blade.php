@@ -5,7 +5,9 @@
     @include('flash::message')
 </div>
 
-<h1>Привет от Хекслета!</h1>
+<div class="text-lg font-bold p-8">
+    <h1>Привет от Хекслета!</h1>
+</div>
 @endsection
 
 @section('logout')

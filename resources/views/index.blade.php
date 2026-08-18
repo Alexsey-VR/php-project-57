@@ -17,5 +17,7 @@
 @endsection
 
 @section('content')
-<h1>Здесь будет главная страница</h1>
+<div class="text-lg font-bold p-8">
+    <h1>Привет от Хекслета!</h1>
+</div>
 @endsection
