@@ -22,6 +22,7 @@ test-sonar: init
 
 init:
 	php artisan migrate:fresh
+	php artisan db:seed
 	npm run build
 
 lint:
