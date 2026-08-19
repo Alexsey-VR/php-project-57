@@ -23,7 +23,8 @@ class TaskStatusController extends Controller
     public function create()
     {
         $task_status = new TaskStatus();
-        return view('task_statuses.create', compact('task_status'));
+        $task_status_options = TaskStatus::getAllowedOptions()->toArray();
+        return view('task_statuses.create', compact('task_status', 'task_status_options'));
     }
 
     /**
@@ -53,7 +54,8 @@ class TaskStatusController extends Controller
      */
     public function edit(TaskStatus $task_status)
     {
-        return view('task_statuses.edit', compact('task_status'));
+        $task_status_options = TaskStatus::getAllowedOptions()->toArray();
+        return view('task_statuses.edit', compact('task_status', 'task_status_options'));
     }
 
     /**
