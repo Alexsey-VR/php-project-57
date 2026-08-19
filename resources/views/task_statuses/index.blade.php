@@ -8,9 +8,15 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-function confirmDelete(event, name) {
+function confirmDelete(event, name, formId) {
     event.preventDefault();
-    const form = event.target.closest('form');
+
+    let form = document.getElementById(formId);
+    if (!form) {
+        const deleteButton = event.currentTarget;
+        form = deleteButton.closest('form');
+    }
+
     Swal.fire({
         title: "Вы уверены?",
         text: `Это действие нельзя отменить! Удалить статус \"${name}\"?`,
@@ -56,19 +62,19 @@ function confirmDelete(event, name) {
                     </td>
                     <td class="py-2 px-4">{{ $task_status->created_at }}</td>
                     <td class="py-2 px-4">
-                        {{ html()->modelForm($task_status, 'DELETE', route('task_statuses.destroy', $task_status))->open() }}
-                            @csrf
-                            <button type='submit'
-                                    onclick="confirmDelete(event, '{{ $task_status->name }}');"
-                                    class="text-red-500 hover:text-red-70"
-                            >
-                                Удалить
-                            </button>                        
-                        <a href="{{ route('task_statuses.edit', $task_status) }}"
-                            class="text-blue-500 hover:text-blue-70"
-                        >
-                            Изменить
-                        </a>
+                        <div class="flex space-x-4">
+                            {{ html()->modelForm($task_status, 'DELETE', route('task_statuses.destroy', $task_status))->open() }}
+                                @csrf
+                                <button type='submit'
+                                        onclick="confirmDelete(event, '{{ $task_status->name }}', 'form-{{ $task_status->id }}');"
+                                        class="text-red-500 hover:text-red-700"
+                                >
+                                    Удалить
+                                </button>   
+                            {{ html()->closeModelForm() }}                     
+                            <a href="{{ route('task_statuses.edit', $task_status) }}"
+                                class="text-blue-500 hover:text-blue-700">Изменить</a>
+                        </div>
                     </td>
                 </tr>
             @endforeach
