@@ -24,6 +24,9 @@ class LogMailSendTest extends TestCase
 {
     public function testMailIsSentToLog(): void
     {
+        $this->withoutMiddleware();
+        Mail::fake();
+
         $testEmail = 'test@example.ru';
         $user = User::factory()->make([
             'name' => 'Test Name',
