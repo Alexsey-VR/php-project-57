@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use SweetAlert2\Laravel\Swal;
 
 class TaskStatusController extends Controller
@@ -11,7 +13,7 @@ class TaskStatusController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
         $task_statuses = TaskStatus::all();
         return view('task_statuses.index', compact('task_statuses'));
@@ -20,7 +22,7 @@ class TaskStatusController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
         $task_status = new TaskStatus();
         $task_status_options = TaskStatus::getAllowedOptions()->toArray();
@@ -30,7 +32,7 @@ class TaskStatusController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255']
@@ -44,7 +46,7 @@ class TaskStatusController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(TaskStatus $task_status)
+    public function show(TaskStatus $task_status): View
     {
         return view('task_statuses.show', compact('task_status'));
     }
@@ -52,7 +54,7 @@ class TaskStatusController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(TaskStatus $task_status)
+    public function edit(TaskStatus $task_status): View
     {
         $task_status_options = TaskStatus::getAllowedOptions()->toArray();
         return view('task_statuses.edit', compact('task_status', 'task_status_options'));
@@ -61,7 +63,7 @@ class TaskStatusController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TaskStatus $task_status)
+    public function update(Request $request, TaskStatus $task_status): RedirectResponse
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255']
@@ -75,7 +77,7 @@ class TaskStatusController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TaskStatus $task_status)
+    public function destroy(TaskStatus $task_status): RedirectResponse
     {
         $task_status->delete();
         flash('Статус успешно удалён')->success();
