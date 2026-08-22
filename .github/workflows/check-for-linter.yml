@@ -43,7 +43,7 @@ jobs:
       - name: Setup environment
         run: |
           cp .env.example .env
-          php artisan key:generate
+          echo "APP_ENV=$(php artisan key:generate --show)" >> .env
 
       - name: Validate files for linter
         run: make lint
