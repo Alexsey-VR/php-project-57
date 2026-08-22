@@ -37,13 +37,13 @@ jobs:
           php-version: '8.5'
           coverage: xdebug
 
-      - name: Install project and dependencies
-        run: make install
-
       - name: Setup environment
         run: |
           cp .env.example .env
           echo "APP_ENV=$(php artisan key:generate --show)" >> .env
+
+      - name: Install project and dependencies
+        run: make install
 
       - name: Validate files for linter
         run: make lint
