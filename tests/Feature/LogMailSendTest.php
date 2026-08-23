@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
+// Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Illuminate\Support\Facades\View;
@@ -13,6 +13,7 @@ use App\Listeners\LogMailListener;
 use App\Providers\AppServiceProvider;
 use App\Providers\EventListenProvider;
 use App\Providers\FortifyServiceProvider;
+use Illuminate\Support\Facades\DB;
 
 #[CoversClass(LogMail::class)]
 #[CoversClass(LogMailListener::class)]
@@ -22,21 +23,35 @@ use App\Providers\FortifyServiceProvider;
 #[CoversClass(FortifyServiceProvider::class)]
 class LogMailSendTest extends TestCase
 {
+    public function setUp(): void
+    {
+        parent::setUp();
+        DB::beginTransaction();
+    }
+
+    public function tearDown(): void
+    {
+        DB::rollBack();
+        parent::tearDown();
+    }
+
     public function testMailIsSentToLog(): void
     {
-        $this->withoutMiddleware();
-        Mail::fake();
-
+        //$this->withoutMiddleware();
         $testEmail = 'test@example.ru';
-        $user = User::factory()->make([
+        $user = User::factory()->create([
             'name' => 'Test Name',
             'email' => $testEmail
         ]);
         $this->actingAs($user);
+
+        Mail::fake();
+
         View::share('user', $user);
         Mail::to($user->email)->send(new LogMail());
-        $log = file_get_contents(storage_path('logs/mail.log')) ?: '';
 
-        $this->assertTrue(mb_strpos($log, $testEmail) !== false);
+        Mail::assertSent(LogMail::class, function ($mail) {
+            return $mail->envelope()->subject === 'User Greeting';
+        });
     }
 }

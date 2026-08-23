@@ -40,7 +40,7 @@ jobs:
       - name: Setup environment
         run: |
           cp .env.example .env
-          echo "APP_ENV=$(php artisan key:generate --show)" >> .env
+          echo "APP_ENV=${{ secrets.APP_KEY }}" >> .env
 
       - name: Setup Node.js
         uses: actions/setup-node@v7
