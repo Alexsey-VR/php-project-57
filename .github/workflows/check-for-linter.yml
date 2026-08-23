@@ -59,7 +59,9 @@ jobs:
         run: make lint
         
       - name: Run unit tests
-        run: make test-sonar
+        run: |
+          export APP_KEY=$(php artisan key:generate --show --no-ansi)
+          make test-sonar
         env:
           APP_ENV: testing
           DB_HOST: localhost
