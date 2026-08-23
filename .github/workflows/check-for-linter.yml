@@ -39,7 +39,7 @@ jobs:
 
       - name: Setup environment
         run: |
-          cp .env.example .env.testing
+          cp .env.example .env
           php artisan key:generate
 
       - name: Setup Node.js
