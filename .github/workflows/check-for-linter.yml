@@ -37,13 +37,13 @@ jobs:
           php-version: '8.5'
           coverage: xdebug
 
-      - name: Install project and dependencies
-        run: make install
-
       - name: Setup environment
         run: |
           cp .env.example .env
-          echo "APP_KEY=$(php artisan key:generate --show)" >> .env
+          echo "APP_KEY=${{ secrets.APP_KEY }}" >> .env
+
+      - name: Install project and dependencies
+        run: make install
 
       - name: Setup Node.js
         uses: actions/setup-node@v7
@@ -61,6 +61,7 @@ jobs:
       - name: Run unit tests
         run: make test-sonar
         env:
+          APP_ENV: testing
           POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
           DATABASE_URL: postgresql://postgres:password@localhost:5432/test
