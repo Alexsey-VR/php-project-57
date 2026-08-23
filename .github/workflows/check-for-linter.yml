@@ -42,6 +42,12 @@ jobs:
           cp .env.example .env
           echo "APP_ENV=$(php artisan key:generate --show)" >> .env
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: 'npm'
+
       - name: Install project and dependencies
         run: make install
 
