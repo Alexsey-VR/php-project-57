@@ -1,17 +1,14 @@
 @extends('layouts.auth')
 
 @section('content')
-<div class="w-full max-w-md bg-indigo-50 rounded-2xl shadow-lg p-8 space-y-6">
-    <h1 class="text-3xl text-center font-serif">Менеджер задач</h1>
-    {{ html()->modelForm($user, 'POST', route('login.store'))->open() }}
-        @csrf
-        <div class="grid gap-4 rounded-md">
-            @include('auth.form')
+{{ html()->modelForm($user, 'POST', route('login.store'))->open() }}
+    @csrf
+    <div class="grid gap-4 rounded-md">
+        @include('auth.form')
 
-            <div class="shadow-md bg-indigo-100 p-2 rounded-md outline-indigo-100 text-center font-medium">
-                {{ html()->submit('Войти') }}
-            </div>
+        <div class="shadow-md bg-indigo-100 p-2 rounded-md outline-indigo-100 text-center font-medium">
+            {{ html()->submit(__('app.login')) }}
         </div>
-    {{ html()->closeModelForm() }}
-</div>
+    </div>
+{{ html()->closeModelForm() }}
 @endsection

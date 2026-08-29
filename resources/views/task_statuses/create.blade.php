@@ -2,7 +2,7 @@
 
 @section('label')
     <div class="p-4 text-2xl font-bold text">
-        <h1>Создать статус</h1>
+        <h1>{{ __('tasks.status.create') }}</h1>
     </div>
 @endsection
 
@@ -11,7 +11,7 @@
         @csrf
         @include('task_statuses.form')
         <div class="p-2">
-            {{ html()->submit('Создать')
+            {{ html()->submit(__('tasks.status.confirm'))
                 ->class('rounded-md text-sm text-center font-semibold text-white h-10 w-32 px-4 bg-indigo-600') }}
         </div>
     {{ html()->closeModelForm() }}

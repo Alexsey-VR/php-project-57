@@ -25,7 +25,8 @@ class TaskStatusController extends Controller
     public function create(): View
     {
         $task_status = new TaskStatus();
-        $task_status_options = TaskStatus::getAllowedOptions()->toArray();
+        $locale = app()->getLocale();
+        $task_status_options = TaskStatus::getAllowedOptions($locale)->toArray();
         return view('task_statuses.create', compact('task_status', 'task_status_options'));
     }
 
@@ -38,7 +39,7 @@ class TaskStatusController extends Controller
             'name' => ['required', 'string', 'max:255']
         ]);
         TaskStatus::create($data);
-        flash('Статус успешно создан')->success();
+        flash(__('flash.status.created'))->success();
 
         return redirect()->route('task_statuses.index');
     }
@@ -56,7 +57,8 @@ class TaskStatusController extends Controller
      */
     public function edit(TaskStatus $task_status): View
     {
-        $task_status_options = TaskStatus::getAllowedOptions()->toArray();
+        $locale = app()->getLocale();
+        $task_status_options = TaskStatus::getAllowedOptions($locale)->toArray();
         return view('task_statuses.edit', compact('task_status', 'task_status_options'));
     }
 
@@ -69,7 +71,7 @@ class TaskStatusController extends Controller
             'name' => ['required', 'string', 'max:255']
         ]);
         $task_status->update($data);
-        flash('Статус успешно обновлён')->success();
+        flash(__('flash.status.updated'))->success();
 
         return redirect()->route('task_statuses.index');
     }
@@ -80,7 +82,7 @@ class TaskStatusController extends Controller
     public function destroy(TaskStatus $task_status): RedirectResponse
     {
         $task_status->delete();
-        flash('Статус успешно удалён')->success();
+        flash(__('flash.status.deleted'))->success();
 
         return redirect()->route('task_statuses.index');
     }

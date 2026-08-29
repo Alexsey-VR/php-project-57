@@ -6,11 +6,11 @@
 </div>
 
 <div>
-    <h1 class="text-2xl font-bold px-4 py-4 text">Статусы</h1>
+    <h1 class="text-2xl font-bold px-4 py-4 text">{{ __('tasks.statuses') }}</h1>
     <div class="p-2">
         <button class="rounded-md text-sm text-center font-semibold text-white h-10 w-auto px-4 bg-indigo-600">
             <a href="{{ route('task_statuses.create') }}">
-                Создать статус
+                {{ __('tasks.status.create') }}
             </a>
         </button>
     </div>
@@ -18,9 +18,9 @@
         <thead class="border-b bg-gray-100 text-left">
             <tr>
                 <th class="py-2 px-4">ID</th>
-                <th class="py-2 px-4">Имя</th>
-                <th class="py-2 px-4">Дата создания</th>
-                <th class="py-2 px-4">Действия</th>
+                <th class="py-2 px-4">{{ __('tasks.status.name') }}</th>
+                <th class="py-2 px-4">{{ __('tasks.status.create_date') }}</th>
+                <th class="py-2 px-4">{{ __('tasks.status.actions') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -39,11 +39,11 @@
                                         onclick="confirmDelete(event, '{{ $task_status->name }}', 'form-{{ $task_status->id }}');"
                                         class="text-red-500 hover:text-red-700"
                                 >
-                                    Удалить
-                                </button>   
-                            {{ html()->closeModelForm() }}                     
+                                    {{ __('tasks.status.delete') }}
+                                </button>
+                            {{ html()->closeModelForm() }}
                             <a href="{{ route('task_statuses.edit', $task_status) }}"
-                                class="text-blue-500 hover:text-blue-700">Изменить</a>
+                                class="text-blue-500 hover:text-blue-700">{{ __('tasks.status.edit') }}</a>
                         </div>
                     </td>
                 </tr>

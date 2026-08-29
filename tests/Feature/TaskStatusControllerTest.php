@@ -51,7 +51,7 @@ class TaskStatusControllerTest extends TestCase
             ->get('/task_statuses/create');
 
         $response->assertStatus(200);
-        $response->assertSee('Создать статус');
+        $response->assertSee(__('tasks.status.create'));
     }
 
     public function testAuthenticatedUserCanCreateATaskStatus(): void
@@ -125,10 +125,10 @@ class TaskStatusControllerTest extends TestCase
             ->get('/task_statuses/create');
 
         $response->assertStatus(200);
-        $response->assertSee('Новый');
-        $response->assertSee('В работе');
-        $response->assertSee('На тестировании');
-        $response->assertSee('Завершён');
+        $response->assertSee(__('tasks.status.options.new'));
+        $response->assertSee(__('tasks.status.options.in_progress'));
+        $response->assertSee(__('tasks.status.options.testing'));
+        $response->assertSee(__('tasks.status.options.completed'));
     }
 
     public function testAuthenticateduserCanUpdateTaskStatus(): void

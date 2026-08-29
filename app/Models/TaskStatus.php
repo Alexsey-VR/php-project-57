@@ -15,17 +15,26 @@ class TaskStatus extends Model
     protected $fillable = ['name'];
 
     public const ALLOWED_OPTIONS = [
-        'Новый',
-        'В работе',
-        'На тестировании',
-        'Завершён'
+        'New',
+        'In progress',
+        'Testing',
+        'Completed'
     ];
 
     /**
-     * @return Collection<int, string>
+     * @return Collection<string, string>
      */
-    public static function getAllowedOptions(): Collection
+    public static function getAllowedOptions(string $locale = 'en'): Collection
     {
-        return collect(self::ALLOWED_OPTIONS)->combine(self::ALLOWED_OPTIONS);
+        $locales = [
+            'tasks.status.options.new',
+            'tasks.status.options.in_progress',
+            'tasks.status.options.testing',
+            'tasks.status.options.completed'
+        ];
+        $translations = array_combine(self::ALLOWED_OPTIONS, $locales);
+
+        return collect(self::ALLOWED_OPTIONS)
+            ->mapWithKeys(fn($key) => [$key => trans($translations[$key], [], $locale)]);
     }
 }
