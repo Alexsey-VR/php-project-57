@@ -4,10 +4,13 @@ return [
     'statuses' => 'Statuses',
     'status' => [
         'name' => 'Name',
-        'create_date' => 'Create date',
-        'create' => 'Create status',
         'confirm' => 'Create',
-        'edit_header' => 'Edit status',
+        'header' => [
+            'name' => 'Status',
+            'edit' => 'Edit status',
+            'create' => 'Create status',
+            'date' => 'Create date'
+        ],
         'edit' => 'Edit',
         'update' => 'Update',
         'delete' => 'Delete',
@@ -24,5 +27,21 @@ return [
         'text' => 'This action can\'t be undone! Delete status ":name"?',
         'confirm' => 'Yes, delete',
         'cancel' => 'Cancel'
-    ]
+    ],
+    'create' => 'Create task',
+    'confirm' => 'Create',
+    'apply' => 'Apply',
+    'name' => 'Name',
+    'description' => 'Description',
+    'init_status' => 'Status',
+    'assignee' => 'Assignee',
+    'labels' => 'Labels',
+    'edit' => 'Edit task',
+    'update' => 'Update task',
+    'delete' => 'Delete task',
+    'tasks' => 'Tasks',
+    'creator' => 'Author',
+    'created_at' => 'Create date',
+    'actions' => 'Actions',
+    'search' => 'Search'
 ];

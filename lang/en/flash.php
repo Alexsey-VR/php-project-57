@@ -11,5 +11,10 @@ return [
         'created' => 'Status successfully created',
         'updated' => 'Status successfully updated',
         'deleted' => 'Status deleted'
-    ]
+    ],
+    'task' => [
+        'created' => 'Task successfully created',
+        'updated' => 'Task successfully updated',
+        'deleted' => 'Task deleted'
+    ],
 ];

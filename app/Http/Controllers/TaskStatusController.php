@@ -26,7 +26,8 @@ class TaskStatusController extends Controller
     {
         $task_status = new TaskStatus();
         $locale = app()->getLocale();
-        $task_status_options = TaskStatus::getAllowedOptions($locale)->toArray();
+        $task_status_options = TaskStatus::getAllowedTaskStatusOptions($locale)->toArray();
+
         return view('task_statuses.create', compact('task_status', 'task_status_options'));
     }
 
@@ -58,7 +59,7 @@ class TaskStatusController extends Controller
     public function edit(TaskStatus $task_status): View
     {
         $locale = app()->getLocale();
-        $task_status_options = TaskStatus::getAllowedOptions($locale)->toArray();
+        $task_status_options = TaskStatus::getAllowedTaskStatusOptions($locale)->toArray();
         return view('task_statuses.edit', compact('task_status', 'task_status_options'));
     }
 

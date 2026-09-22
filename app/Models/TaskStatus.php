@@ -5,6 +5,7 @@ namespace App\Models;
 use Database\Factories\TaskStatusFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
 class TaskStatus extends Model
@@ -15,26 +16,35 @@ class TaskStatus extends Model
     protected $fillable = ['name'];
 
     public const ALLOWED_OPTIONS = [
-        'New',
-        'In progress',
-        'Testing',
-        'Completed'
+        'new',
+        'in_progress',
+        'testing',
+        'completed'
     ];
 
     /**
      * @return Collection<string, string>
      */
-    public static function getAllowedOptions(string $locale = 'en'): Collection
+    public static function getAllowedTaskStatusOptions(string $locale = 'en'): Collection
     {
-        $locales = [
-            'tasks.status.options.new',
-            'tasks.status.options.in_progress',
-            'tasks.status.options.testing',
-            'tasks.status.options.completed'
-        ];
-        $translations = array_combine(self::ALLOWED_OPTIONS, $locales);
-
         return collect(self::ALLOWED_OPTIONS)
-            ->mapWithKeys(fn($key) => [$key => trans($translations[$key], [], $locale)]);
+            ->mapWithKeys(fn($key) => [$key => trans("tasks.status.options.{$key}", [], $locale)]);
+    }
+
+    /**
+     * @return Collection<int, string>
+     */
+    public static function getAllowedTaskStatusIndexOptions(string $locale = 'en'): Collection
+    {
+        return collect(self::ALLOWED_OPTIONS)
+            ->map(fn($key) => trans("tasks.status.options.{$key}", [], $locale));
+    }
+
+    /**
+     * @return hasMany<Task, covariant static>
+     */
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(Task::class, 'status_id');
     }
 }

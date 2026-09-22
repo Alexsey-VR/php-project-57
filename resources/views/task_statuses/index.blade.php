@@ -1,16 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="flex rounded-md text-base text-center">
-    @include('flash::message')
-</div>
-
 <div>
     <h1 class="text-2xl font-bold px-4 py-4 text">{{ __('tasks.statuses') }}</h1>
     <div class="p-2">
         <button class="rounded-md text-sm text-center font-semibold text-white h-10 w-auto px-4 bg-indigo-600">
             <a href="{{ route('task_statuses.create') }}">
-                {{ __('tasks.status.create') }}
+                {{ __('tasks.status.header.create') }}
             </a>
         </button>
     </div>
@@ -19,7 +15,7 @@
             <tr>
                 <th class="py-2 px-4">ID</th>
                 <th class="py-2 px-4">{{ __('tasks.status.name') }}</th>
-                <th class="py-2 px-4">{{ __('tasks.status.create_date') }}</th>
+                <th class="py-2 px-4">{{ __('tasks.status.header.date') }}</th>
                 <th class="py-2 px-4">{{ __('tasks.status.actions') }}</th>
             </tr>
         </thead>
@@ -28,22 +24,25 @@
                 <tr>
                     <td class="py-2 px-4">{{ $task_status->id }}</td>
                     <td class="py-2 px-4">
-                        <a href="{{ route('task_statuses.show', $task_status) }}">{{ $task_status->name }}</a>
+                        <a href="{{ route('task_statuses.show', $task_status) }}">{{ __("tasks.status.options.{$task_status->name}") }} </a>
                     </td>
                     <td class="py-2 px-4">{{ $task_status->created_at }}</td>
                     <td class="py-2 px-4">
                         <div class="flex space-x-4">
-                            {{ html()->modelForm($task_status, 'DELETE', route('task_statuses.destroy', $task_status))->open() }}
+                            {{ html()->modelForm($task_status, 'DELETE', route('task_statuses.destroy', $task_status))
+                                    ->attribute('id', "form-status-{$task_status->id}")
+                                    ->open() }}
                                 @csrf
                                 <button type='submit'
-                                        onclick="confirmDelete(event, '{{ $task_status->name }}', 'form-{{ $task_status->id }}');"
+                                        onclick="confirmDelete(event, '{{ $task_status->name }}', 'form-status-{{ $task_status->id }}');"
                                         class="text-red-500 hover:text-red-700"
                                 >
                                     {{ __('tasks.status.delete') }}
                                 </button>
                             {{ html()->closeModelForm() }}
                             <a href="{{ route('task_statuses.edit', $task_status) }}"
-                                class="text-blue-500 hover:text-blue-700">{{ __('tasks.status.edit') }}</a>
+                                class="text-blue-500 hover:text-blue-700">{{ __('tasks.status.edit') }}
+                            </a>
                         </div>
                     </td>
                 </tr>

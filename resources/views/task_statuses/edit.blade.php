@@ -2,7 +2,7 @@
 
 @section('label')
     <div class="p-4 text-2xl font-bold text">
-        <h1>{{ __('tasks.status.edit_header') }}</h1>
+        <h1>{{ __('tasks.status.header.edit') }}</h1>
     </div>
 @endsection
 

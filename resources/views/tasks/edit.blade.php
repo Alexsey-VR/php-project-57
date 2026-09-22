@@ -2,17 +2,19 @@
 
 @section('label')
     <div class="p-4 text-2xl font-bold text">
-        <h1>{{ __('tasks.status.header.create') }}</h1>
+        <h1>{{ __('tasks.edit') }}</h1>
     </div>
 @endsection
 
 @section('content')
-    {{ html()->modelForm($task_status, 'POST', route('task_statuses.store'))->open() }}
+<div>
+    {{ html()->modelForm($task, 'PATCH', route('tasks.update', $task))->open() }}
         @csrf
-        @include('task_statuses.form')
+        @include('tasks.form')
         <div class="p-2">
-            {{ html()->submit(__('tasks.status.confirm'))
+            {{ html()->submit(__('tasks.update'))
                 ->class('rounded-md text-sm text-center font-semibold text-white h-10 w-32 px-4 bg-indigo-600') }}
         </div>
     {{ html()->closeModelForm() }}
+</div>
 @endsection

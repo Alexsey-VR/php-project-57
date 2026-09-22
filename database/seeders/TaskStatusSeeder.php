@@ -13,9 +13,9 @@ class TaskStatusSeeder extends Seeder
      */
     public function run(): void
     {
-        $seedList = TaskStatus::getAllowedOptions();
-        $seedList->map(function($seed) {
-            TaskStatus::create(['name' => $seed]);
+        $seedList = TaskStatus::getAllowedTaskStatusOptions();
+        $seedList->mapWithKeys(function($value, $key) {
+            return TaskStatus::create(['name' => $key]);
         });
     }
 }
