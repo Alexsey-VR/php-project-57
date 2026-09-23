@@ -20,10 +20,16 @@ use Tests\TestCase;
 #[CoversClass(EventListenProvider::class)]
 class TaskStatusControllerTest extends TestCase
 {
+    private User $user;
+
     public function setUp(): void
     {
         parent::setUp();
         DB::beginTransaction();
+        $this->user = User::factory()->make([
+            'name' => 'Test name',
+            'email' => 'test@example.ru'
+        ]);
     }
 
     public function tearDown(): void
@@ -41,29 +47,17 @@ class TaskStatusControllerTest extends TestCase
 
     public function testAuthenticatedUserCanSeeTheCreateForm(): void
     {
-        $testEmail = 'test@example.ru';
-        $user = User::factory()->make([
-            'name' => 'Test Name',
-            'email' => $testEmail
-        ]);
-
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->get('/task_statuses/create');
 
         $response->assertStatus(200);
-        $response->assertSee(__('tasks.status.create'));
+        $response->assertSee(__('tasks.status.confirm'));
     }
 
     public function testAuthenticatedUserCanCreateATaskStatus(): void
     {
-        $testEmail = 'test@example.ru';
-        $user = User::factory()->make([
-            'name' => 'Test Name',
-            'email' => $testEmail
-        ]);
-
         $token = 'test-csrf-token';
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->withSession(['_token' => $token])
             ->post('/task_statuses', [
                 'name' => 'New Status',
@@ -76,15 +70,8 @@ class TaskStatusControllerTest extends TestCase
 
     public function testValidationFailsWhenNameIsMissing(): void
     {
-        $testEmail = 'test@example.ru';
-
-        $user = User::factory()->make([
-            'name' => 'Test Name',
-            'email' => $testEmail
-        ]);
-
         $token = 'test-csrf-token';
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->withSession(['_token' => $token])
             ->postJson('/task_statuses', ['_token' => $token]);
 
@@ -94,14 +81,8 @@ class TaskStatusControllerTest extends TestCase
 
     public function testValidationFailsWhenNameIsTooLong(): void
     {
-        $testEmail = 'test@example.ru';
-        $user = User::factory()->make([
-            'name' => 'Test Name',
-            'email' => $testEmail
-        ]);
-
         $token = 'test-csrf-token';
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->withSession(['_token' => $token])
             ->postJson('/task_statuses', [
                 'name' => str_repeat('a', 256),
@@ -114,14 +95,8 @@ class TaskStatusControllerTest extends TestCase
 
     public function testAuthenticatedUserCanSeeAllowedOptions(): void
     {
-        $testEmail = 'test@example.ru';
-        $user = User::factory()->make([
-            'name' => 'Test Name',
-            'email' => $testEmail
-        ]);
-
         $token = 'test-csrf-token';
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->get('/task_statuses/create');
 
         $response->assertStatus(200);
@@ -133,19 +108,13 @@ class TaskStatusControllerTest extends TestCase
 
     public function testAuthenticateduserCanUpdateTaskStatus(): void
     {
-        $testEmail = 'test@example.ru';
-        $user = User::factory()->make([
-            'name' => 'Test Name',
-            'email' => $testEmail
-        ]);
-
         $taskStatus = TaskStatus::factory()->create([
             'name' => 'Новый'
         ]);
 
         $token = 'test-csrf-token';
         $updatedStatus = 'Завершён';
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->withSession(['_token' => $token])
             ->put("/task_statuses/{$taskStatus->id}", [
                 'name' => $updatedStatus,
@@ -158,17 +127,12 @@ class TaskStatusControllerTest extends TestCase
 
     public function testAuthenticateduserCanDeleteTaskStatus(): void
     {
-        $testEmail = 'test@example.ru';
-        $user = User::factory()->make([
-            'name' => 'Test Name',
-            'email' => $testEmail
-        ]);
         $taskStatus = TaskStatus::factory()->create([
             'name' => 'Новый'
         ]);
 
         $token = 'csrf-test-token';
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->withSession(['_token' => $token])
             ->delete("/task_statuses/{$taskStatus->id}", ['_token' => $token]);
 
