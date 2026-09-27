@@ -138,7 +138,7 @@ class TaskController extends Controller
     {
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'description' => ['required','string', 'max:512'],
+            'description' => ['nullable','string', 'max:512'],
             'status' => ['required', 'string', 'max:255'],
             'assigned_to_id' => ['required', 'integer', 'exists:users,id'],
             'label_id' => ['required', 'integer']
@@ -163,11 +163,21 @@ class TaskController extends Controller
      */
     public function destroy(Task $task): RedirectResponse
     {
-        $task->delete();
-        if (Task::where('status_id', $task->status_id)->count() === 0) {
-            $task->status()->delete();
-        };
-        flash(__('flash.task.deleted'))->success();
+        if (
+            Auth::id() === $task->created_by_id
+        ) {
+            $task->delete();
+            if (
+                Task::where('status_id', $task->status_id)->count() === 0
+                && $task->status instanceof TaskStatus
+            ) {
+                $task->status->delete();
+            }
+
+            flash(__('flash.task.deleted'))->success();
+        } else {
+            flash(__('flash.task.restricted_delete'))->error();
+        }
 
         return redirect()->route('tasks.index');
     }
