@@ -41,7 +41,7 @@ class TaskStatus extends Model
     }
 
     /**
-     * @return hasMany<Task, covariant static>
+     * @return HasMany<Task, covariant static>
      */
     public function tasks(): HasMany
     {

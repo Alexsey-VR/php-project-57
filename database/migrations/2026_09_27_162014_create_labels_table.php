@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tasks', function (Blueprint $table) {
+        Schema::create('labels', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('description');
-            $table->foreignId('status_id')->constrained('task_statuses');
-            $table->foreignId('created_by_id')->constrained('users');
-            $table->foreignId('assigned_to_id')->constrained('users');
-            $table->integer('label_id')->constrained('labels');
             $table->timestamps();
         });
     }
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tasks');
+        Schema::dropIfExists('labels');
     }
 };

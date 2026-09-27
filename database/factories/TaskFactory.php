@@ -30,7 +30,7 @@ class TaskFactory extends Factory
                 ])->id,
             'created_by_id'    => User::factory()->create()->id,
             'assigned_to_id'   => User::factory()->create()->id,
-            'label_id'         => $this->faker->randomNumber(1)
+            'label_id'         => Label::factory()->create()->id
         ];
     }
 }
