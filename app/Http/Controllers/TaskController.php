@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use App\Models\TaskStatus;
+use App\Models\Label;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -150,6 +151,12 @@ class TaskController extends Controller
             $taskStatus->save();
 
             $validatedData['status_id'] = $taskStatus->id;
+        }
+
+        $label = $task->label;
+        if ($label instanceof Label) {
+            $label->fill(['name' => 'TODO update from task']);
+            $label->save();
         }
 
         $task->update($validatedData);

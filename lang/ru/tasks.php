@@ -2,6 +2,7 @@
 
 return [
     'statuses' => 'Статусы',
+    'labels' => 'Метки',
     'status' => [
         'name' => 'Имя',
         'confirm' => 'Создать',
@@ -21,6 +22,21 @@ return [
             'testing' => 'На тестировании',
             'completed' => 'Завершён'
         ]
+    ],
+    'label' => [
+        'name' => 'Имя',
+        'description' => 'Описание',
+        'confirm' => 'Создать',
+        'header' => [
+            'name' => 'Метка',
+            'edit' => 'Изменить метку',
+            'create' => 'Создать метку',
+            'date' => 'Дата создания',
+        ],
+        'edit' => 'Изменить',
+        'update' => 'Обновить',
+        'delete' => 'Удалить',
+        'actions' => 'Действия',
     ],
     'sweetalert' => [
         'question' => 'Вы уверены?',

@@ -2,6 +2,7 @@
 
 return [
     'statuses' => 'Statuses',
+    'labels' => 'Labels',
     'status' => [
         'name' => 'Name',
         'confirm' => 'Create',
@@ -21,6 +22,21 @@ return [
             'testing' => 'Testing',
             'completed' => 'Completed'
         ]
+    ],
+    'label' => [
+        'name' => 'Name',
+        'description' => 'Description',
+        'confirm' => 'Create',
+        'header' => [
+            'name' => 'Label',
+            'edit' => 'Edit label',
+            'create' => 'Create label',
+            'date' => 'Create date',
+        ],
+        'edit' => 'Edit',
+        'update' => 'Update',
+        'delete' => 'Delete',
+        'actions' => 'Actions',
     ],
     'sweetalert' => [
         'question' => 'Are you sure?',

@@ -16,6 +16,7 @@ class TaskStatusController extends Controller
     public function index(): View
     {
         $task_statuses = TaskStatus::all();
+
         return view('task_statuses.index', compact('task_statuses'));
     }
 

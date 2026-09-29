@@ -38,6 +38,10 @@
                                 class="text-sm text-gray-700 hover:text-indigo-600">
                                 {{ __('tasks.statuses') }}
                             </a>
+                            <a href="{{ route('labels.index') }}" 
+                                class="text-sm text-gray-700 hover:text-indigo-600">
+                                {{ __('tasks.labels') }}
+                            </a>
                         </div>
                         <div flex items-center space-x-4>
                             {{ html()->modelForm($user, 'POST', route('logout'))->open() }}

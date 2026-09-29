@@ -13,6 +13,12 @@ return [
         'deleted' => 'Status deleted',
         'restricted_delete' => "Can't delete status"
     ],
+    'label' => [
+        'created' => 'Label successfully created',
+        'updated' => 'Label successfully updated',
+        'deleted' => 'Label deleted',
+        'restricted_delete' => "Can't delete label"
+    ],
     'task' => [
         'created' => 'Task successfully created',
         'updated' => 'Task successfully updated',
