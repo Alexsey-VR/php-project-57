@@ -4,21 +4,21 @@ namespace Tests\Feature;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use App\Models\User;
-use App\Models\TaskStatus;
+use App\Models\Label;
 use App\Providers\AppServiceProvider;
 use App\Providers\EventListenProvider;
 use App\Providers\FortifyServiceProvider;
-use App\Http\Controllers\TaskStatusController;
+use App\Http\Controllers\LabelController;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 #[CoversClass(User::class)]
-#[CoversClass(TaskStatus::class)]
+#[CoversClass(Label::class)]
 #[CoversClass(AppServiceProvider::class)]
 #[CoversClass(FortifyServiceProvider::class)]
-#[CoversClass(TaskStatusController::class)]
+#[CoversClass(LabelController::class)]
 #[CoversClass(EventListenProvider::class)]
-class TaskStatusControllerTest extends TestCase
+class LabelControllerTest extends TestCase
 {
     private User $user;
     private string $token;
@@ -43,7 +43,7 @@ class TaskStatusControllerTest extends TestCase
 
     public function testGuestCannotAccessTheCreateForm(): void
     {
-        $response = $this->get(route('task_statuses.create'));
+        $response = $this->get(route('labels.create'));
 
         $response->assertRedirect(route('register'));
     }
@@ -51,30 +51,32 @@ class TaskStatusControllerTest extends TestCase
     public function testAuthenticatedUserCanSeeTheCreateForm(): void
     {
         $response = $this->actingAs($this->user)
-            ->get(route('task_statuses.create'));
+            ->get(route('labels.create'));
 
         $response->assertStatus(200);
-        $response->assertSee(__('tasks.status.confirm'));
+        $response->assertSee(__('tasks.label.confirm'));
     }
 
-    public function testAuthenticatedUserCanCreateATaskStatus(): void
+    public function testAuthenticatedUserCanCreateLabel(): void
     {
+        $labelName = 'Test';
         $response = $this->actingAs($this->user)
             ->withSession(['_token' => $this->token])
-            ->post('/task_statuses', [
-                'name' => 'New Status',
+            ->post('/labels', [
+                'name' => $labelName,
+                'description' => 'Test label',
                 '_token' => $this->token
             ]);
 
-        $response->assertRedirect(route('task_statuses.index'));
-        $this->assertDatabaseHas('task_statuses', ['name' => 'New Status']);
+        $response->assertRedirect(route('labels.index'));
+        $this->assertDatabaseHas('labels', ['name' => $labelName]);
     }
 
     public function testValidationFailsWhenNameIsMissing(): void
     {
         $response = $this->actingAs($this->user)
             ->withSession(['_token' => $this->token])
-            ->postJson(route('task_statuses.store'), ['_token' => $this->token]);
+            ->postJson(route('labels.store'), ['_token' => $this->token]);
 
         $response->assertStatus(422);
     }
@@ -83,7 +85,7 @@ class TaskStatusControllerTest extends TestCase
     {
         $response = $this->actingAs($this->user)
             ->withSession(['_token' => $this->token])
-            ->postJson('/task_statuses', [
+            ->postJson('/labels', [
                 'name' => str_repeat('a', 256),
                 '_token' => $this->token
             ]);
@@ -91,41 +93,29 @@ class TaskStatusControllerTest extends TestCase
         $response->assertStatus(422);
     }
 
-    public function testAuthenticatedUserCanSeeAllowedOptions(): void
+    public function testAuthenticateduserCanUpdateLabel(): void
     {
-        $response = $this->actingAs($this->user)
-            ->get(route('task_statuses.create'));
-
-        $response->assertStatus(200);
-        $response->assertSee(__('tasks.status.options.new'));
-        $response->assertSee(__('tasks.status.options.in_progress'));
-        $response->assertSee(__('tasks.status.options.testing'));
-        $response->assertSee(__('tasks.status.options.completed'));
-    }
-
-    public function testAuthenticateduserCanUpdateTaskStatus(): void
-    {
-        $taskStatus = TaskStatus::factory()->create(['name' => 'Новый']);
-        $updatedStatus = 'Завершён';
+        $label = Label::factory()->create(['name' => 'Test']);
+        $updatedLabel = 'Edit';
         $response = $this->actingAs($this->user)
             ->withSession(['_token' => $this->token])
-            ->put(route('task_statuses.update', $taskStatus->id), [
-                'name' => $updatedStatus,
+            ->put(route('labels.update', $label->id), [
+                'name' => $updatedLabel,
                 '_token' => $this->token
             ]);
 
-        $response->assertRedirect(route('task_statuses.index'));
-        $this->assertDatabaseHas('task_statuses', ['id' => $taskStatus->id]);
+        $response->assertRedirect(route('labels.index'));
+        $this->assertDatabaseHas('labels', ['id' => $label->id]);
     }
 
-    public function testAuthenticateduserCanDeleteTaskStatus(): void
+    public function testAuthenticatedUserCanDeleteLabel(): void
     {
-        $taskStatus = TaskStatus::factory()->create();
+        $label = Label::factory()->create();
         $response = $this->actingAs($this->user)
             ->withSession(['_token' => $this->token])
-            ->delete("/task_statuses/{$taskStatus->id}", ['_token' => $this->token]);
+            ->delete("/labels/{$label->id}", ['_token' => $this->token]);
 
-        $response->assertRedirect(route('task_statuses.index'));
-        $this->assertDatabaseMissing('task_statuses', ['id' => $taskStatus->id]);
+        $response->assertRedirect(route('labels.index'));
+        $this->assertDatabaseMissing('labels', ['id' => $label->id]);
     }
 }

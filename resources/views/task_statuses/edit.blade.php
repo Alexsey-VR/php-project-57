@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.task')
 
 @section('label')
     <div class="p-4 text-2xl font-bold text">

@@ -18,8 +18,8 @@ class LabelFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->sentence,
-            'description' => $this->faker->paragraph
+            'name' => $this->faker->text(16),
+            'description' => $this->faker->text(64)
         ];
     }
 }

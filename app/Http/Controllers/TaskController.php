@@ -71,11 +71,13 @@ class TaskController extends Controller
         $locale = app()->getLocale();
         $taskStatusOptions = TaskStatus::getAllowedTaskStatusOptions($locale)->toArray();
         $assigneeList = User::getAllowedAssigneeOptions()->toArray();
+        $labelOptions = Label::pluck('name', 'id');
 
         return view('tasks.create', compact([
             'task',
             'taskStatusOptions',
-            'assigneeList'
+            'assigneeList',
+            'labelOptions'
         ]));
     }
 
@@ -89,7 +91,8 @@ class TaskController extends Controller
             'description' => ['nullable','string', 'max:512'],
             'status' => ['required', 'string', 'max:255'],
             'assigned_to_id' => ['required', 'integer', 'exists:users,id'],
-            'label_id' => ['required', 'integer']
+            'labels' => ['array'],
+            'labels.*' => ['nullable', 'string', 'max:255']
         ]);
 
         if (
@@ -103,7 +106,12 @@ class TaskController extends Controller
 
         $validatedData['status_id'] = $taskStatus->id;
         $validatedData['created_by_id'] = Auth::id();
-        Task::create($validatedData);
+
+        $task = Task::create($validatedData);
+        if (isset($validatedData['labels'])) {
+            $task->labels()->attach($validatedData['labels']);
+        }
+
         flash(__('flash.task.created'))->success();
 
         return redirect()->route('tasks.index');
@@ -114,6 +122,8 @@ class TaskController extends Controller
      */
     public function show(Task $task): View
     {
+        $task->load('labels');
+
         return view('tasks.show', compact('task'));
     }
 
@@ -125,10 +135,13 @@ class TaskController extends Controller
         $locale = app()->getLocale();
         $taskStatusOptions = TaskStatus::getAllowedTaskStatusOptions($locale)->toArray();
         $assigneeList = User::getAllowedAssigneeOptions()->toArray();
+        $labelOptions = Label::pluck('name', 'id');
+
         return view('tasks.edit', compact([
             'task',
             'taskStatusOptions',
-            'assigneeList'
+            'assigneeList',
+            'labelOptions'
         ]));
     }
 
@@ -142,24 +155,25 @@ class TaskController extends Controller
             'description' => ['nullable','string', 'max:512'],
             'status' => ['required', 'string', 'max:255'],
             'assigned_to_id' => ['required', 'integer', 'exists:users,id'],
-            'label_id' => ['required', 'integer']
+            'labels' => ['array'],
+            'labels.*' => ['nullable', 'string', 'max:255', 'exists:labels,id']
         ]);
 
         $taskStatus = $task->status;
         if ($taskStatus instanceof TaskStatus) {
             $taskStatus->fill(['name' => $validatedData['status']]);
             $taskStatus->save();
-
             $validatedData['status_id'] = $taskStatus->id;
         }
 
-        $label = $task->label;
-        if ($label instanceof Label) {
-            $label->fill(['name' => 'TODO update from task']);
-            $label->save();
+        $task->update($validatedData);
+
+        if (isset($validatedData['labels'])) {
+            $task->labels()->sync($validatedData['labels']);
+        } else {
+            $task->labels()->detach();
         }
 
-        $task->update($validatedData);
         flash(__('flash.task.updated'))->success();
 
         return redirect()->route('tasks.index');
@@ -171,20 +185,32 @@ class TaskController extends Controller
     public function destroy(Task $task): RedirectResponse
     {
         if (
-            Auth::id() === $task->created_by_id
+            Auth::id() !== $task->created_by_id
         ) {
-            $task->delete();
-            if (
-                Task::where('status_id', $task->status_id)->count() === 0
-                && $task->status instanceof TaskStatus
-            ) {
-                $task->status->delete();
-            }
-
-            flash(__('flash.task.deleted'))->success();
-        } else {
             flash(__('flash.task.restricted_delete'))->error();
         }
+
+        $labelIds = $task->labels()->pluck('label_id')->toArray();
+        $task->labels()->detach();
+        $task->delete();
+        if (
+            Task::where('status_id', $task->status_id)->count() === 0
+            && $task->status instanceof TaskStatus
+        ) {
+            $task->status->delete();
+        }
+
+        foreach ($labelIds as $labelId) {
+            $label = Label::find($labelId);
+            if (
+                $label instanceof Label
+                && $label->tasks()->count() === 0
+            ) {
+                $label->delete();
+            }
+        }
+
+        flash(__('flash.task.deleted'))->success();
 
         return redirect()->route('tasks.index');
     }

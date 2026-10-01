@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\TaskStatus;
+use App\Models\Label;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -22,15 +23,14 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'             => $this->faker->sentence,
-            'description'      => $this->faker->paragraph,
+            'name'             => $this->faker->text(16),
+            'description'      => $this->faker->text(64),
             'status_id'        => TaskStatus::factory()
                 ->create([
                     'name' => $this->faker->randomElement(TaskStatus::ALLOWED_OPTIONS)
                 ])->id,
             'created_by_id'    => User::factory()->create()->id,
-            'assigned_to_id'   => User::factory()->create()->id,
-            'label_id'         => Label::factory()->create()->id
+            'assigned_to_id'   => User::factory()->create()->id
         ];
     }
 }

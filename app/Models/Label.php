@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Database\Factories\LabelFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Label extends Model
@@ -18,10 +18,10 @@ class Label extends Model
     ];
 
     /**
-     * @return HasMany<Task, covariant static>
+     * @return BelongsToMany<Task, covariant static>
      */
-    public function tasks(): HasMany
+    public function tasks(): BelongsToMany
     {
-        return $this->hasMany(Task::class, 'label_id');
+        return $this->belongsToMany(Task::class, 'task_labels');
     }
 }

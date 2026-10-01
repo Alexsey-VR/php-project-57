@@ -1,16 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.task')
 
 @section('content')
-<div>
-    <h1>ID</h1>
-    <p class="text-3xl font-bold">{{ $task_status->id }}</p>
-</div>
-<div>
-    <h1>{{ __('tasks.status.name') }}</h1>
-    <p class="text-3xl font-bold">{{ $task_status->name }}</p>
-</div>
-<div>
-    <h1>{{ __('tasks.status.create_date') }}</h1>
-    <p class="text-3xl font-bold">{{ $task_status->created_at }}</p>
-</div>
+    {{ html()->label(__('tasks.status.name'), 'name') }}
+    <div class="bg-white p-2 rounded-md outline-solid outline-indigo-100">
+        {{ __("tasks.status.options.{$task_status->name}") }}
+    </div>
 @endsection
