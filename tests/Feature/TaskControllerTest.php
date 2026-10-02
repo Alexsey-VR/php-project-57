@@ -3,13 +3,10 @@
 namespace Tests\Feature;
 
 use PHPUnit\Framework\Attributes\CoversClass;
-use App\Models\User;
-use App\Models\Task;
-use App\Models\TaskStatus;
-use App\Providers\AppServiceProvider;
-use App\Providers\EventListenProvider;
-use App\Providers\FortifyServiceProvider;
+use App\Models\{User, Task, TaskStatus};
+use App\Providers\{AppServiceProvider, EventListenProvider, FortifyServiceProvider};
 use App\Http\Controllers\TaskController;
+use App\Http\Requests\{TaskFormRequest, TaskFilterRequest};
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
@@ -19,6 +16,8 @@ use Tests\TestCase;
 #[CoversClass(AppServiceProvider::class)]
 #[CoversClass(FortifyServiceProvider::class)]
 #[CoversClass(TaskController::class)]
+#[CoversClass(TaskFormRequest::class)]
+#[CoversClass(TaskFilterRequest::class)]
 #[CoversClass(EventListenProvider::class)]
 class TaskControllerTest extends TestCase
 {

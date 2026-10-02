@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Task;
-use App\Models\TaskStatus;
-use App\Models\Label;
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Models\{Task, TaskStatus, Label, User};
 use Illuminate\Http\RedirectResponse;
-use App\Http\Requests\TaskFormRequest;
+use App\Http\Requests\{TaskFilterRequest, TaskFormRequest};
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,13 +13,9 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request): View
+    public function index(TaskFilterRequest $request): View
     {
-        $validatedData = $request->validate([
-            'status' => ['nullable', 'string', 'max:255'],
-            'created_by_id' => ['nullable', 'integer', 'exists:users,id'],
-            'assigned_to_id' => ['nullable', 'integer', 'exists:users,id']
-        ]);
+        $validatedData = $request->validated();
         $queryTaskStatus = $validatedData['status'] ?? null;
         $queryCreatorId = $validatedData['created_by_id'] ?? null;
         $queryAssigneeId = $validatedData['assigned_to_id'] ?? null;
