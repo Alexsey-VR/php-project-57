@@ -8,6 +8,7 @@ use App\Models\Label;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\TaskFormRequest;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 
@@ -84,16 +85,9 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(TaskFormRequest $request): RedirectResponse
     {
-        $validatedData = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'description' => ['nullable','string', 'max:512'],
-            'status' => ['required', 'string', 'max:255'],
-            'assigned_to_id' => ['required', 'integer', 'exists:users,id'],
-            'labels' => ['array'],
-            'labels.*' => ['nullable', 'string', 'max:255']
-        ]);
+        $validatedData = $request->validated();
 
         if (
             !(($taskStatus = TaskStatus::where('name', $validatedData['status'])->first())
@@ -148,16 +142,9 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task $task): RedirectResponse
+    public function update(TaskFormRequest $request, Task $task): RedirectResponse
     {
-        $validatedData = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'description' => ['nullable','string', 'max:512'],
-            'status' => ['required', 'string', 'max:255'],
-            'assigned_to_id' => ['required', 'integer', 'exists:users,id'],
-            'labels' => ['array'],
-            'labels.*' => ['nullable', 'string', 'max:255', 'exists:labels,id']
-        ]);
+        $validatedData = $request->validated();
 
         $taskStatus = $task->status;
         if ($taskStatus instanceof TaskStatus) {
