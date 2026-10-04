@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TaskStatus;
-use Illuminate\Http\Request;
+use App\Http\Requests\TaskStatusFormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use SweetAlert2\Laravel\Swal;
@@ -35,11 +35,9 @@ class TaskStatusController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(TaskStatusFormRequest $request): RedirectResponse
     {
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:255']
-        ]);
+        $data = $request->validated();
         TaskStatus::create($data);
         flash(__('flash.status.created'))->success();
 
@@ -67,11 +65,9 @@ class TaskStatusController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TaskStatus $task_status): RedirectResponse
+    public function update(TaskStatusFormRequest $request, TaskStatus $task_status): RedirectResponse
     {
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:255']
-        ]);
+        $data = $request->validated();
         $task_status->update($data);
         flash(__('flash.status.updated'))->success();
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Label;
-use Illuminate\Http\Request;
+use App\Http\Requests\LabelFormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -33,12 +33,9 @@ class LabelController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(LabelFormRequest $request): RedirectResponse
     {
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string', 'max:512']
-        ]);
+        $data = $request->validated();
         Label::create($data);
         flash(__('flash.label.created'))->success();
 
@@ -64,12 +61,9 @@ class LabelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Label $label): RedirectResponse
+    public function update(LabelFormRequest $request, Label $label): RedirectResponse
     {
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string', 'max:512']
-        ]);
+        $data = $request->validated();
         $label->update($data);
         flash(__('flash.label.updated'))->success();
 
