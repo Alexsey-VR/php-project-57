@@ -11,18 +11,27 @@ return [
         'created' => 'Status successfully created',
         'updated' => 'Status successfully updated',
         'deleted' => 'Status deleted',
-        'restricted_delete' => "Can't delete status"
+        'restricted_delete' => "Can't delete status",
+        'header' => [
+            'error' => 'Status error'
+        ]
     ],
     'label' => [
         'created' => 'Label successfully created',
         'updated' => 'Label successfully updated',
         'deleted' => 'Label deleted',
-        'restricted_delete' => "Can't delete label"
+        'restricted_delete' => "Can't delete label",
+        'header' => [
+            'error' => 'Label error'
+        ]
     ],
     'task' => [
         'created' => 'Task successfully created',
         'updated' => 'Task successfully updated',
         'deleted' => 'Task deleted',
-        'restricted_delete' => 'Deleting a task is prohibited'
+        'restricted_delete' => 'Deleting a task is prohibited',
+        'header' => [
+            'error' => 'Task error'
+        ]
     ],
 ];
