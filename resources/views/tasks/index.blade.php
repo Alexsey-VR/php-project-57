@@ -11,28 +11,28 @@
         {{ html()->form('GET', route('tasks.index'))
             ->class("flex items-center space-x-4")
             ->open() }}
-            {{ html()->select('status', $taskStatusOptions, $queryTaskStatus)
+            {{ html()->select('status', $options['filter_status'], $placeholders['query_status'])
                     ->prependChild(
-                        html()->option($taskStatusPlaceholder)
+                        html()->option($placeholders['status'])
                             ->disabled()
                             ->attribute('hidden', 'hidden')
-                            ->selectedIf($queryTaskStatus === null)
+                            ->selectedIf($placeholders['query_status'] === null)
                     )
                     ->class('w-32 h-10 p-2 rounded-md outline-solid outline-indigo-100 has-placeholder') }}
-            {{ html()->select('created_by_id', $authorList, $queryCreatorId)
+            {{ html()->select('created_by_id', $options['filter_creator'], $placeholders['query_creator'])
                     ->prependChild(
-                        html()->option($creatorPlaceholder)
+                        html()->option($placeholders['creator'])
                             ->disabled()
                             ->attribute('hidden', 'hidden')
-                            ->selectedIf($queryCreatorId === null)
+                            ->selectedIf($placeholders['query_creator'] === null)
                     )
                     ->class('w-48 h-10 p-2 rounded-md outline-solid outline-indigo-100') }}
-            {{ html()->select('assigned_to_id', $assigneeList, $queryAssigneeId)
+            {{ html()->select('assigned_to_id', $options['filter_assignee'], $placeholders['query_assignee'])
                     ->prependChild(
-                        html()->option($assigneePlaceholder)
+                        html()->option($placeholders['assignee'])
                             ->disabled()
                             ->attribute('hidden', 'hidden')
-                            ->selectedIf($queryAssigneeId === null)
+                            ->selectedIf($placeholders['query_assignee'] === null)
                     )
                     ->class('w-48 h-10 p-2 rounded-md outline-solid outline-indigo-100') }}
             {{ html()->submit(__('tasks.apply'))

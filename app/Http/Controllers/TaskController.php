@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\{Task, TaskStatus, Label, User};
+use App\Services\TaskService;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\{TaskFilterRequest, TaskFormRequest};
 use Illuminate\View\View;
@@ -10,48 +11,26 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
+    public function __construct(
+        protected TaskService $taskService
+    ) {
+       //
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index(TaskFilterRequest $request): View
     {
         $validatedData = $request->validated();
-        $queryTaskStatus = $validatedData['status'] ?? null;
-        $queryCreatorId = $validatedData['created_by_id'] ?? null;
-        $queryAssigneeId = $validatedData['assigned_to_id'] ?? null;
-
-        $taskStatusPlaceholder = __('tasks.status.header.name');
-        $creatorPlaceholder = __('tasks.creator');
-        $assigneePlaceholder = __('tasks.assignee');
-
-        $taskQuery = Task::query();
-        if ($queryTaskStatus !== null) {
-            $taskQuery->whereHas('status', fn($query) => $query->where('name', $queryTaskStatus));
-        }
-        if ($queryCreatorId !== null) {
-            $taskQuery->where('created_by_id', $queryCreatorId);
-        }
-        if ($queryAssigneeId !== null) {
-            $taskQuery->where('assigned_to_id', $queryAssigneeId);
-        }
-        $tasks = $taskQuery->get();
-
-        $locale = app()->getLocale();
-        $taskStatusOptions = TaskStatus::getAllowedTaskStatusOptions($locale)->toArray();
-        $authorList = User::getAllowedAuthorOptions()->toArray();
-        $assigneeList = User::getAllowedAssigneeOptions()->toArray();
+        $placeholders = $this->taskService->getTaskFilterPlaceholders($validatedData);
+        $options = $this->taskService->getFilterOptions();
+        $tasks = $this->taskService->getFilteredTasks($validatedData);
 
         return view('tasks.index', compact([
             'tasks',
-            'taskStatusOptions',
-            'authorList',
-            'assigneeList',
-            'taskStatusPlaceholder',
-            'creatorPlaceholder',
-            'assigneePlaceholder',
-            'queryTaskStatus',
-            'queryCreatorId',
-            'queryAssigneeId'
+            'options',
+            'placeholders'
         ]));
     }
 
@@ -61,16 +40,11 @@ class TaskController extends Controller
     public function create(): View
     {
         $task = new Task();
-        $locale = app()->getLocale();
-        $taskStatusOptions = TaskStatus::getAllowedTaskStatusOptions($locale)->toArray();
-        $assigneeList = User::getAllowedAssigneeOptions()->toArray();
-        $labelOptions = Label::pluck('name', 'id');
+        $options = $this->taskService->getCreateOptions();
 
         return view('tasks.create', compact([
             'task',
-            'taskStatusOptions',
-            'assigneeList',
-            'labelOptions'
+            'options'
         ]));
     }
 
@@ -79,24 +53,7 @@ class TaskController extends Controller
      */
     public function store(TaskFormRequest $request): RedirectResponse
     {
-        $validatedData = $request->validated();
-
-        if (
-            !(($taskStatus = TaskStatus::where('name', $validatedData['status'])->first())
-            instanceof TaskStatus)
-        ) {
-            $taskStatus = new TaskStatus();
-            $taskStatus->fill(['name' => $validatedData['status']]);
-            $taskStatus->save();
-        }
-
-        $validatedData['status_id'] = $taskStatus->id;
-        $validatedData['created_by_id'] = Auth::id();
-
-        $task = Task::create($validatedData);
-        if (isset($validatedData['labels'])) {
-            $task->labels()->attach($validatedData['labels']);
-        }
+        $this->taskService->createTask($request->validated());
 
         flash(__('flash.task.created'))->success();
 
@@ -118,16 +75,11 @@ class TaskController extends Controller
      */
     public function edit(Task $task): View
     {
-        $locale = app()->getLocale();
-        $taskStatusOptions = TaskStatus::getAllowedTaskStatusOptions($locale)->toArray();
-        $assigneeList = User::getAllowedAssigneeOptions()->toArray();
-        $labelOptions = Label::pluck('name', 'id');
+        $options = $this->taskService->getCreateOptions();
 
         return view('tasks.edit', compact([
             'task',
-            'taskStatusOptions',
-            'assigneeList',
-            'labelOptions'
+            'options'
         ]));
     }
 
@@ -136,22 +88,10 @@ class TaskController extends Controller
      */
     public function update(TaskFormRequest $request, Task $task): RedirectResponse
     {
-        $validatedData = $request->validated();
-
-        $taskStatus = $task->status;
-        if ($taskStatus instanceof TaskStatus) {
-            $taskStatus->fill(['name' => $validatedData['status']]);
-            $taskStatus->save();
-            $validatedData['status_id'] = $taskStatus->id;
-        }
-
-        $task->update($validatedData);
-
-        if (isset($validatedData['labels'])) {
-            $task->labels()->sync($validatedData['labels']);
-        } else {
-            $task->labels()->detach();
-        }
+        $this->taskService->updateTask(
+            $validatedData = $request->validated(),
+            $task
+        );
 
         flash(__('flash.task.updated'))->success();
 
@@ -169,25 +109,7 @@ class TaskController extends Controller
             flash(__('flash.task.restricted_delete'))->error();
         }
 
-        $labelIds = $task->labels()->pluck('label_id')->toArray();
-        $task->labels()->detach();
-        $task->delete();
-        if (
-            Task::where('status_id', $task->status_id)->count() === 0
-            && $task->status instanceof TaskStatus
-        ) {
-            $task->status->delete();
-        }
-
-        foreach ($labelIds as $labelId) {
-            $label = Label::find($labelId);
-            if (
-                $label instanceof Label
-                && $label->tasks()->count() === 0
-            ) {
-                $label->delete();
-            }
-        }
+        $this->taskService->destroyTask($task);
 
         flash(__('flash.task.deleted'))->success();
 

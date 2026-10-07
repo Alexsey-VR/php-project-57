@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use App\Models\{User, Task, TaskStatus};
+use App\Services\TaskService;
 use App\Providers\{AppServiceProvider, EventListenProvider, FortifyServiceProvider};
 use App\Http\Controllers\TaskController;
 use App\Http\Requests\{TaskFormRequest, TaskFilterRequest};
@@ -13,6 +14,7 @@ use Tests\TestCase;
 #[CoversClass(User::class)]
 #[CoversClass(Task::class)]
 #[CoversClass(TaskStatus::class)]
+#[CoversClass(TaskService::class)]
 #[CoversClass(AppServiceProvider::class)]
 #[CoversClass(FortifyServiceProvider::class)]
 #[CoversClass(TaskController::class)]
