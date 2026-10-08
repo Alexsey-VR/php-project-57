@@ -11,6 +11,7 @@ return [
         'created' => 'Status successfully created',
         'updated' => 'Status successfully updated',
         'deleted' => 'Status deleted',
+        'dublicated' => 'A status with that name is already exists',
         'restricted_delete' => "Can't delete status",
         'header' => [
             'error' => 'Status error'

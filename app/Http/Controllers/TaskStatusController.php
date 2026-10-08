@@ -38,8 +38,12 @@ class TaskStatusController extends Controller
     public function store(TaskStatusFormRequest $request): RedirectResponse
     {
         $data = $request->validated();
-        TaskStatus::create($data);
-        flash(__('flash.status.created'))->success();
+        if (TaskStatus::where('name', $data['name'])->count() > 0) {
+            flash(__('flash.status.dublicated'))->error();
+        } else {
+            TaskStatus::create($data);
+            flash(__('flash.status.created'))->success();
+        }
 
         return redirect()->route('task_statuses.index');
     }
