@@ -21,6 +21,7 @@ return [
         'created' => 'Label successfully created',
         'updated' => 'Label successfully updated',
         'deleted' => 'Label deleted',
+        'dublicated' => 'A label with that name is already exists',
         'restricted_delete' => "Can't delete label",
         'header' => [
             'error' => 'Label error'
