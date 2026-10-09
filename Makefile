@@ -1,6 +1,6 @@
 setup:
 	composer install --no-ansi --no-interaction --no-progress
-	npm install esbuild@0.28.0 || true
+	init
 
 update:
 	composer update
