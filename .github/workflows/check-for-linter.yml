@@ -43,7 +43,7 @@ jobs:
           echo "APP_KEY=${{ secrets.APP_KEY }}" >> .env
 
       - name: Install project and dependencies
-        run: make install
+        run: make setup
 
       - name: Setup Node.js
         uses: actions/setup-node@v7
