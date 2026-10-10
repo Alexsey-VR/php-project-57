@@ -44,7 +44,7 @@ class LabelControllerTest extends TestCase
     {
         $response = $this->get(route('labels.create'));
 
-        $response->assertRedirect(route('register'));
+        $response->assertRedirect(route('login'));
     }
 
     public function testAuthenticatedUserCanSeeTheCreateForm(): void

@@ -44,7 +44,7 @@ class TaskStatusControllerTest extends TestCase
     {
         $response = $this->get(route('task_statuses.create'));
 
-        $response->assertRedirect(route('register'));
+        $response->assertRedirect(route('login'));
     }
 
     public function testAuthenticatedUserCanSeeTheCreateForm(): void

@@ -56,7 +56,7 @@ class TaskControllerTest extends TestCase
     public function testGuestCannotAccessTheCreateForm(): void
     {
         $response = $this->get(route('tasks.create'));
-        $response->assertRedirect(route('register'));
+        $response->assertRedirect(route('login'));
     }
 
     public function testAuthenticatedUserCanSeeTheCreateForm(): void
