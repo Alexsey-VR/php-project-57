@@ -1,12 +1,5 @@
-init:
-	php artisan migrate:fresh
-	php artisan db:seed --class=DatabaseSeeder
-	php artisan db:seed --class=TaskStatusSeeder
-	npm run build
-
 setup:
 	composer install --no-ansi --no-interaction --no-progress
-	init
 
 update:
 	composer update
@@ -26,6 +19,12 @@ test-dev:
 
 test-sonar: init
 	XDEBUG_MODE=coverage vendor/bin/paratest --coverage-clover=coverage.xml tests
+
+init:
+	php artisan migrate:fresh
+	php artisan db:seed --class=DatabaseSeeder
+	php artisan db:seed --class=TaskStatusSeeder
+	npm run build
 
 lint:
 	composer exec --verbose phpcs -- public/ routes/ app/ tests/
