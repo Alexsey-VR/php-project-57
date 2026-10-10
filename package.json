@@ -15,7 +15,6 @@
         "vite": "^8.3.4"
     },
     "dependencies": {
-        "esbuild": "^0.28.0",
         "sweetalert2": "^11.26.25"
     }
 }

@@ -1,5 +1,12 @@
 setup:
 	composer install --no-ansi --no-interaction --no-progress
+	@test -f .env || cp .env.example .env
+	php artisan key:generate --no-interaction
+	php artisan migrate:fresh --force
+	php artisan db:seed --class=DatabaseSeeder
+	php artisan db:seed --class=TaskStatusSeeder
+	npm install --ignore-scripts
+	npm run build
 
 update:
 	composer update

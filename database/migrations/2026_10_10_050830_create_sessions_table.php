@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (config('database.default') === 'pgsql' && config('app.env') === 'testing') {
+        if (config('database.default') === 'pgsql') {
             Schema::create('sessions', function (Blueprint $table) {
                 $table->id()->primary();
                 $table->foreignId('user_id')->constrained('users');
@@ -28,7 +28,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        if (config('database.default') === 'pgsql' && config('app.env') === 'testing') {
+        if (config('database.default') === 'pgsql') {
             Schema::dropIfExists('sessions');
         }
     }
