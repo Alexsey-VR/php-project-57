@@ -8,6 +8,6 @@ return [
     'created_at' => 'Дата создания',
     'updated_at' => 'Дата обновления',
     'confirmation' => 'Подтверждение',
-    'create' => 'Создать',
+    'create' => 'Зарегистрировать',
     'already_registered' => 'Уже зарегистрированы?'
 ];
