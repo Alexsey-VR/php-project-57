@@ -44,12 +44,14 @@
                             </a>
                         </div>
                         <div flex items-center space-x-4>
-                            {{ html()->modelForm($user, 'POST', route('logout'))->open() }}
+                            {{ html()->form('POST', route('logout'))->attribute('id', 'logout-form')->open() }}
                                 @csrf
-                                <button class="rounded-md text-sm text-center font-semibold text-white h-10 w-24 bg-indigo-600">
-                                    {{ __('app.exit') }}
-                                </button>
-                            {{ html()->closeModelForm() }}
+                            {{ html()->form()->close() }}
+                            <a href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                class="rounded-md text-sm text-center font-semibold text-white h-10 w-24 bg-indigo-600 flex items-center justify-center">
+                                {{ __('app.exit') }}
+                            </a>
                         </div>
                     @else
                         <div flex items-center space-x-4>

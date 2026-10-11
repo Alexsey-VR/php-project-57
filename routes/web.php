@@ -7,14 +7,7 @@ use App\Http\Controllers\TaskStatusController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\LabelController;
 
-Route::get('/home', function () {
-    return view('page.home');
-})->name('page.home')->middleware('auth');
-
 Route::get('/', function () {
-    if (auth()->check()) {
-        return redirect()->route('page.home');
-    }
     return view('index');
 })->name('index');
 

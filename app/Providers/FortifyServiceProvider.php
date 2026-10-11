@@ -30,7 +30,7 @@ class FortifyServiceProvider extends ServiceProvider
             public function toResponse($request)
             {
                 flash(__('flash.user.registered'))->success();
-                return redirect()->route('page.home');
+                return redirect()->route('index');
             }
         });
 
@@ -40,7 +40,7 @@ class FortifyServiceProvider extends ServiceProvider
                 $user = Auth::user();
                 flash(__('flash.user.logged_in'))->success();
 
-                return redirect()->route('page.home');
+                return redirect()->route('index');
             }
         });
 
@@ -49,7 +49,7 @@ class FortifyServiceProvider extends ServiceProvider
             {
                 flash(__('flash.user.goodbye'))->success();
 
-                return redirect('/');
+                return redirect()->route('index');
             }
         });
     }

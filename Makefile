@@ -1,7 +1,6 @@
 setup:
 	composer install --no-ansi --no-interaction --no-progress
 	@test -f .env || cp .env.example .env
-	sed -i 's/^APP_LOCALE=.*/APP_LOCALE=ru/' .env
 	php artisan key:generate --no-interaction
 	php artisan migrate:fresh --force
 	php artisan db:seed --class=DatabaseSeeder
