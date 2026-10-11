@@ -1,10 +1,5 @@
 @extends('layouts.app')
 
-@section('content')
-<div class="flex rounded-md text-base text-center">
-    @include('flash::message')
-</div>
-
 @section('login')
 <a href="{{ route('login') }}">
     <button class="rounded-md text-sm text-center font-semibold text-white h-10 w-24 bg-indigo-600">
@@ -22,6 +17,9 @@
 @endsection
 
 @section('content')
+<div class="flex rounded-md text-base text-center">
+    @include('flash::message')
+</div>
 <div class="text-lg font-bold p-8">
     <h1>{{ __('app.welcome') }}</h1>
 </div>
