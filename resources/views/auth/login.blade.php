@@ -7,7 +7,7 @@
         @include('auth.form')
 
         <div class="shadow-md bg-indigo-100 p-2 rounded-md outline-indigo-100 text-center font-medium">
-            {{ html()->submit(__('app.login')) }}
+            {{ html()->submit(__('app.signin')) }}
         </div>
     </div>
 {{ html()->closeModelForm() }}
