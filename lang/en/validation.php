@@ -180,8 +180,9 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'password' => [
+            'min' => 'Password must be at least :min characters',
+            'confirmed' => 'The password and confirmation do not match'
         ],
     ],
 
