@@ -24,6 +24,7 @@ skills-lock.json
 /storage/*.key
 /storage/pail
 /vendor
+/tests/fixtures/
 /reports/
 /docs/dev/
 npm-debug.log
