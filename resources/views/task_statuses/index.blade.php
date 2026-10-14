@@ -33,12 +33,13 @@
                                     ->attribute('id', "form-status-{$task_status->id}")
                                     ->open() }}
                                 @csrf
-                                <button type='submit'
+                                <a href="{{ route('task_statuses.destroy', $task_status) }}"
                                         onclick="confirmDelete(event, '{{ $task_status->name }}', 'form-status-{{ $task_status->id }}');"
                                         class="text-red-500 hover:text-red-700"
+                                        rel="nofollow"
                                 >
                                     {{ __('tasks.status.delete') }}
-                                </button>
+                                </a>
                             {{ html()->closeModelForm() }}
                             <a href="{{ route('task_statuses.edit', $task_status) }}"
                                 class="text-blue-500 hover:text-blue-700">{{ __('tasks.status.edit') }}
