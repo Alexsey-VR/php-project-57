@@ -141,7 +141,7 @@ return [
     'prohibited_unless' => 'Поле :attribute запрещено к заполнению, если только :other не равно одному из :values.',
     'prohibits' => 'Поле :attribute запрещает наличие поля :other.',
     'regex' => 'Формат поля :attribute неверен.',
-    'required' => 'Поле :attribute обязательно для заполнения.',
+    'required' => 'Это обязательное поле.',
     'required_array_keys' => 'Поле :attribute должно содержать записи для: :values.',
     'required_if' => 'Поле :attribute обязательно для заполнения, когда :other равно :value.',
     'required_if_accepted' => 'Поле :attribute обязательно для заполнения, когда :other принято.',
