@@ -90,18 +90,6 @@ class TaskStatusControllerTest extends TestCase
         $response->assertStatus(422);
     }
 
-    public function testAuthenticatedUserCanSeeAllowedOptions(): void
-    {
-        $response = $this->actingAs($this->user)
-            ->get(route('task_statuses.create'));
-
-        $response->assertStatus(200);
-        $response->assertSee(__('tasks.status.options.new'));
-        $response->assertSee(__('tasks.status.options.in_progress'));
-        $response->assertSee(__('tasks.status.options.testing'));
-        $response->assertSee(__('tasks.status.options.completed'));
-    }
-
     public function testAuthenticateduserCanUpdateTaskStatus(): void
     {
         $taskStatus = TaskStatus::factory()->create(['name' => 'Новый']);

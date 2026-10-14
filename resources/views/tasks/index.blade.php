@@ -58,7 +58,7 @@
             @foreach ($tasks as $task)
                 <tr>
                     <td class="py-2 px-4">{{ $task->id }}</td>
-                    <td class="py-2 px-4">{{ __("tasks.status.options.{$task->status->name}") }}</td>
+                    <td class="py-2 px-4">{{ $task->status->name }}</td>
                     <td class="py-2 px-4">
                         <a href="{{ route('tasks.show', $task) }}">{{ $task->creator->name }}</a>
                     </td>

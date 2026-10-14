@@ -17,7 +17,7 @@
 </div>
 {{ html()->label(__('tasks.init_status'), 'init_status') }}
 <div class="bg-white p-2 rounded-md outline-solid outline-indigo-100">
-    {{ __("tasks.status.options.{$task->status->name}") }}
+    {{ $task->status->name }}
 </div>
 {{ html()->label(__('tasks.creator'), 'creator') }}
 <div class="bg-white p-2 rounded-md outline-solid outline-indigo-100">

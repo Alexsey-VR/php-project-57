@@ -8,14 +8,21 @@ use Illuminate\Database\Seeder;
 
 class TaskStatusSeeder extends Seeder
 {
+    public const ALLOWED_OPTIONS = [
+        'new',
+        'in_progress',
+        'testing',
+        'completed'
+    ];
+
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $seedList = TaskStatus::getAllowedTaskStatusOptions();
-        $seedList->mapWithKeys(function($value, $key) {
-            return TaskStatus::create(['name' => $key]);
-        });
+        $seedList = collect(self::ALLOWED_OPTIONS)
+            ->map(fn ($value) => TaskStatus::create([
+                'name' => trans("tasks.status.options.{$value}")
+            ]));
     }
 }

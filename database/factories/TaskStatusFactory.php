@@ -12,6 +12,13 @@ use Illuminate\Support\Str;
  */
 class TaskStatusFactory extends Factory
 {
+    public const ALLOWED_OPTIONS = [
+        'new',
+        'in_progress',
+        'testing',
+        'completed'
+    ];
+
     /**
      * Define the model's default state
      * 
@@ -20,7 +27,7 @@ class TaskStatusFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->randomElement(TaskStatus::ALLOWED_OPTIONS)
+            'name' => trans("tasks.status.options.{$this->faker->randomElement(self::ALLOWED_OPTIONS)}")
         ];
     }
 }

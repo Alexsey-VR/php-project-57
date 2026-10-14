@@ -24,7 +24,7 @@
                 <tr>
                     <td class="py-2 px-4">{{ $task_status->id }}</td>
                     <td class="py-2 px-4">
-                        <a href="{{ route('task_statuses.show', $task_status) }}">{{ __("tasks.status.options.{$task_status->name}") }} </a>
+                        <a href="{{ route('task_statuses.show', $task_status) }}">{{ $task_status->name }} </a>
                     </td>
                     <td class="py-2 px-4">{{ $task_status->created_at }}</td>
                     <td class="py-2 px-4">

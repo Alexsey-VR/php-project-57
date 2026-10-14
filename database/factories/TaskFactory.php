@@ -15,6 +15,12 @@ use Illuminate\Support\Str;
  */
 class TaskFactory extends Factory
 {
+    public const TASK_STATUS_ALLOWED_OPTIONS = [
+        'new',
+        'in_progress',
+        'testing',
+        'completed'
+    ];
     /**
      * Define the model's default state
      * 
@@ -27,7 +33,7 @@ class TaskFactory extends Factory
             'description'      => $this->faker->text(64),
             'status_id'        => TaskStatus::factory()
                 ->create([
-                    'name' => $this->faker->randomElement(TaskStatus::ALLOWED_OPTIONS)
+                    'name' => trans("tasks.status.options.{$this->faker->randomElement(self::TASK_STATUS_ALLOWED_OPTIONS)}")
                 ])->id,
             'created_by_id'    => User::factory()->create()->id,
             'assigned_to_id'   => User::factory()->create()->id

@@ -15,29 +15,13 @@ class TaskStatus extends Model
 
     protected $fillable = ['name'];
 
-    public const ALLOWED_OPTIONS = [
-        'new',
-        'in_progress',
-        'testing',
-        'completed'
-    ];
-
     /**
      * @return Collection<string, string>
      */
     public static function getAllowedTaskStatusOptions(string $locale = 'en'): Collection
     {
-        return collect(self::ALLOWED_OPTIONS)
-            ->mapWithKeys(fn($key) => [$key => trans("tasks.status.options.{$key}", [], $locale)]);
-    }
-
-    /**
-     * @return Collection<int, string>
-     */
-    public static function getAllowedTaskStatusIndexOptions(string $locale = 'en'): Collection
-    {
-        return collect(self::ALLOWED_OPTIONS)
-            ->map(fn($key) => trans("tasks.status.options.{$key}", [], $locale));
+        return collect(self::all())
+            ->pluck('name', 'name');
     }
 
     /**
