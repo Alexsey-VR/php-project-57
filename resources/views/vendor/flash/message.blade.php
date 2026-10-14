@@ -7,7 +7,7 @@
         ])
     @else
         @if ($message['level'] === 'success')
-            <div class="w-full flex justify-center">
+            <div class="w-full flex justify-center" role="alert">
                 <button
                     class="rounded-md text-sm text-center
                     font-semibold text-green-700
@@ -20,7 +20,7 @@
             $message['level'] === 'error'
             || $message['level'] === 'danger'
         )
-            <div class="w-full flex justify-center">
+            <div class="w-full flex justify-center" role="alert">
                 <button
                     class="rounded-md text-sm text-center
                     font-semibold text-red-700
