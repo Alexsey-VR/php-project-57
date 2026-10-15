@@ -30,4 +30,14 @@ class TaskStatusFormRequest extends FormRequest
             ]
         ];
     }
+
+    /**
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'name.unique' => __('flash.status.dublicated')
+        ];
+    }
 }
