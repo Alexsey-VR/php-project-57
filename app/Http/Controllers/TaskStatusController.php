@@ -60,8 +60,8 @@ class TaskStatusController extends Controller
      */
     public function edit(TaskStatus $task_status): View
     {
-        $task_status_option = $task_status->name;
-        return view('task_statuses.edit', compact('task_status', 'task_status_option'));
+        $name = $task_status->name;
+        return view('task_statuses.edit', compact('task_status', 'name'));
     }
 
     /**
