@@ -92,8 +92,8 @@ class TaskStatusControllerTest extends TestCase
 
     public function testAuthenticateduserCanUpdateTaskStatus(): void
     {
-        $taskStatus = TaskStatus::factory()->create(['name' => 'Новый']);
-        $updatedStatus = 'Завершён';
+        $taskStatus = TaskStatus::factory()->create(['name' => 'Тестовый']);
+        $updatedStatus = 'Тестовый обновлённый';
         $response = $this->actingAs($this->user)
             ->withSession(['_token' => $this->token])
             ->put(route('task_statuses.update', $taskStatus->id), [
