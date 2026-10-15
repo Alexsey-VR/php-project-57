@@ -26,9 +26,9 @@ class TaskStatusController extends Controller
     public function create(): View
     {
         $task_status = new TaskStatus();
-        $task_status_option = __('tasks.status.header.name');
+        $name = '';
 
-        return view('task_statuses.create', compact('task_status', 'task_status_option'));
+        return view('task_statuses.create', compact('task_status', 'name'));
     }
 
     /**
