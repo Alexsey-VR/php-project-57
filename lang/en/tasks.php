@@ -40,7 +40,7 @@ return [
     ],
     'sweetalert' => [
         'question' => 'Are you sure?',
-        'text' => 'This action can\'t be undone! Delete status ":name"?',
+        'text' => 'This action can\'t be undone! Delete ":name"?',
         'confirm' => 'Yes, delete',
         'cancel' => 'Cancel'
     ],

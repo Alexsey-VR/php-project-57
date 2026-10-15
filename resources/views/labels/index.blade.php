@@ -35,12 +35,14 @@
                                     ->attribute('id', "form-label-{$label->id}")
                                     ->open() }}
                                 @csrf
-                                <button type='submit'
-                                        onclick="confirmDelete(event, '{{ $label->name }}', 'form-label-{{ $label->id }}');"
+                                <a href="{{ route('labels.destroy', $label) }}"
+                                        data-confirm="{{ __('tasks.sweetalert.question') }} {{ __('tasks.sweetalert.text', ['name' => $label->name]) }}"
+                                        onclick="event.preventDefault(); if (confirm(this.dataset.confirm)) { this.closest('form').submit(); }"
                                         class="text-red-500 hover:text-red-700"
+                                        rel="nofollow"
                                 >
                                     {{ __('tasks.label.delete') }}
-                                </button>
+                                </a>
                             {{ html()->closeModelForm() }}
                             <a href="{{ route('labels.edit', $label) }}"
                                 class="text-blue-500 hover:text-blue-700">{{ __('tasks.label.edit') }}

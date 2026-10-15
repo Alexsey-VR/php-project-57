@@ -67,15 +67,16 @@
                     <td class="py-2 px-4">
                         <div class="flex space-x-4">
                             {{ html()->modelForm($task, 'DELETE', route('tasks.destroy', $task))
-                                    ->attribute('id', "form-task-{$task->id}")
                                     ->open() }}
                                 @csrf
-                                <button type='submit'
-                                        onclick="confirmDelete(event, '{{ $task->name }}', 'form-task-{{ $task->id }}');"
+                                <a href="{{ route('tasks.destroy', $task) }}"
+                                        data-confirm="{{ __('tasks.sweetalert.question') }} {{ __('tasks.sweetalert.text', ['name' => $task->name]) }}"
+                                        onclick="event.preventDefault(); if (confirm(this.dataset.confirm)) { this.closest('form').submit(); }"
                                         class="text-red-500 hover:text-red-700"
+                                        rel="nofollow"
                                 >
                                     {{ __('tasks.delete') }}
-                                </button>
+                                </a>
                             {{ html()->closeModelForm() }}
                             <a href="{{ route('tasks.edit', $task) }}"
                                 class="text-blue-500 hover:text-blue-700">{{ __('tasks.edit') }}

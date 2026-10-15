@@ -35,7 +35,7 @@
                                 @csrf
                                 <a href="{{ route('task_statuses.destroy', $task_status) }}"
                                         data-confirm="{{ __('tasks.sweetalert.question') }} {{ __('tasks.sweetalert.text', ['name' => $task_status->name]) }}"
-                                        onclick="confirmDelete(event, '{{ $task_status->name }}', 'form-status-{{ $task_status->id }}');"
+                                        onclick="event.preventDefault(); if (confirm(this.dataset.confirm)) { this.closest('form').submit(); }"
                                         class="text-red-500 hover:text-red-700"
                                         rel="nofollow"
                                 >
