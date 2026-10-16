@@ -24,13 +24,25 @@ class TaskFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => [
+                'required', 'string', 'max:255',
+                Rule::unique('tasks', 'name')->ignore($this->route('task'))
+            ],
             'description' => ['nullable','string', 'max:512'],
             'status' => ['required', 'string', 'max:255'],
             'assigned_to_id' => ['required', 'integer', 'exists:users,id'],
             'labels' => ['array'],
             'labels.*' => ['nullable', 'string', 'max:255'],
-            Rule::unique('tasks', 'name')->ignore($this->route('task'))
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'name.unique' => __('flash.task.dublicated')
         ];
     }
 }

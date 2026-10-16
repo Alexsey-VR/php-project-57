@@ -24,9 +24,21 @@ class LabelFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => [
+                'required', 'string', 'max:255',
+                Rule::unique('labels', 'name')->ignore($this->route('label'))
+            ],
             'description' => ['nullable', 'string', 'max:512'],
-            Rule::unique('labels', 'name')->ignore($this->route('label'))
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'name.unique' => __('flash.label.dublicated')
         ];
     }
 }

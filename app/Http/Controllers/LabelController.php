@@ -35,13 +35,8 @@ class LabelController extends Controller
      */
     public function store(LabelFormRequest $request): RedirectResponse
     {
-        $data = $request->validated();
-        if (Label::where('name', $data['name'])->count() > 0) {
-            flash(__('flash.label.dublicated'))->error();
-        } else {
-            Label::create($data);
-            flash(__('flash.label.created'))->success();
-        }
+        Label::create($request->validated());
+        flash(__('flash.label.created'))->success();
 
         return redirect()->route('labels.index');
     }
