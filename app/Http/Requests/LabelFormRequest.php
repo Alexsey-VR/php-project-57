@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class LabelFormRequest extends FormRequest
 {
@@ -24,7 +25,8 @@ class LabelFormRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string', 'max:512']
+            'description' => ['nullable', 'string', 'max:512'],
+            Rule::unique('labels', 'name')->ignore($this->route('label'))
         ];
     }
 }

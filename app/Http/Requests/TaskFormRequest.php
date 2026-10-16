@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class TaskFormRequest extends FormRequest
 {
@@ -28,7 +29,8 @@ class TaskFormRequest extends FormRequest
             'status' => ['required', 'string', 'max:255'],
             'assigned_to_id' => ['required', 'integer', 'exists:users,id'],
             'labels' => ['array'],
-            'labels.*' => ['nullable', 'string', 'max:255']
+            'labels.*' => ['nullable', 'string', 'max:255'],
+            Rule::unique('tasks', 'name')->ignore($this->route('task'))
         ];
     }
 }
