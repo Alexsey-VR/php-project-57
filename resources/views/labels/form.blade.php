@@ -4,5 +4,5 @@
 </div>
 {{ html()->label(__('tasks.label.description'), 'description') }}
 <div class="w-full bg-white p-2 rounded-md outline-solid outline-indigo-100">
-    {{ html()->input('description', 'description')->class('w-full') }}
+    {{ html()->textarea('description')->rows(3)->class('w-full') }}
 </div>
