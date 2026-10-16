@@ -9,7 +9,7 @@ return [
     ],
     'status' => [
         'created' => 'Status successfully created',
-        'updated' => 'Status successfully updated',
+        'updated' => 'Status successfully changed',
         'deleted' => 'Status deleted',
         'dublicated' => 'A status with that name is already exists',
         'restricted_delete' => "Can't delete status",
@@ -19,7 +19,7 @@ return [
     ],
     'label' => [
         'created' => 'Label successfully created',
-        'updated' => 'Label successfully updated',
+        'updated' => 'Label successfully changed',
         'deleted' => 'Label deleted',
         'dublicated' => 'A label with that name is already exists',
         'restricted_delete' => "Can't delete label",
@@ -29,7 +29,7 @@ return [
     ],
     'task' => [
         'created' => 'Task successfully created',
-        'updated' => 'Task successfully updated',
+        'updated' => 'Task successfully changed',
         'deleted' => 'Task deleted',
         'restricted_delete' => 'Deleting a task is prohibited',
         'header' => [
