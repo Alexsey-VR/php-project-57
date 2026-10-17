@@ -9,6 +9,12 @@
 {{ html()->label(__('tasks.init_status'), 'status') }}
 <div class="w-full bg-white p-2 rounded-md outline-solid outline-indigo-100">
     {{ html()->select('status_id', $options['status'])
+        ->prependChild(
+            html()->option(__('tasks.status.header.name'), '')
+                ->disabled()
+                ->attribute('hidden', 'hidden')
+                ->selectedIf($task->status_id === null)
+        )
         ->class('w-full') }}
 </div>
 {{ html()->label(__('tasks.assignee'), 'assigned_to_id') }}
