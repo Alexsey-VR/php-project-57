@@ -48,6 +48,7 @@
             <tr>
                 <th class="py-2 px-4">ID</th>
                 <th class="py-2 px-4">{{ __('tasks.init_status') }}</th>
+                <th class="py-2 px-4">{{ __('tasks.name') }}</th>
                 <th class="py-2 px-4">{{ __('tasks.creator') }}</th>
                 <th class="py-2 px-4">{{ __('tasks.assignee') }}</th>
                 <th class="py-2 px-4">{{ __('tasks.created_at') }}</th>
@@ -60,8 +61,9 @@
                     <td class="py-2 px-4">{{ $task->id }}</td>
                     <td class="py-2 px-4">{{ $task->status->name }}</td>
                     <td class="py-2 px-4">
-                        <a href="{{ route('tasks.show', $task) }}">{{ $task->creator->name }}</a>
+                        <a href="{{ route('tasks.show', $task) }}">{{ $task->name }}</a>
                     </td>
+                    <td class="py-2 px-4">{{ $task->creator->name }}</td>
                     <td class="py-2 px-4">{{ $task->assignee->name }}</td>
                     <td class="py-2 px-4">{{ $task->created_at }}</td>
                     <td class="py-2 px-4">
