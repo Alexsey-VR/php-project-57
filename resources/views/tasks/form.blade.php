@@ -8,7 +8,7 @@
 </div>
 {{ html()->label(__('tasks.init_status'), 'status') }}
 <div class="w-full bg-white p-2 rounded-md outline-solid outline-indigo-100">
-    {{ html()->select('status', $options['status'])
+    {{ html()->select('status_id', $options['status'])
         ->class('w-full') }}
 </div>
 {{ html()->label(__('tasks.assignee'), 'assigned_to_id') }}

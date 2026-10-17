@@ -29,7 +29,7 @@ class TaskFormRequest extends FormRequest
                 Rule::unique('tasks', 'name')->ignore($this->route('task'))
             ],
             'description' => ['nullable','string', 'max:512'],
-            'status' => ['required', 'string', 'max:255'],
+            'status_id' => ['required', 'integer', 'exists:task_statuses,id'],
             'assigned_to_id' => ['required', 'integer', 'exists:users,id'],
             'labels' => ['array'],
             'labels.*' => ['nullable', 'string', 'max:255'],

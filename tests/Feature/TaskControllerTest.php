@@ -76,7 +76,7 @@ class TaskControllerTest extends TestCase
             ->post(route('tasks.store'), [
                 'name' => $taskName,
                 'description' => 'test task',
-                'status' => $this->status->name,
+                'status_id' => $this->status->id,
                 'assigned_to_id' => $this->assignee->id,
                 'label_id' => self::LABEL_ID,
                 '_token' => $this->token
@@ -136,7 +136,7 @@ class TaskControllerTest extends TestCase
             ->post(route('tasks.store'), [
                 'name' => 'Test task',
                 'description' => 'test task',
-                'status' => $this->status->name,
+                'status_id' => $this->status->id,
                 'assigned_to_id' => $this->assignee->id,
                 'label_id' => self::LABEL_ID,
                 '_token' => $this->token
@@ -160,7 +160,7 @@ class TaskControllerTest extends TestCase
             ->put(route('tasks.update', $task), [
                 'name' => $updatedTaskName,
                 'description' => 'test task',
-                'status' => $this->status->name,
+                'status_id' => $this->status->id,
                 'assigned_to_id' => $this->assignee->id,
                 'label_id' => self::LABEL_ID,
                 '_token' => $this->token
@@ -177,7 +177,7 @@ class TaskControllerTest extends TestCase
             ->post(route('tasks.store'), [
                 'name' => 'Test task',
                 'description' => 'test task',
-                'status' => $this->status->name,
+                'status_id' => $this->status->id,
                 'assigned_to_id' => $this->assignee->id,
                 'label_id' => self::LABEL_ID,
                 '_token' => $this->token

@@ -13,18 +13,7 @@ class TaskService
      */
     public function createTask(array $validatedData): Task
     {
-        if (
-            !(($taskStatus = TaskStatus::where('name', $validatedData['status'])->first())
-            instanceof TaskStatus)
-        ) {
-            $taskStatus = new TaskStatus();
-            $taskStatus->fill(['name' => $validatedData['status']]);
-            $taskStatus->save();
-        }
-
-        $validatedData['status_id'] = $taskStatus->id;
         $validatedData['created_by_id'] = Auth::id();
-
         $task = Task::create($validatedData);
         if (isset($validatedData['labels'])) {
             $task->labels()->attach($validatedData['labels']);
@@ -69,7 +58,7 @@ class TaskService
     public function getCreateOptions(): array
     {
         $locale = app()->getLocale();
-        $createOptions['status'] = TaskStatus::getAllowedTaskStatusOptions($locale)->toArray();
+        $createOptions['status'] = TaskStatus::pluck('name', 'id');
         $createOptions['assignee'] = User::getAllowedAssigneeOptions()->toArray();
         $createOptions['label'] = Label::pluck('name', 'id');
 
@@ -101,13 +90,6 @@ class TaskService
      */
     public function updateTask(array $validatedData, Task $task): void
     {
-        $taskStatus = $task->status;
-        if ($taskStatus instanceof TaskStatus) {
-            $taskStatus->fill(['name' => $validatedData['status']]);
-            $taskStatus->save();
-            $validatedData['status_id'] = $taskStatus->id;
-        }
-
         $task->update($validatedData);
 
         if (isset($validatedData['labels'])) {
