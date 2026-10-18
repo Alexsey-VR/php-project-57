@@ -24,7 +24,7 @@ class TaskFilterRequest extends FormRequest
     {
         return [
             'filter' => ['nullable', 'array'],
-            'filter.status_id' => ['nullable', 'integer', 'exists:statuses,id'],
+            'filter.status_id' => ['nullable', 'integer', 'exists:task_statuses,id'],
             'filter.created_by_id' => ['nullable', 'integer', 'exists:users,id'],
             'filter.assigned_to_id' => ['nullable', 'integer', 'exists:users,id']
         ];
