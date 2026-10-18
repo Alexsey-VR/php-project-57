@@ -11,7 +11,7 @@
         {{ html()->form('GET', route('tasks.index'))
             ->class("flex items-center space-x-4")
             ->open() }}
-            {{ html()->select('status', $options['filter_status'], $placeholders['query_status'])
+            {{ html()->select('filter[status_id]', $options['filter_status'], $placeholders['query_status'])
                     ->prependChild(
                         html()->option($placeholders['status'])
                             ->disabled()
@@ -19,7 +19,7 @@
                             ->selectedIf($placeholders['query_status'] === null)
                     )
                     ->class('w-32 h-10 p-2 rounded-md outline-solid outline-indigo-100 has-placeholder') }}
-            {{ html()->select('created_by_id', $options['filter_creator'], $placeholders['query_creator'])
+            {{ html()->select('filter[created_by_id]', $options['filter_creator'], $placeholders['query_creator'])
                     ->prependChild(
                         html()->option($placeholders['creator'])
                             ->disabled()
@@ -27,7 +27,7 @@
                             ->selectedIf($placeholders['query_creator'] === null)
                     )
                     ->class('w-48 h-10 p-2 rounded-md outline-solid outline-indigo-100') }}
-            {{ html()->select('assigned_to_id', $options['filter_assignee'], $placeholders['query_assignee'])
+            {{ html()->select('filter[assigned_to_id]', $options['filter_assignee'], $placeholders['query_assignee'])
                     ->prependChild(
                         html()->option($placeholders['assignee'])
                             ->disabled()
@@ -68,18 +68,20 @@
                     <td class="py-2 px-4">{{ $task->created_at }}</td>
                     <td class="py-2 px-4">
                         <div class="flex space-x-4">
-                            {{ html()->modelForm($task, 'DELETE', route('tasks.destroy', $task))
-                                    ->open() }}
-                                @csrf
-                                <a href="{{ route('tasks.destroy', $task) }}"
-                                        data-confirm="{{ __('tasks.sweetalert.question') }} {{ __('tasks.sweetalert.text', ['name' => $task->name]) }}"
-                                        onclick="event.preventDefault(); if (confirm(this.dataset.confirm)) { this.closest('form').submit(); }"
-                                        class="text-red-500 hover:text-red-700"
-                                        rel="nofollow"
-                                >
-                                    {{ __('tasks.delete') }}
-                                </a>
-                            {{ html()->closeModelForm() }}
+                            @if ($task->created_by_id === auth()->id())
+                                {{ html()->modelForm($task, 'DELETE', route('tasks.destroy', $task))
+                                        ->open() }}
+                                    @csrf
+                                    <a href="{{ route('tasks.destroy', $task) }}"
+                                            data-confirm="{{ __('tasks.sweetalert.question') }} {{ __('tasks.sweetalert.text', ['name' => $task->name]) }}"
+                                            onclick="event.preventDefault(); if (confirm(this.dataset.confirm)) { this.closest('form').submit(); }"
+                                            class="text-red-500 hover:text-red-700"
+                                            rel="nofollow"
+                                    >
+                                        {{ __('tasks.delete') }}
+                                    </a>
+                                {{ html()->closeModelForm() }}
+                            @endif
                             <a href="{{ route('tasks.edit', $task) }}"
                                 class="text-blue-500 hover:text-blue-700">{{ __('tasks.edit') }}
                             </a>
