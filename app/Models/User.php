@@ -36,8 +36,6 @@ class User extends Authenticatable
      */
     public static function getAllowedAssigneeOptions(): Collection
     {
-        $users = User::where('id', '!=', Auth::id())->get();
-
         return $users->pluck('name', 'id');
     }
 
