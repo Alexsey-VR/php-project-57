@@ -32,10 +32,12 @@ class User extends Authenticatable
     }
 
     /**
-     * @return Collection<string, string>
+     * @return Collection<int, string>
      */
     public static function getAllowedAssigneeOptions(): Collection
     {
+        $users = User::all();
+
         return $users->pluck('name', 'id');
     }
 
