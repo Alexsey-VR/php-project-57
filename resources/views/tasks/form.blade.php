@@ -1,5 +1,6 @@
 {{ html()->label(__('tasks.name'), 'name') }}
-<div class="w-full bg-white p-2 rounded-md outline-solid outline-indigo-100">
+<div class="w-full bg-white p-2 rounded-md outline-solid
+    {{ $errors->has('name') ? 'outline-red-200' : 'outline-indigo-100' }}">
     {{ html()->input('name', 'name')->class('w-full') }}
 </div>
 {{ html()->label(__('tasks.description'), 'description') }}
@@ -7,7 +8,8 @@
     {{ html()->textarea('description')->class('w-full h-32') }}
 </div>
 {{ html()->label(__('tasks.init_status'), 'status') }}
-<div class="w-full bg-white p-2 rounded-md outline-solid outline-indigo-100">
+<div class="w-full bg-white p-2 rounded-md outline-solid
+    {{ $errors->has('status_id') ? 'outline-red-200' : 'outline-indigo-100' }}">
     {{ html()->select('status_id', $options['status'])
         ->prependChild(
             html()->option(__('tasks.status.header.name'), '')
