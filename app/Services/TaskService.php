@@ -45,8 +45,7 @@ class TaskService
      */
     public function getFilterOptions(): array
     {
-        $locale = app()->getLocale();
-        $filterOptions['filter_status'] = TaskStatus::getAllowedTaskStatusOptions($locale)->toArray();
+        $filterOptions['filter_status'] = TaskStatus::getAllowedTaskStatusOptions()->toArray();
         $filterOptions['filter_creator'] = User::getAllowedAuthorOptions()->toArray();
         $filterOptions['filter_assignee'] = User::getAllowedAssigneeOptions()->toArray();
 
@@ -58,7 +57,6 @@ class TaskService
      */
     public function getCreateOptions(): array
     {
-        $locale = app()->getLocale();
         $createOptions['status'] = TaskStatus::pluck('name', 'id');
         $createOptions['assignee'] = User::getAllowedAssigneeOptions()->toArray();
         $createOptions['label'] = Label::pluck('name', 'id');
