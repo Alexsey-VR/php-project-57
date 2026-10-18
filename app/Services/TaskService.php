@@ -28,14 +28,15 @@ class TaskService
      */
     public function getTaskFilterPlaceholders(array $validatedData): array
     {
+        $filter = $validatedData['filter'] ?? [];
 
         return [
             'status' => __('tasks.status.header.name'),
             'creator' => __('tasks.creator'),
             'assignee' => __('tasks.assignee'),
-            'query_status' => $validatedData['status'] ?? null,
-            'query_creator' => $validatedData['created_by_id'] ?? null,
-            'query_assignee' => $validatedData['assigned_to_id'] ?? null
+            'query_status' => $filter['status_id'] ?? null,
+            'query_creator' => $filter['created_by_id'] ?? null,
+            'query_assignee' => $filter['assigned_to_id'] ?? null
         ];
     }
 
@@ -71,15 +72,16 @@ class TaskService
      */
     public function getFilteredTasks(array $validatedData): Collection
     {
+        $filter = $validatedData['filter'] ?? [];
         $taskQuery = Task::query();
-        if (array_key_exists('status', $validatedData)) {
-            $taskQuery->whereHas('status', fn($query) => $query->where('name', $validatedData['status']));
+        if (array_key_exists('status_id', $filter)) {
+            $taskQuery->where('status_id', $filter['status_id']);
         }
-        if (array_key_exists('created_by_id', $validatedData)) {
-            $taskQuery->where('created_by_id', $validatedData['created_by_id']);
+        if (array_key_exists('created_by_id', $filter)) {
+            $taskQuery->where('created_by_id', $filter['created_by_id']);
         }
-        if (array_key_exists('assigned_to_id', $validatedData)) {
-            $taskQuery->where('assigned_to_id', $validatedData['assigned_to_id']);
+        if (array_key_exists('assigned_to_id', $filter)) {
+            $taskQuery->where('assigned_to_id', $filter['assigned_to_id']);
         }
 
         return $taskQuery->get();

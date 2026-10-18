@@ -23,9 +23,10 @@ class TaskFilterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => ['nullable', 'string', 'max:255'],
-            'created_by_id' => ['nullable', 'integer', 'exists:users,id'],
-            'assigned_to_id' => ['nullable', 'integer', 'exists:users,id']
+            'filter' => ['nullable', 'array'],
+            'filter.status_id' => ['nullable', 'integer', 'exists:users,id'],
+            'filter.created_by_id' => ['nullable', 'integer', 'exists:users,id'],
+            'filter.assigned_to_id' => ['nullable', 'integer', 'exists:users,id']
         ];
     }
 }

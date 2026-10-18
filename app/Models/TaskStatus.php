@@ -16,12 +16,12 @@ class TaskStatus extends Model
     protected $fillable = ['name'];
 
     /**
-     * @return Collection<string, string>
+     * @return Collection<int, string>
      */
-    public static function getAllowedTaskStatusOptions(string $locale = 'en'): Collection
+    public static function getAllowedTaskStatusOptions(): Collection
     {
         return collect(self::all())
-            ->pluck('name', 'name');
+            ->pluck('name', 'id');
     }
 
     /**

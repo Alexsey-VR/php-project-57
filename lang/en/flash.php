@@ -31,6 +31,7 @@ return [
         'created' => 'Task successfully created',
         'updated' => 'Task successfully changed',
         'deleted' => 'Task successfully deleted',
+        'dublicated' => 'A task with that name is already exists',
         'restricted_delete' => 'Deleting a task is prohibited',
         'header' => [
             'error' => 'Task error'
