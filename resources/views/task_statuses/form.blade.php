@@ -3,6 +3,6 @@
     {{ html()->text('name', $name)
         ->class(
             'w-full bg-white p-2 rounded-md outline-solid ' .
-            ($errors->has('name') ? 'outline-red-200' : 'outline-indigo-100')
+            ($errors->has('name') ? 'outline-red-500' : 'outline-indigo-100')
         ) }}
 </div>
