@@ -107,6 +107,8 @@ class TaskController extends Controller
             Auth::id() !== $task->created_by_id
         ) {
             flash(__('flash.task.restricted_delete'))->error();
+
+            return redirect()->route('tasks.index');
         }
 
         $this->taskService->destroyTask($task);
