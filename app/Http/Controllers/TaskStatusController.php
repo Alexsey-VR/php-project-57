@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TaskStatus;
+use App\Services\TaskStatusService;
 use App\Http\Requests\TaskStatusFormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -10,12 +11,17 @@ use SweetAlert2\Laravel\Swal;
 
 class TaskStatusController extends Controller
 {
+    public function __construct(
+        protected TaskStatusService $taskStatusService
+    ) {
+        //
+    }
     /**
      * Display a listing of the resource.
      */
     public function index(): View
     {
-        $task_statuses = TaskStatus::all();
+        $task_statuses = $this->taskStatusService->getTaskStatuses();
 
         return view('task_statuses.index', compact('task_statuses'));
     }
@@ -25,7 +31,7 @@ class TaskStatusController extends Controller
      */
     public function create(): View
     {
-        $task_status = new TaskStatus();
+        $task_status = $this->taskStatusService->getTaskStatusInstance();
         $name = '';
 
         return view('task_statuses.create', compact('task_status', 'name'));
@@ -36,7 +42,7 @@ class TaskStatusController extends Controller
      */
     public function store(TaskStatusFormRequest $request): RedirectResponse
     {
-        TaskStatus::create($request->validated());
+        $this->taskStatusService->createTaskStatus($request->validated());
         flash(__('flash.status.created'))->success();
 
         return redirect()->route('task_statuses.index');
@@ -55,7 +61,8 @@ class TaskStatusController extends Controller
      */
     public function edit(TaskStatus $task_status): View
     {
-        $name = $task_status->name;
+        $name = $this->taskStatusService->getTaskStatusName($task_status);
+
         return view('task_statuses.edit', compact('task_status', 'name'));
     }
 
@@ -64,8 +71,10 @@ class TaskStatusController extends Controller
      */
     public function update(TaskStatusFormRequest $request, TaskStatus $task_status): RedirectResponse
     {
-        $data = $request->validated();
-        $task_status->update($data);
+        $this->taskStatusService->updateTaskStatus(
+            $request->validated(),
+            $task_status
+        );
         flash(__('flash.status.updated'))->success();
 
         return redirect()->route('task_statuses.index');
@@ -76,8 +85,7 @@ class TaskStatusController extends Controller
      */
     public function destroy(TaskStatus $task_status): RedirectResponse
     {
-        if ($task_status->tasks->count() === 0) {
-            $task_status->delete();
+        if ($this->taskStatusService->destroyTaskStatus($task_status)) {
             flash(__('flash.status.deleted'))->success();
         } else {
             flash(__('flash.status.restricted_delete'))->error();
