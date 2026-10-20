@@ -39,7 +39,7 @@ class TaskController extends Controller
      */
     public function create(): View
     {
-        $task = new Task();
+        $task = $this->taskService->getTaskInstance();
         $options = $this->taskService->getCreateOptions();
 
         return view('tasks.create', compact([
@@ -65,7 +65,7 @@ class TaskController extends Controller
      */
     public function show(Task $task): View
     {
-        $task->load('labels');
+        $this->taskService->loadRelatedInfo($task);
 
         return view('tasks.show', compact('task'));
     }
@@ -89,7 +89,7 @@ class TaskController extends Controller
     public function update(TaskFormRequest $request, Task $task): RedirectResponse
     {
         $this->taskService->updateTask(
-            $validatedData = $request->validated(),
+            $request->validated(),
             $task
         );
 
@@ -103,17 +103,11 @@ class TaskController extends Controller
      */
     public function destroy(Task $task): RedirectResponse
     {
-        if (
-            Auth::id() !== $task->created_by_id
-        ) {
+        if ($this->taskService->destroyTask($task)) {
+            flash(__('flash.task.deleted'))->success();
+        } else {
             flash(__('flash.task.restricted_delete'))->error();
-
-            return redirect()->route('tasks.index');
         }
-
-        $this->taskService->destroyTask($task);
-
-        flash(__('flash.task.deleted'))->success();
 
         return redirect()->route('tasks.index');
     }

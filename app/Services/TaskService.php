@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskService
 {
+    public function getTaskInstance(): Task
+    {
+        return new Task();
+    }
+
     /**
      * @param array<string,mixed> $validatedData
      */
@@ -20,6 +25,11 @@ class TaskService
         }
 
         return $task;
+    }
+
+    public function loadRelatedInfo(Task $task): void
+    {
+        $task->load('labels');
     }
 
     /**
@@ -99,8 +109,14 @@ class TaskService
         }
     }
 
-    public function destroyTask(Task $task): void
+    public function destroyTask(Task $task): bool
     {
+        if (
+            Auth::id() !== $task->created_by_id
+        ) {
+            return false;
+        }
+
         $labelIds = $task->labels()->pluck('label_id')->toArray();
         $task->labels()->detach();
         $task->delete();
@@ -120,5 +136,7 @@ class TaskService
                 $label->delete();
             }
         }
+
+        return true;
     }
 }
