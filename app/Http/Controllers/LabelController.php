@@ -3,18 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\Label;
+use App\Services\LabelService;
 use App\Http\Requests\LabelFormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class LabelController extends Controller
 {
+    public function __construct(
+        protected LabelService $labelService
+    ) {
+        //
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index(): View
     {
-        $labels = Label::all();
+        $labels = $this->labelService->getLabels();
 
         return view('labels.index', compact('labels'));
     }
@@ -24,8 +31,7 @@ class LabelController extends Controller
      */
     public function create(): View
     {
-        $label = new Label();
-        $locale = app()->getLocale();
+        $label = $this->labelService->getLabelInstance();
 
         return view('labels.create', compact('label'));
     }
@@ -35,7 +41,7 @@ class LabelController extends Controller
      */
     public function store(LabelFormRequest $request): RedirectResponse
     {
-        Label::create($request->validated());
+        $this->labelService->createLabel($request->validated());
         flash(__('flash.label.created'))->success();
 
         return redirect()->route('labels.index');
@@ -62,8 +68,7 @@ class LabelController extends Controller
      */
     public function update(LabelFormRequest $request, Label $label): RedirectResponse
     {
-        $data = $request->validated();
-        $label->update($data);
+        $this->labelService->updateLabel($request->validated(), $label);
         flash(__('flash.label.updated'))->success();
 
         return redirect()->route('labels.index');
@@ -74,8 +79,7 @@ class LabelController extends Controller
      */
     public function destroy(Label $label): RedirectResponse
     {
-        if ($label->tasks->count() === 0) {
-            $label->delete();
+        if ($this->labelService->destroyLabel($label)) {
             flash(__('flash.label.deleted'))->success();
         } else {
             flash(__('flash.label.restricted_delete'))->error();

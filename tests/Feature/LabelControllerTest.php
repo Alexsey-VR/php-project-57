@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use App\Models\{User, Label};
+use App\Services\LabelService;
 use App\Providers\{AppServiceProvider, EventListenProvider, FortifyServiceProvider};
 use App\Http\Controllers\LabelController;
 use App\Http\Requests\LabelFormRequest;
@@ -12,6 +13,7 @@ use Tests\TestCase;
 
 #[CoversClass(User::class)]
 #[CoversClass(Label::class)]
+#[CoversClass(LabelService::class)]
 #[CoversClass(LabelFormRequest::class)]
 #[CoversClass(AppServiceProvider::class)]
 #[CoversClass(FortifyServiceProvider::class)]
