@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Task, TaskStatus, Label, User};
+use App\Models\Task;
 use App\Services\TaskService;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\{TaskFilterRequest, TaskFormRequest};
 use Illuminate\View\View;
-use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
