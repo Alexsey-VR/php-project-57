@@ -56,8 +56,8 @@ class TaskService
     public function getFilterOptions(): array
     {
         $filterOptions['filter_status'] = TaskStatus::getAllowedTaskStatusOptions()->toArray();
-        $filterOptions['filter_creator'] = User::getAllowedAuthorOptions()->toArray();
-        $filterOptions['filter_assignee'] = User::getAllowedAssigneeOptions()->toArray();
+        $filterOptions['filter_creator'] = User::pluck('name', 'id');
+        $filterOptions['filter_assignee'] = User::pluck('name', 'id');
 
         return $filterOptions;
     }
@@ -68,7 +68,7 @@ class TaskService
     public function getCreateOptions(): array
     {
         $createOptions['status'] = TaskStatus::pluck('name', 'id');
-        $createOptions['assignee'] = User::getAllowedAssigneeOptions()->toArray();
+        $createOptions['assignee'] = User::pluck('name', 'id');
         $createOptions['label'] = Label::pluck('name', 'id');
 
         return $createOptions;

@@ -22,26 +22,6 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
-     * @return Collection<int, string>
-     */
-    public static function getAllowedAuthorOptions(): Collection
-    {
-        $users = User::all();
-
-        return $users->pluck('name', 'id');
-    }
-
-    /**
-     * @return Collection<int, string>
-     */
-    public static function getAllowedAssigneeOptions(): Collection
-    {
-        $users = User::all();
-
-        return $users->pluck('name', 'id');
-    }
-
-    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
