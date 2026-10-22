@@ -20,8 +20,7 @@ class TaskStatus extends Model
      */
     public static function getAllowedTaskStatusOptions(): Collection
     {
-        return collect(self::all())
-            ->pluck('name', 'id');
+        return static::pluck('name', 'id');
     }
 
     /**
