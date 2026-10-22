@@ -22,4 +22,8 @@
             <directory>app</directory>
         </include>
     </source>
+
+    <php>
+        <env name="QUEUE_CONNECTION" value="sync"/>
+    </php>
 </phpunit>

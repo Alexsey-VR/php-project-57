@@ -7,6 +7,7 @@ use Illuminate\Mail\Events\MessageSending;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\Mime\Address;
 
 class LogMailListener implements ShouldQueue
 {
@@ -26,9 +27,9 @@ class LogMailListener implements ShouldQueue
         $mail = $event->message;
         $messageInfo = [
             'subject' => $mail->getSubject(),
-            'from'    => $mail->getFrom(),
-            'to'      => $mail->getTo(),
-            'replyTo' => $mail->getReplyTo()
+            'from'    => array_map(fn (Address $a) => $a->getAddress(), $mail->getFrom()),
+            'to'      => array_map(fn (Address $a) => $a->getAddress(), $mail->getTo()),
+            'replyTo' => array_map(fn (Address $a) => $a->getAddress(), $mail->getReplyTo())
         ];
 
         if ($event instanceof MessageSending) {
