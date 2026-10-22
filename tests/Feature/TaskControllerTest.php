@@ -188,4 +188,34 @@ class TaskControllerTest extends TestCase
 
         $response->assertRedirect(route('tasks.index'));
     }
+
+    public function testForeignTaskCanNotBeDeleted(): void
+    {
+        $response = $this->actingAs($this->user)
+            ->withSession(['_token' => $this->token])
+            ->post(route('tasks.store'), [
+                'name' => 'Test task',
+                'description' => 'test task',
+                'status_id' => $this->status->id,
+                'assigned_to_id' => $this->assignee->id,
+                'label_id' => self::LABEL_ID,
+                '_token' => $this->token
+            ]);
+
+        $task = $this->user->createdTasks()->first();
+
+        $response = $this->actingAs($this->assignee)
+            ->withSession(['_token' => $this->token])
+            ->deleteJson(
+                route('tasks.destroy', $task),
+                ['_token' => $this->token]
+            );
+
+        $response->assertRedirect(route('tasks.index'));
+        $this->assertDatabaseHas('tasks', ['id' => $task->id]);
+
+        $this->actingAs($this->assignee)
+            ->get(route('tasks.index'))
+            ->assertSee(__('flash.task.restricted_delete'));
+    }
 }
