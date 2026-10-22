@@ -7,6 +7,7 @@ setup:
 	php artisan db:seed --class=TaskStatusSeeder
 	npm install --ignore-scripts
 	npm run build
+	php artisan queue:work
 
 update:
 	composer update
