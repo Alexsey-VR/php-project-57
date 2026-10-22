@@ -8,7 +8,7 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Artisan::command('rollbar:test', function () {
-     // Send a test log message
+    // Send a test log message
     \Log::debug('Test debug message from laravel');
 
     // Trigger a test exception
