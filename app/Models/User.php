@@ -45,7 +45,7 @@ class User extends Authenticatable
     /**
      * @return hasMany<Task, covariant static>
      */
-    public function asignedTasks(): HasMany
+    public function assignedTasks(): HasMany
     {
         return $this->hasMany(Task::class, 'assigned_to_id');
     }
