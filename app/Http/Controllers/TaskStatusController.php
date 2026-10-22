@@ -7,7 +7,6 @@ use App\Services\TaskStatusService;
 use App\Http\Requests\TaskStatusFormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
-use SweetAlert2\Laravel\Swal;
 
 class TaskStatusController extends Controller
 {
