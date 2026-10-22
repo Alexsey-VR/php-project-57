@@ -11,17 +11,11 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mailer\Envelope;
 use Symfony\Component\Mailer\SentMessage as SymfonySentMessage;
-use App\Providers\AppServiceProvider;
-use App\Providers\EventListenProvider;
-use App\Providers\FortifyServiceProvider;
 use Illuminate\Mail\SentMessage;
 use Illuminate\Mail\Events\MessageSent;
 use Illuminate\Mail\Events\MessageSending;
 
 #[CoversClass(LogMailListener::class)]
-#[CoversClass(AppServiceProvider::class)]
-#[CoversClass(EventListenProvider::class)]
-#[CoversClass(FortifyServiceProvider::class)]
 class LogMailListenerTest extends TestCase
 {
     public function testLogMailListenerIsHandleTheMessageSending(): void

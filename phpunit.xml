@@ -21,6 +21,9 @@
         <include>
             <directory>app</directory>
         </include>
+        <exclude>
+            <directory>app/Providers</directory>
+        </exclude>
     </source>
 
     <php>
