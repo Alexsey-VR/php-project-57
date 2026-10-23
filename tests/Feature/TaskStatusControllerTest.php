@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use PHPUnit\Framework\Attributes\CoversClass;
-use App\Models\{User, TaskStatus};
+use App\Models\{User, TaskStatus, Task};
 use App\Services\TaskStatusService;
 use App\Http\Controllers\TaskStatusController;
 use App\Http\Requests\TaskStatusFormRequest;
@@ -112,5 +112,25 @@ class TaskStatusControllerTest extends TestCase
 
         $response->assertRedirect(route('task_statuses.index'));
         $this->assertDatabaseMissing('task_statuses', ['id' => $taskStatus->id]);
+    }
+
+    public function testTaskStatusWithTaskCanNotBeDeleted(): void
+    {
+        $status = TaskStatus::factory()->create();
+        $task = Task::factory()->create(['status_id' => $status->id]);
+
+        $response = $this->actingAs($this->user)
+            ->withSession(['_token' => $this->token])
+            ->deleteJson(
+                route('task_statuses.destroy', $status),
+                ['_token' => $this->token]
+            );
+
+        $response->assertRedirect(route('task_statuses.index'));
+        $this->assertDatabaseHas('task_statuses', ['id' => $status->id]);
+
+        $this->actingAs($this->user)
+            ->get(route('task_statuses.index'))
+            ->assertSee(__('flash.status.restricted_delete'));
     }
 }

@@ -204,6 +204,7 @@ class TaskControllerTest extends TestCase
 
         $task = $this->user->createdTasks()->first();
 
+        $this->assertNotNull($task);
         $response = $this->actingAs($this->assignee)
             ->withSession(['_token' => $this->token])
             ->deleteJson(
@@ -212,6 +213,7 @@ class TaskControllerTest extends TestCase
             );
 
         $response->assertRedirect(route('tasks.index'));
+
         $this->assertDatabaseHas('tasks', ['id' => $task->id]);
 
         $this->actingAs($this->assignee)

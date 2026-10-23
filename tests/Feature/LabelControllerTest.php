@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use PHPUnit\Framework\Attributes\CoversClass;
-use App\Models\{User, Label};
+use App\Models\{User, Label, Task};
 use App\Services\LabelService;
 use App\Http\Controllers\LabelController;
 use App\Http\Requests\LabelFormRequest;
@@ -114,5 +114,26 @@ class LabelControllerTest extends TestCase
 
         $response->assertRedirect(route('labels.index'));
         $this->assertDatabaseMissing('labels', ['id' => $label->id]);
+    }
+
+    public function testLabelWithTaskCanNotBeDeleted(): void
+    {
+        $label = Label::factory()->create();
+        $task = Task::factory()->create();
+        $label->tasks()->attach($task->id);
+
+        $response = $this->actingAs($this->user)
+            ->withSession(['_token' => $this->token])
+            ->deleteJson(
+                route('labels.destroy', $label),
+                ['_token' => $this->token]
+            );
+
+        $response->assertRedirect(route('labels.index'));
+        $this->assertDatabaseHas('labels', ['id' => $label->id]);
+
+        $this->actingAs($this->user)
+            ->get(route('labels.index'))
+            ->assertSee(__('flash.label.restricted_delete'));
     }
 }
