@@ -37,7 +37,7 @@ class TaskStatusFormRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.unique' => __('flash.status.dublicated')
+            'name.unique' => __('flash.status.duplicated')
         ];
     }
 }

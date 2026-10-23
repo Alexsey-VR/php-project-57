@@ -38,7 +38,7 @@ class LabelFormRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.unique' => __('flash.label.dublicated')
+            'name.unique' => __('flash.label.duplicated')
         ];
     }
 }

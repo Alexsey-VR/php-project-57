@@ -42,7 +42,7 @@ class TaskFormRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.unique' => __('flash.task.dublicated')
+            'name.unique' => __('flash.task.duplicated')
         ];
     }
 }

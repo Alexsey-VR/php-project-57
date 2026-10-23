@@ -11,7 +11,7 @@ return [
         'created' => 'Status successfully created',
         'updated' => 'Status successfully changed',
         'deleted' => 'Status successfully deleted',
-        'dublicated' => 'A status with that name is already exists',
+        'duplicated' => 'A status with that name is already exists',
         'restricted_delete' => "Can't delete status",
         'header' => [
             'error' => 'Status error'
@@ -21,7 +21,7 @@ return [
         'created' => 'Label successfully created',
         'updated' => 'Label successfully changed',
         'deleted' => 'Label successfully deleted',
-        'dublicated' => 'A label with that name is already exists',
+        'duplicated' => 'A label with that name is already exists',
         'restricted_delete' => "Can't delete label",
         'header' => [
             'error' => 'Label error'
@@ -31,7 +31,7 @@ return [
         'created' => 'Task successfully created',
         'updated' => 'Task successfully changed',
         'deleted' => 'Task successfully deleted',
-        'dublicated' => 'A task with that name is already exists',
+        'duplicated' => 'A task with that name is already exists',
         'restricted_delete' => 'Deleting a task is prohibited',
         'header' => [
             'error' => 'Task error'
