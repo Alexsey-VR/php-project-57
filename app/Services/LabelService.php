@@ -38,7 +38,7 @@ class LabelService
 
     public function destroyLabel(Label $label): bool
     {
-        if ($label->tasks->count() === 0) {
+        if (!$label->hasTasks()) {
             $label->delete();
 
             return true;

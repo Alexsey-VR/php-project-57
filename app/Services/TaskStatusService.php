@@ -44,7 +44,7 @@ class TaskStatusService
 
     public function destroyTaskStatus(TaskStatus $taskStatus): bool
     {
-        if ($taskStatus->tasks->count() === 0) {
+        if (!$taskStatus->hasTasks()) {
             $taskStatus->delete();
 
             return true;

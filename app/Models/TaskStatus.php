@@ -7,11 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use App\Traits\TaskGuard;
 
 class TaskStatus extends Model
 {
     /** @use HasFactory<TaskStatusFactory> */
     use HasFactory;
+
+    use TaskGuard;
 
     protected $fillable = ['name'];
 
