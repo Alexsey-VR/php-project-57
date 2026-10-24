@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
-use App\Services\TaskService;
+use App\Services\{TaskService, TaskQueryService};
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\{TaskFilterRequest, TaskFormRequest};
@@ -12,7 +12,8 @@ use Illuminate\View\View;
 class TaskController extends Controller
 {
     public function __construct(
-        protected TaskService $taskService
+        protected TaskService $taskService,
+        protected TaskQueryService $taskQueryService
     ) {
        //
     }
@@ -23,9 +24,9 @@ class TaskController extends Controller
     public function index(TaskFilterRequest $request): View
     {
         $validatedData = $request->validated();
-        $placeholders = $this->taskService->getTaskFilterPlaceholders($validatedData);
-        $options = $this->taskService->getFilterOptions();
-        $tasks = $this->taskService->getFilteredTasks($validatedData);
+        $placeholders = $this->taskQueryService->getTaskFilterPlaceholders($validatedData);
+        $options = $this->taskQueryService->getFilterOptions();
+        $tasks = $this->taskQueryService->getFilteredTasks($validatedData);
 
         return view('tasks.index', compact([
             'tasks',
@@ -40,7 +41,7 @@ class TaskController extends Controller
     public function create(): View
     {
         $task = $this->taskService->getTaskInstance();
-        $options = $this->taskService->getCreateOptions();
+        $options = $this->taskQueryService->getCreateOptions();
 
         return view('tasks.create', compact([
             'task',
@@ -75,7 +76,7 @@ class TaskController extends Controller
      */
     public function edit(Task $task): View
     {
-        $options = $this->taskService->getCreateOptions();
+        $options = $this->taskQueryService->getCreateOptions();
 
         return view('tasks.edit', compact([
             'task',
