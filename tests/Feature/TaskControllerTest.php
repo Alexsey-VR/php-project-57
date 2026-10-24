@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use PHPUnit\Framework\Attributes\CoversClass;
 use App\Models\{User, Task, TaskStatus};
 use App\Services\TaskService;
+use App\Policies\TaskPolicy;
 use App\Http\Controllers\TaskController;
 use App\Http\Requests\{TaskFormRequest, TaskFilterRequest};
 use Illuminate\Support\Facades\DB;
@@ -12,6 +13,7 @@ use Tests\TestCase;
 
 #[CoversClass(User::class)]
 #[CoversClass(Task::class)]
+#[CoversClass(TaskPolicy::class)]
 #[CoversClass(TaskStatus::class)]
 #[CoversClass(TaskService::class)]
 #[CoversClass(TaskController::class)]
@@ -137,7 +139,6 @@ class TaskControllerTest extends TestCase
                 'label_id' => self::LABEL_ID,
                 '_token' => $this->token
             ]);
-
         $response = $this->actingAs($this->user)
             ->withSession(['_token' => $this->token])
             ->get(route('tasks.edit', $this->user->createdTasks()->first()));
@@ -168,10 +169,11 @@ class TaskControllerTest extends TestCase
 
     public function testAuthenticatedUserCanDeleteCreatedTask(): void
     {
+        $taskName = 'Test task';
         $response = $this->actingAs($this->user)
             ->withSession(['_token' => $this->token])
             ->post(route('tasks.store'), [
-                'name' => 'Test task',
+                'name' => $taskName,
                 'description' => 'test task',
                 'status_id' => $this->status->id,
                 'assigned_to_id' => $this->assignee->id,
@@ -187,6 +189,7 @@ class TaskControllerTest extends TestCase
             );
 
         $response->assertRedirect(route('tasks.index'));
+        $this->assertDatabaseMissing('tasks', ['name' => $taskName]);
     }
 
     public function testForeignTaskCanNotBeDeleted(): void
@@ -213,9 +216,7 @@ class TaskControllerTest extends TestCase
             );
 
         $response->assertRedirect(route('tasks.index'));
-
         $this->assertDatabaseHas('tasks', ['id' => $task->id]);
-
         $this->actingAs($this->assignee)
             ->get(route('tasks.index'))
             ->assertSee(__('flash.task.restricted_delete'));

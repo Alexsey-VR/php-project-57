@@ -109,14 +109,8 @@ class TaskService
         }
     }
 
-    public function destroyTask(Task $task): bool
+    public function destroyTask(Task $task): void
     {
-        if (
-            Auth::id() !== $task->created_by_id
-        ) {
-            return false;
-        }
-
         $labelIds = $task->labels()->pluck('label_id')->toArray();
         $task->labels()->detach();
         $task->delete();
@@ -136,7 +130,5 @@ class TaskService
                 $label->delete();
             }
         }
-
-        return true;
     }
 }

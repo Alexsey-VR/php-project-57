@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Services\TaskService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\{TaskFilterRequest, TaskFormRequest};
 use Illuminate\View\View;
 
@@ -102,7 +103,8 @@ class TaskController extends Controller
      */
     public function destroy(Task $task): RedirectResponse
     {
-        if ($this->taskService->destroyTask($task)) {
+        if (Gate::allows('delete', $task)) {
+            $this->taskService->destroyTask($task);
             flash(__('flash.task.deleted'))->success();
         } else {
             flash(__('flash.task.restricted_delete'))->error();
