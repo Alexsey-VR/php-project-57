@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\{Auth, Gate};
+use App\Models\{Task, TaskStatus};
+use App\Policies\{TaskStatusPolicy};
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,5 +24,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::share('user', Auth::user());
+
+        Gate::policy(TaskStatus::class, TaskStatusPolicy::class);
     }
 }

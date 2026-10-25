@@ -7,6 +7,7 @@ use App\Models\{User, TaskStatus, Task};
 use App\Services\TaskStatusService;
 use App\Http\Controllers\TaskStatusController;
 use App\Http\Requests\TaskStatusFormRequest;
+use App\Policies\TaskStatusPolicy;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
@@ -15,6 +16,7 @@ use Tests\TestCase;
 #[CoversClass(TaskStatusService::class)]
 #[CoversClass(TaskStatusFormRequest::class)]
 #[CoversClass(TaskStatusController::class)]
+#[CoversClass(TaskStatusPolicy::class)]
 class TaskStatusControllerTest extends TestCase
 {
     private User $user;
