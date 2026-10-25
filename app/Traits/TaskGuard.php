@@ -10,6 +10,6 @@ trait TaskGuard
 
     public function hasTasks(): bool
     {
-        return $this->tasks->count() !== 0;
+        return $this->tasks()->exists();
     }
 }
