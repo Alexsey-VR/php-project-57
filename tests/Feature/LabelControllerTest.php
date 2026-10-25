@@ -7,11 +7,13 @@ use App\Models\{User, Label, Task};
 use App\Services\LabelService;
 use App\Http\Controllers\LabelController;
 use App\Http\Requests\LabelFormRequest;
+use App\Policies\LabelPolicy;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 #[CoversClass(User::class)]
 #[CoversClass(Label::class)]
+#[CoversClass(LabelPolicy::class)]
 #[CoversClass(LabelService::class)]
 #[CoversClass(LabelFormRequest::class)]
 #[CoversClass(LabelController::class)]

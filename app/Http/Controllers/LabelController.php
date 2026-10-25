@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Label;
 use App\Services\LabelService;
 use App\Http\Requests\LabelFormRequest;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -79,7 +80,8 @@ class LabelController extends Controller
      */
     public function destroy(Label $label): RedirectResponse
     {
-        if ($this->labelService->destroyLabel($label)) {
+        if (Gate::allows('delete', $label)) {
+            $this->labelService->destroyLabel($label);
             flash(__('flash.label.deleted'))->success();
         } else {
             flash(__('flash.label.restricted_delete'))->error();
