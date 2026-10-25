@@ -33,4 +33,9 @@ class TaskStatus extends Model
     {
         return $this->hasMany(Task::class, 'status_id');
     }
+
+    public function cleanUp(): void
+    {
+        $this->delete();
+    }
 }

@@ -52,4 +52,13 @@ class Task extends Model
     {
         return $this->belongsToMany(Label::class, 'task_labels');
     }
+
+    public function cleanUp(): void
+    {
+        $labelIds = $this->labels()->pluck('label_id');
+        $this->labels()->detach();
+        $this->delete();
+        Label::whereDoesntHave('tasks')->whereIn('id', $labelIds)->delete();
+        TaskStatus::whereDoesntHave('tasks')->delete();
+    }
 }

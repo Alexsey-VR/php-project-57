@@ -5,9 +5,16 @@ namespace App\Services;
 use App\Models\{User, Task, TaskStatus, Label};
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
+use App\Services\OrphanCleanupService;
 
 class TaskStatusService
 {
+    public function __construct(
+        protected OrphanCleanupService $cleanupService
+    ) {
+        //
+    }
+
     public function getTaskStatusInstance(): TaskStatus
     {
         return new TaskStatus();
@@ -42,14 +49,8 @@ class TaskStatusService
         $taskStatus->update($validatedData);
     }
 
-    public function destroyTaskStatus(TaskStatus $taskStatus): bool
+    public function destroyTaskStatus(TaskStatus $taskStatus): void
     {
-        if (!$taskStatus->hasTasks()) {
-            $taskStatus->delete();
-
-            return true;
-        }
-
-        return false;
+        $this->cleanupService->cleanupFor($taskStatus);
     }
 }
