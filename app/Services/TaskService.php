@@ -2,12 +2,19 @@
 
 namespace App\Services;
 
-use App\Models\{Task, TaskStatus, Label};
+use App\Models\Task;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
+use App\Services\OrphanCleanupService;
 
 class TaskService
 {
+    public function __construct(
+        protected OrphanCleanupService $cleanupService
+    ) {
+        //
+    }
+
     public function getTaskInstance(): Task
     {
         return new Task();
@@ -50,24 +57,6 @@ class TaskService
 
     public function destroyTask(Task $task): void
     {
-        $labelIds = $task->labels()->pluck('label_id')->toArray();
-        $task->labels()->detach();
-        $task->delete();
-        if (
-            Task::where('status_id', $task->status_id)->count() === 0
-            && $task->status instanceof TaskStatus
-        ) {
-            $task->status->delete();
-        }
-
-        foreach ($labelIds as $labelId) {
-            $label = Label::find($labelId);
-            if (
-                $label instanceof Label
-                && $label->tasks()->count() === 0
-            ) {
-                $label->delete();
-            }
-        }
+        $this->cleanupService->cleanupFor($task);
     }
 }

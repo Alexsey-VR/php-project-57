@@ -55,7 +55,6 @@ class TaskController extends Controller
     public function store(TaskFormRequest $request): RedirectResponse
     {
         $this->taskService->createTask($request->validated());
-
         flash(__('flash.task.created'))->success();
 
         return redirect()->route('tasks.index');
@@ -93,7 +92,6 @@ class TaskController extends Controller
             $request->validated(),
             $task
         );
-
         flash(__('flash.task.updated'))->success();
 
         return redirect()->route('tasks.index');
