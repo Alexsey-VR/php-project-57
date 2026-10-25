@@ -4,9 +4,16 @@ namespace App\Services;
 
 use App\Models\Label;
 use Illuminate\Database\Eloquent\Collection;
+use App\Services\OrphanCleanupService;
 
 class LabelService
 {
+    public function __construct(
+        protected OrphanCleanupService $cleanupService
+    ) {
+        //
+    }
+
     public function getLabelInstance(): Label
     {
         return new Label();
@@ -36,14 +43,8 @@ class LabelService
         $label->update($validatedData);
     }
 
-    public function destroyLabel(Label $label): bool
+    public function destroyLabel(Label $label): void
     {
-        if (!$label->hasTasks()) {
-            $label->delete();
-
-            return true;
-        }
-
-        return false;
+        $this->cleanupService->cleanupFor($label);
     }
 }

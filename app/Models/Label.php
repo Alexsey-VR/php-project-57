@@ -30,6 +30,6 @@ class Label extends Model
 
     public function cleanUp(): void
     {
-        //
+        $this->delete();
     }
 }

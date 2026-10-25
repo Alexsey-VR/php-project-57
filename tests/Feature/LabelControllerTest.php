@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use App\Models\{User, Label, Task};
-use App\Services\LabelService;
+use App\Services\{LabelService, OrphanCleanupService};
 use App\Http\Controllers\LabelController;
 use App\Http\Requests\LabelFormRequest;
 use App\Policies\LabelPolicy;
@@ -13,6 +13,7 @@ use Tests\TestCase;
 
 #[CoversClass(User::class)]
 #[CoversClass(Label::class)]
+#[CoversClass(OrphanCleanupService::class)]
 #[CoversClass(LabelPolicy::class)]
 #[CoversClass(LabelService::class)]
 #[CoversClass(LabelFormRequest::class)]
