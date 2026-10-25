@@ -8,22 +8,10 @@ class OrphanCleanupService
 {
     public function cleanupFor(Task $task): void
     {
-        $labelIds = $task->labels()
-            ->get(['task_labels', 'label_id'])
-            ->pluck('label_id');
-
+        $labelIds = $task->labels()->pluck('label_id');
         $task->labels()->detach();
         $task->delete();
-
-        Label::whereIn('id', $labelIds)
-            ->doesntHave('tasks')
-            ->delete();
-
-        if (
-            $task->status instanceof TaskStatus
-            && !$task->status->hasTasks()
-        ) {
-            $task->status->delete();
-        }
+        Label::whereDoesntHave('tasks')->whereIn('id', $labelIds)->delete();
+        TaskStatus::whereDoesntHave('tasks')->delete();
     }
 }

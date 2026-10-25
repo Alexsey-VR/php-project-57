@@ -103,6 +103,7 @@ class TaskController extends Controller
     public function destroy(Task $task): RedirectResponse
     {
         if (Gate::allows('delete', $task)) {
+            $this->taskService->loadRelatedInfo($task);
             $this->taskService->destroyTask($task);
             flash(__('flash.task.deleted'))->success();
         } else {

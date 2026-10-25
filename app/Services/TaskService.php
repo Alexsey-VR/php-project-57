@@ -38,7 +38,7 @@ class TaskService
 
     public function loadRelatedInfo(Task $task): void
     {
-        $task->load('labels');
+        $task->load(['status', 'labels']);
     }
 
     /**
