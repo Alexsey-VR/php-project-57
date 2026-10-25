@@ -18,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->map(QueryException::class, function (QueryException $e) {
+            Log::error($e->getMessage());
             return new HttpException(500, 'Internal server error');
         });
     })->create();
