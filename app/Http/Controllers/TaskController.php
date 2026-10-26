@@ -54,8 +54,12 @@ class TaskController extends Controller
      */
     public function store(TaskFormRequest $request): RedirectResponse
     {
-        $this->taskService->createTask($request->validated());
-        flash(__('flash.task.created'))->success();
+        if ($request->authorize()) {
+            $this->taskService->createTask($request->validated());
+            flash(__('flash.task.created'))->success();
+        } else {
+            flash(__('flash.task.restricted_create'))->error();
+        }
 
         return redirect()->route('tasks.index');
     }
@@ -88,11 +92,16 @@ class TaskController extends Controller
      */
     public function update(TaskFormRequest $request, Task $task): RedirectResponse
     {
-        $this->taskService->updateTask(
-            $request->validated(),
-            $task
-        );
-        flash(__('flash.task.updated'))->success();
+        if ($request->authorize()) {
+            $this->taskService->updateTask(
+                $request->validated(),
+                $task
+            );
+
+            flash(__('flash.task.updated'))->success();
+        } else {
+            flash(__('flash.task.restricted_update'))->success();
+        }
 
         return redirect()->route('tasks.index');
     }

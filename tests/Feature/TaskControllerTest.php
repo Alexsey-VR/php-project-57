@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use App\Models\{User, Task, TaskStatus, Label};
-use App\Services\{TaskService, TaskQueryService, OrphanCleanupService};
+use App\Services\{TaskService, TaskQueryService, OrphanCleanupService, AuthorizationService};
 use App\Policies\TaskPolicy;
 use App\Http\Controllers\TaskController;
 use App\Http\Requests\{TaskFormRequest, TaskFilterRequest};
@@ -18,6 +18,7 @@ use Tests\TestCase;
 #[CoversClass(TaskStatus::class)]
 #[CoversClass(TaskService::class)]
 #[CoversClass(TaskQueryService::class)]
+#[CoversClass(AuthorizationService::class)]
 #[Coversclass(OrphanCleanupService::class)]
 #[CoversClass(TaskController::class)]
 #[CoversClass(TaskFormRequest::class)]

@@ -4,13 +4,13 @@ namespace App\Services;
 
 use App\Models\Task;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
-use App\Services\OrphanCleanupService;
+use App\Services\{OrphanCleanupService, AuthorizationService};
 
 class TaskService
 {
     public function __construct(
-        protected OrphanCleanupService $cleanupService
+        protected OrphanCleanupService $cleanupService,
+        protected AuthorizationService $authorizationService
     ) {
         //
     }
@@ -25,10 +25,9 @@ class TaskService
      */
     public function createTask(array $validatedData): Task
     {
-        // TODO: move this check to TaskPolicy
-        $validatedData['created_by_id'] = Auth::id();
-
+        $validatedData = $this->authorizationService->authorize($validatedData);
         $task = Task::create($validatedData);
+
         if (isset($validatedData['labels'])) {
             $task->labels()->attach($validatedData['labels']);
         }
