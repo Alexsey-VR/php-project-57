@@ -3,7 +3,7 @@
 _This is a simple task manager service built with Laravel_
 
 ### Hexlet tests and linter status:
-[![Actions Status](https://github.com/Alexsey-VR/php-project-57/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Alexsey-VR/php-project-57/actions)
+[![Actions Status](https://github.com/Alexsey-VR/php-project-57/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Alexsey-VR/php-project-57/actions)[![Quality gate status](https://sonarcloud.io/api/project_badges/measure?project=Alexsey-VR_php-project-57&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Alexsey-VR_php-project-57)
 
 This a task manager project built with Laravel. It includes basic CRUD operations for tasks.
 
