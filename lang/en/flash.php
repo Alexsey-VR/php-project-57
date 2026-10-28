@@ -3,7 +3,7 @@
 return [
     'user' => [
         'registered' => 'Welcome to the service!',
-        'logged_in' => 'You have successfully logged in!',
+        'logged_in' => 'You have successfully logged in',
         'goodbye' => 'Goodbye!',
         'close' => 'Close'
     ],
