@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\{User, Task, TaskStatus, Label};
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class TaskQueryService
 {
@@ -39,12 +39,14 @@ class TaskQueryService
 
     /**
      * @param array<string,mixed> $validatedData
-     * @return Collection<int,Task>
+     * @return LengthAwarePaginator<int,Task>
      */
-    public function getFilteredTasks(array $validatedData): Collection
+    public function getFilteredTasks(array $validatedData): LengthAwarePaginator
     {
         $filter = $validatedData['filter'] ?? [];
-        $taskQuery = Task::query();
+        $taskQuery = Task::query()
+            ->with(['status', 'creator', 'assignee'])
+            ->orderBy('id');
         if (array_key_exists('status_id', $filter)) {
             $taskQuery->where('status_id', $filter['status_id']);
         }
@@ -55,7 +57,9 @@ class TaskQueryService
             $taskQuery->where('assigned_to_id', $filter['assigned_to_id']);
         }
 
-        return $taskQuery->get();
+        return $taskQuery
+            ->paginate(config('pagination.per_page'))
+            ->withQueryString();
     }
 
     /**
