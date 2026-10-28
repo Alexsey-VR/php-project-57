@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use App\Models\{User, Task, TaskStatus, Label};
-use App\Services\{TaskService, TaskQueryService, OrphanCleanupService, AuthorizationService};
+use App\Services\{TaskService, TaskQueryService, OrphanCleanupService};
 use App\Policies\TaskPolicy;
 use App\Http\Controllers\TaskController;
 use App\Http\Requests\{TaskFormRequest, TaskFilterRequest};
@@ -18,7 +18,6 @@ use Tests\TestCase;
 #[CoversClass(TaskStatus::class)]
 #[CoversClass(TaskService::class)]
 #[CoversClass(TaskQueryService::class)]
-#[CoversClass(AuthorizationService::class)]
 #[Coversclass(OrphanCleanupService::class)]
 #[CoversClass(TaskController::class)]
 #[CoversClass(TaskFormRequest::class)]
@@ -153,7 +152,10 @@ class TaskControllerTest extends TestCase
     public function testAuthenticatedUserCanUpdateTask(): void
     {
         $taskName = 'Task';
-        $task = Task::factory()->create(['name' => $taskName]);
+        $task = Task::factory()->create([
+            'name' => $taskName,
+            'created_by_id' => $this->user->id
+        ]);
 
         $updatedTaskName = "Updated task";
         $response = $this->actingAs($this->user)

@@ -6,8 +6,8 @@ use App\Models\{Task, TaskStatus, Label};
 
 class OrphanCleanupService
 {
-    public function cleanupFor(Task|TaskStatus|Label $task): void
+    public function cleanupFor(Task|TaskStatus|Label $model): void
     {
-        $task->cleanUp();
+        $model->cleanUp();
     }
 }

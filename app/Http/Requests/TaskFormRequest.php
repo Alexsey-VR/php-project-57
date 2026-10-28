@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Models\Task;
 
 class TaskFormRequest extends FormRequest
 {
@@ -13,7 +14,11 @@ class TaskFormRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        $task = $this->route('task');
+
+        return $task instanceof Task
+            ? $this->user()?->can('update', $task) ?? false
+            : $this->user()?->can('create', Task::class) ?? false;
     }
 
     /**

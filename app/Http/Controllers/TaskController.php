@@ -40,6 +40,8 @@ class TaskController extends Controller
      */
     public function create(): View
     {
+        Gate::authorize('create', Task::class);
+
         $task = $this->taskService->getTaskInstance();
         $options = $this->taskQueryService->getCreateOptions();
 
@@ -54,12 +56,8 @@ class TaskController extends Controller
      */
     public function store(TaskFormRequest $request): RedirectResponse
     {
-        if ($request->authorize()) {
-            $this->taskService->createTask($request->validated());
-            flash(__('flash.task.created'))->success();
-        } else {
-            flash(__('flash.task.restricted_create'))->error();
-        }
+        $this->taskService->createTask($request->validated());
+        flash(__('flash.task.created'))->success();
 
         return redirect()->route('tasks.index');
     }
@@ -69,6 +67,8 @@ class TaskController extends Controller
      */
     public function show(Task $task): View
     {
+        Gate::authorize('show', $task);
+
         $this->taskService->loadRelatedInfo($task);
 
         return view('tasks.show', compact('task'));
@@ -79,6 +79,8 @@ class TaskController extends Controller
      */
     public function edit(Task $task): View
     {
+        Gate::authorize('update', $task);
+
         $options = $this->taskQueryService->getCreateOptions();
 
         return view('tasks.edit', compact([
@@ -92,16 +94,11 @@ class TaskController extends Controller
      */
     public function update(TaskFormRequest $request, Task $task): RedirectResponse
     {
-        if ($request->authorize()) {
-            $this->taskService->updateTask(
-                $request->validated(),
-                $task
-            );
-
-            flash(__('flash.task.updated'))->success();
-        } else {
-            flash(__('flash.task.restricted_update'))->success();
-        }
+        $this->taskService->updateTask(
+            $request->validated(),
+            $task
+        );
+        flash(__('flash.task.updated'))->success();
 
         return redirect()->route('tasks.index');
     }
