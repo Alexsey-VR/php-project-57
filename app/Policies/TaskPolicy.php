@@ -16,7 +16,15 @@ class TaskPolicy
     }
 
     /**
-     * Deterrmine whether the user can show the task status
+     * Determine whether the user can view the task list
+     */
+    public function viewAny(User $user): bool
+    {
+        return true;
+    }
+
+    /**
+     * Deterrmine whether the user can view the task
      */
     public function show(User $user, Task $task): bool
     {

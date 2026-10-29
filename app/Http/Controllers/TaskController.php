@@ -23,6 +23,8 @@ class TaskController extends Controller
      */
     public function index(TaskFilterRequest $request): View
     {
+        Gate::authorize('viewAny', Task::class);
+
         $validatedData = $request->validated();
         $placeholders = $this->taskQueryService->getTaskFilterPlaceholders($validatedData);
         $options = $this->taskQueryService->getFilterOptions();
