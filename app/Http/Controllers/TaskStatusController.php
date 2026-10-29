@@ -31,6 +31,8 @@ class TaskStatusController extends Controller
      */
     public function create(): View
     {
+        Gate::authorize('create', TaskStatus::class);
+
         $task_status = $this->taskStatusService->getTaskStatusInstance();
         $name = '';
 
@@ -61,6 +63,8 @@ class TaskStatusController extends Controller
      */
     public function edit(TaskStatus $task_status): View
     {
+        Gate::authorize('update', $task_status);
+
         $name = $this->taskStatusService->getTaskStatusName($task_status);
 
         return view('task_statuses.edit', compact('task_status', 'name'));

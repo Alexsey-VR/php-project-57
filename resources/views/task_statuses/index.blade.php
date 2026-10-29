@@ -4,11 +4,13 @@
 <div>
     <h1 class="text-2xl font-bold px-4 py-4 text">{{ __('tasks.statuses') }}</h1>
     <div class="p-2">
-        <button class="rounded-md text-sm text-center font-semibold text-white h-10 w-auto px-4 bg-indigo-600">
-            <a href="{{ route('task_statuses.create') }}">
-                {{ __('tasks.status.header.create') }}
-            </a>
-        </button>
+        @can('create', App\Models\TaskStatus::class)
+            <button class="rounded-md text-sm text-center font-semibold text-white h-10 w-auto px-4 bg-indigo-600">
+                <a href="{{ route('task_statuses.create') }}">
+                    {{ __('tasks.status.header.create') }}
+                </a>
+            </button>
+        @endcan
     </div>
     <table class="table-auto">
         <thead class="border-b bg-gray-100 text-left">
@@ -21,33 +23,37 @@
         </thead>
         <tbody>
             @foreach($task_statuses as $task_status)
-                <tr>
-                    <td class="py-2 px-4">{{ $task_status->id }}</td>
-                    <td class="py-2 px-4">
-                        <a href="{{ route('task_statuses.show', $task_status) }}">{{ $task_status->name }} </a>
-                    </td>
-                    <td class="py-2 px-4">{{ $task_status->created_at }}</td>
-                    <td class="py-2 px-4">
-                        <div class="flex space-x-4">
-                            {{ html()->modelForm($task_status, 'DELETE', route('task_statuses.destroy', $task_status))
-                                    ->attribute('id', "form-status-{$task_status->id}")
-                                    ->open() }}
-                                @csrf
-                                <a href="{{ route('task_statuses.destroy', $task_status) }}"
-                                        data-confirm="{{ __('tasks.sweetalert.question') }} {{ __('tasks.sweetalert.text', ['name' => $task_status->name]) }}"
-                                        onclick="event.preventDefault(); if (confirm(this.dataset.confirm)) { this.closest('form').submit(); }"
-                                        class="text-red-500 hover:text-red-700"
-                                        rel="nofollow"
-                                >
-                                    {{ __('tasks.status.delete') }}
-                                </a>
-                            {{ html()->closeModelForm() }}
-                            <a href="{{ route('task_statuses.edit', $task_status) }}"
-                                class="text-blue-500 hover:text-blue-700">{{ __('tasks.status.edit') }}
-                            </a>
-                        </div>
-                    </td>
-                </tr>
+                @can('show', $task_status)
+                    <tr>
+                        <td class="py-2 px-4">{{ $task_status->id }}</td>
+                        <td class="py-2 px-4">
+                            <a href="{{ route('task_statuses.show', $task_status) }}">{{ $task_status->name }} </a>
+                        </td>
+                        <td class="py-2 px-4">{{ $task_status->created_at }}</td>
+                        <td class="py-2 px-4">
+                            <div class="flex space-x-4">
+                                {{ html()->modelForm($task_status, 'DELETE', route('task_statuses.destroy', $task_status))
+                                        ->attribute('id', "form-status-{$task_status->id}")
+                                        ->open() }}
+                                    @csrf
+                                    <a href="{{ route('task_statuses.destroy', $task_status) }}"
+                                            data-confirm="{{ __('tasks.sweetalert.question') }} {{ __('tasks.sweetalert.text', ['name' => $task_status->name]) }}"
+                                            onclick="event.preventDefault(); if (confirm(this.dataset.confirm)) { this.closest('form').submit(); }"
+                                            class="text-red-500 hover:text-red-700"
+                                            rel="nofollow"
+                                    >
+                                        {{ __('tasks.status.delete') }}
+                                    </a>
+                                {{ html()->closeModelForm() }}
+                                @can('update', $task_status)
+                                    <a href="{{ route('task_statuses.edit', $task_status) }}"
+                                        class="text-blue-500 hover:text-blue-700">{{ __('tasks.status.edit') }}
+                                    </a>
+                                @endcan
+                            </div>
+                        </td>
+                    </tr>
+                @endcan
             @endforeach
         </tbody>
     </table>
