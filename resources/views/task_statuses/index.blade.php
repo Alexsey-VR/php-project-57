@@ -23,37 +23,35 @@
         </thead>
         <tbody>
             @foreach($task_statuses as $task_status)
-                @can('show', $task_status)
-                    <tr>
-                        <td class="py-2 px-4">{{ $task_status->id }}</td>
-                        <td class="py-2 px-4">
-                            <a href="{{ route('task_statuses.show', $task_status) }}">{{ $task_status->name }} </a>
-                        </td>
-                        <td class="py-2 px-4">{{ $task_status->created_at }}</td>
-                        <td class="py-2 px-4">
-                            <div class="flex space-x-4">
-                                {{ html()->modelForm($task_status, 'DELETE', route('task_statuses.destroy', $task_status))
-                                        ->attribute('id', "form-status-{$task_status->id}")
-                                        ->open() }}
-                                    @csrf
-                                    <a href="{{ route('task_statuses.destroy', $task_status) }}"
-                                            data-confirm="{{ __('tasks.sweetalert.question') }} {{ __('tasks.sweetalert.text', ['name' => $task_status->name]) }}"
-                                            onclick="event.preventDefault(); if (confirm(this.dataset.confirm)) { this.closest('form').submit(); }"
-                                            class="text-red-500 hover:text-red-700"
-                                            rel="nofollow"
-                                    >
-                                        {{ __('tasks.status.delete') }}
-                                    </a>
-                                {{ html()->closeModelForm() }}
-                                @can('update', $task_status)
-                                    <a href="{{ route('task_statuses.edit', $task_status) }}"
-                                        class="text-blue-500 hover:text-blue-700">{{ __('tasks.status.edit') }}
-                                    </a>
-                                @endcan
-                            </div>
-                        </td>
-                    </tr>
-                @endcan
+                <tr>
+                    <td class="py-2 px-4">{{ $task_status->id }}</td>
+                    <td class="py-2 px-4">
+                        <a href="{{ route('task_statuses.show', $task_status) }}">{{ $task_status->name }} </a>
+                    </td>
+                    <td class="py-2 px-4">{{ $task_status->created_at }}</td>
+                    <td class="py-2 px-4">
+                        <div class="flex space-x-4">
+                            {{ html()->modelForm($task_status, 'DELETE', route('task_statuses.destroy', $task_status))
+                                    ->attribute('id', "form-status-{$task_status->id}")
+                                    ->open() }}
+                                @csrf
+                                <a href="{{ route('task_statuses.destroy', $task_status) }}"
+                                        data-confirm="{{ __('tasks.sweetalert.question') }} {{ __('tasks.sweetalert.text', ['name' => $task_status->name]) }}"
+                                        onclick="event.preventDefault(); if (confirm(this.dataset.confirm)) { this.closest('form').submit(); }"
+                                        class="text-red-500 hover:text-red-700"
+                                        rel="nofollow"
+                                >
+                                    {{ __('tasks.status.delete') }}
+                                </a>
+                            {{ html()->closeModelForm() }}
+                            @can('update', $task_status)
+                                <a href="{{ route('task_statuses.edit', $task_status) }}"
+                                    class="text-blue-500 hover:text-blue-700">{{ __('tasks.status.edit') }}
+                                </a>
+                            @endcan
+                        </div>
+                    </td>
+                </tr>
             @endforeach
         </tbody>
     </table>

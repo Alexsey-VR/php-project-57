@@ -16,11 +16,14 @@ class TaskStatusController extends Controller
     ) {
         //
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index(): View
     {
+        Gate::authorize('viewAny', TaskStatus::class);
+
         $task_statuses = $this->taskStatusService->getTaskStatuses();
 
         return view('task_statuses.index', compact('task_statuses'));
@@ -55,6 +58,8 @@ class TaskStatusController extends Controller
      */
     public function show(TaskStatus $task_status): View
     {
+        Gate::authorize('show', $task_status);
+
         return view('task_statuses.show', compact('task_status'));
     }
 
