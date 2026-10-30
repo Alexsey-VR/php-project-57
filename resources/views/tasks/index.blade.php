@@ -59,41 +59,39 @@
         </thead>
         <tbody>
             @foreach ($tasks as $task)
-                @can('show', $task)
-                    <tr>
-                        <td class="py-2 px-4">{{ $task->id }}</td>
-                        <td class="py-2 px-4">{{ $task->status->name }}</td>
-                        <td class="py-2 px-4">
-                            <a href="{{ route('tasks.show', $task) }}">{{ $task->name }}</a>
-                        </td>
-                        <td class="py-2 px-4">{{ $task->creator->name }}</td>
-                        <td class="py-2 px-4">{{ $task->assignee->name }}</td>
-                        <td class="py-2 px-4">{{ $task->created_at }}</td>
-                        <td class="py-2 px-4">
-                            <div class="flex space-x-4">
-                                @can('delete', $task)
-                                    {{ html()->modelForm($task, 'DELETE', route('tasks.destroy', $task))
-                                            ->open() }}
-                                        @csrf
-                                        <a href="{{ route('tasks.destroy', $task) }}"
-                                                data-confirm="{{ __('tasks.sweetalert.question') }} {{ __('tasks.sweetalert.text', ['name' => $task->name]) }}"
-                                                onclick="event.preventDefault(); if (confirm(this.dataset.confirm)) { this.closest('form').submit(); }"
-                                                class="text-red-500 hover:text-red-700"
-                                                rel="nofollow"
-                                        >
-                                            {{ __('tasks.delete') }}
-                                        </a>
-                                    {{ html()->closeModelForm() }}
-                                @endcan
-                                @can('update', $task)
-                                    <a href="{{ route('tasks.edit', $task) }}"
-                                        class="text-blue-500 hover:text-blue-700">{{ __('tasks.edit') }}
+                <tr>
+                    <td class="py-2 px-4">{{ $task->id }}</td>
+                    <td class="py-2 px-4">{{ $task->status->name }}</td>
+                    <td class="py-2 px-4">
+                        <a href="{{ route('tasks.show', $task) }}">{{ $task->name }}</a>
+                    </td>
+                    <td class="py-2 px-4">{{ $task->creator->name }}</td>
+                    <td class="py-2 px-4">{{ $task->assignee->name }}</td>
+                    <td class="py-2 px-4">{{ $task->created_at }}</td>
+                    <td class="py-2 px-4">
+                        <div class="flex space-x-4">
+                            @can('delete', $task)
+                                {{ html()->modelForm($task, 'DELETE', route('tasks.destroy', $task))
+                                        ->open() }}
+                                    @csrf
+                                    <a href="{{ route('tasks.destroy', $task) }}"
+                                            data-confirm="{{ __('tasks.sweetalert.question') }} {{ __('tasks.sweetalert.text', ['name' => $task->name]) }}"
+                                            onclick="event.preventDefault(); if (confirm(this.dataset.confirm)) { this.closest('form').submit(); }"
+                                            class="text-red-500 hover:text-red-700"
+                                            rel="nofollow"
+                                    >
+                                        {{ __('tasks.delete') }}
                                     </a>
-                                @endcan
-                            </div>
-                        </td>
-                    </tr>
-                @endcan
+                                {{ html()->closeModelForm() }}
+                            @endcan
+                            @can('update', $task)
+                                <a href="{{ route('tasks.edit', $task) }}"
+                                    class="text-blue-500 hover:text-blue-700">{{ __('tasks.edit') }}
+                                </a>
+                            @endcan
+                        </div>
+                    </td>
+                </tr>
             @endforeach
         </tbody>
     </table>
