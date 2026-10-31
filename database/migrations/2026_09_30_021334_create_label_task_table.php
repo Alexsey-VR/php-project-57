@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('task_labels', function (Blueprint $table) {
+        Schema::create('label_task', function (Blueprint $table) {
             $table->id();
             $table->foreignId('task_id')->constrained('tasks');
             $table->foreignId('label_id')->constrained('labels');
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('task_labels');
+        Schema::dropIfExists('label_task');
     }
 };

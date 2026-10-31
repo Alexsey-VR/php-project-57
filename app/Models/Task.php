@@ -50,7 +50,7 @@ class Task extends Model
      */
     public function labels(): BelongsToMany
     {
-        return $this->belongsToMany(Label::class, 'task_labels');
+        return $this->belongsToMany(Label::class);
     }
 
     public function cleanUp(): void
