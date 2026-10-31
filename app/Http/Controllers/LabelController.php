@@ -14,7 +14,7 @@ class LabelController extends Controller
     public function __construct(
         protected LabelService $labelService
     ) {
-        //
+        $this->authorizeResource(Label::class, 'label', ['except' => ['destroy']]);
     }
 
     /**

@@ -14,7 +14,7 @@ class TaskStatusController extends Controller
     public function __construct(
         protected TaskStatusService $taskStatusService
     ) {
-        //
+        $this->authorizeResource(TaskStatus::class, 'task_status', ['except' => ['destroy']]);
     }
 
     /**
@@ -22,8 +22,6 @@ class TaskStatusController extends Controller
      */
     public function index(): View
     {
-        Gate::authorize('viewAny', TaskStatus::class);
-
         $task_statuses = $this->taskStatusService->getTaskStatuses();
 
         return view('task_statuses.index', compact('task_statuses'));
@@ -34,8 +32,6 @@ class TaskStatusController extends Controller
      */
     public function create(): View
     {
-        Gate::authorize('create', TaskStatus::class);
-
         $task_status = $this->taskStatusService->getTaskStatusInstance();
         $name = '';
 
@@ -58,8 +54,6 @@ class TaskStatusController extends Controller
      */
     public function show(TaskStatus $task_status): View
     {
-        Gate::authorize('show', $task_status);
-
         return view('task_statuses.show', compact('task_status'));
     }
 
@@ -68,8 +62,6 @@ class TaskStatusController extends Controller
      */
     public function edit(TaskStatus $task_status): View
     {
-        Gate::authorize('update', $task_status);
-
         $name = $this->taskStatusService->getTaskStatusName($task_status);
 
         return view('task_statuses.edit', compact('task_status', 'name'));

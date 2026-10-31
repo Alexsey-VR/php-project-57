@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Models\Label;
 
 class LabelFormRequest extends FormRequest
 {
@@ -13,7 +14,11 @@ class LabelFormRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        $label = $this->route('label');
+
+        return $label instanceof Label
+            ? $this->user()?->can('update', $label) ?? false
+            : $this->user()?->can('create', Label::class) ?? false;
     }
 
     /**

@@ -26,7 +26,7 @@ class TaskStatusPolicy
     /**
      * Deterrmine whether the user can show the task status
      */
-    public function show(User $user, TaskStatus $status): bool
+    public function view(User $user, TaskStatus $status): bool
     {
         return true;
     }

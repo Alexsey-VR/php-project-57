@@ -1,7 +1,7 @@
 @extends('layouts.task')
 
 @section('content')
-    @can('show', $task_status)
+    @can('view', $task_status)
         {{ html()->label(__('tasks.status.name'), 'name') }}
         <div class="bg-white p-2 rounded-md outline-solid outline-indigo-100">
             {{ $task_status->name }}

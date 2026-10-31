@@ -4,11 +4,13 @@
 <div>
     <h1 class="text-2xl font-bold px-4 py-4 text">{{ __('tasks.labels') }}</h1>
     <div class="p-2">
-        <button class="rounded-md text-sm text-center font-semibold text-white h-10 w-auto px-4 bg-indigo-600">
-            <a href="{{ route('labels.create') }}">
-                {{ __('tasks.label.header.create') }}
-            </a>
-        </button>
+        @can('create', App\Models\Label::class)
+            <button class="rounded-md text-sm text-center font-semibold text-white h-10 w-auto px-4 bg-indigo-600">
+                <a href="{{ route('labels.create') }}">
+                    {{ __('tasks.label.header.create') }}
+                </a>
+            </button>
+        @endcan
     </div>
     <table class="table-auto">
         <thead class="border-b bg-gray-100 text-left">
@@ -44,9 +46,11 @@
                                     {{ __('tasks.label.delete') }}
                                 </a>
                             {{ html()->closeModelForm() }}
-                            <a href="{{ route('labels.edit', $label) }}"
-                                class="text-blue-500 hover:text-blue-700">{{ __('tasks.label.edit') }}
-                            </a>
+                            @can('update', $label)
+                                <a href="{{ route('labels.edit', $label) }}"
+                                    class="text-blue-500 hover:text-blue-700">{{ __('tasks.label.edit') }}
+                                </a>
+                            @endcan
                         </div>
                     </td>
                 </tr>

@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    @can('show', $task)
+    @can('view', $task)
         {{ html()->label(__('tasks.name'), 'name')->class('text-bold') }}
         <div class="bg-white p-2 rounded-md outline-solid outline-indigo-100">
             {{ $task->name }}

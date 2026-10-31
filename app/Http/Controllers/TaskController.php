@@ -15,7 +15,7 @@ class TaskController extends Controller
         protected TaskService $taskService,
         protected TaskQueryService $taskQueryService
     ) {
-       //
+       $this->authorizeResource(Task::class, 'task', ['except' => ['destroy']]);
     }
 
     /**
@@ -23,8 +23,6 @@ class TaskController extends Controller
      */
     public function index(TaskFilterRequest $request): View
     {
-        Gate::authorize('viewAny', Task::class);
-
         $validatedData = $request->validated();
         $placeholders = $this->taskQueryService->getTaskFilterPlaceholders($validatedData);
         $options = $this->taskQueryService->getFilterOptions();
@@ -42,8 +40,6 @@ class TaskController extends Controller
      */
     public function create(): View
     {
-        Gate::authorize('create', Task::class);
-
         $task = $this->taskService->getTaskInstance();
         $options = $this->taskQueryService->getCreateOptions();
 
@@ -69,8 +65,6 @@ class TaskController extends Controller
      */
     public function show(Task $task): View
     {
-        Gate::authorize('show', $task);
-
         $this->taskService->loadRelatedInfo($task);
 
         return view('tasks.show', compact('task'));
@@ -81,8 +75,6 @@ class TaskController extends Controller
      */
     public function edit(Task $task): View
     {
-        Gate::authorize('update', $task);
-
         $options = $this->taskQueryService->getCreateOptions();
 
         return view('tasks.edit', compact([

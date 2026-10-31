@@ -7,12 +7,14 @@
 @endsection
 
 @section('content')
-    {{ html()->label(__('tasks.label.name'), 'name')->class('text-bold') }}
-<div class="bg-white p-2">
-    {{ $label->name }}
-</div>
-{{ html()->label(__('tasks.label.description'), 'description') }}
-<div class="bg-white p-2">
-    {{ $label->description }}
-</div>
+    @can('view', $label)
+        {{ html()->label(__('tasks.label.name'), 'name')->class('text-bold') }}
+        <div class="bg-white p-2">
+            {{ $label->name }}
+        </div>
+        {{ html()->label(__('tasks.label.description'), 'description') }}
+        <div class="bg-white p-2">
+            {{ $label->description }}
+        </div>
+    @endcan
 @endsection

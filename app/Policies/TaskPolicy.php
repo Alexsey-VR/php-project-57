@@ -26,7 +26,7 @@ class TaskPolicy
     /**
      * Deterrmine whether the user can view the task
      */
-    public function show(User $user, Task $task): bool
+    public function view(User $user, Task $task): bool
     {
         return true;
     }
