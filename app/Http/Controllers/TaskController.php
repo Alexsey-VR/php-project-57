@@ -15,7 +15,7 @@ class TaskController extends Controller
         protected TaskService $taskService,
         protected TaskQueryService $taskQueryService
     ) {
-       $this->authorizeResource(Task::class, 'task', ['except' => ['destroy']]);
+        $this->authorizeResource(Task::class, 'task', ['except' => ['destroy']]);
     }
 
     /**

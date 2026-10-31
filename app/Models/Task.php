@@ -32,17 +32,17 @@ class Task extends Model
     /**
      * @return BelongsTo<User, covariant static>
      */
-    public function creator(): BelongsTo
+    public function createdBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'created_by_id', 'id');
+        return $this->belongsTo(User::class);
     }
 
     /**
      * @return BelongsTo<User, covariant static>
      */
-    public function assignee(): BelongsTo
+    public function assignedTo(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'assigned_to_id', 'id');
+        return $this->belongsTo(User::class);
     }
 
     /**

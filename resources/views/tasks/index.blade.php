@@ -65,8 +65,8 @@
                     <td class="py-2 px-4">
                         <a href="{{ route('tasks.show', $task) }}">{{ $task->name }}</a>
                     </td>
-                    <td class="py-2 px-4">{{ $task->creator->name }}</td>
-                    <td class="py-2 px-4">{{ $task->assignee->name }}</td>
+                    <td class="py-2 px-4">{{ $task->createdBy->name }}</td>
+                    <td class="py-2 px-4">{{ $task->assignedTo->name }}</td>
                     <td class="py-2 px-4">{{ $task->created_at }}</td>
                     <td class="py-2 px-4">
                         <div class="flex space-x-4">

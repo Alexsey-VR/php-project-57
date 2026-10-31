@@ -45,7 +45,7 @@ class TaskQueryService
     {
         $filter = $validatedData['filter'] ?? [];
         $taskQuery = Task::query()
-            ->with(['status', 'creator', 'assignee'])
+            ->with(['status', 'createdBy', 'assignedTo'])
             ->orderBy('id');
         if (array_key_exists('status_id', $filter)) {
             $taskQuery->where('status_id', $filter['status_id']);

@@ -20,13 +20,13 @@
         <div class="bg-white p-2 rounded-md outline-solid outline-indigo-100">
             {{ $task->status->name }}
         </div>
-        {{ html()->label(__('tasks.creator'), 'creator') }}
+        {{ html()->label(__('tasks.creator'), 'created_by') }}
         <div class="bg-white p-2 rounded-md outline-solid outline-indigo-100">
-            {{ $task->creator->name }}
+            {{ $task->createdBy->name }}
         </div>
-        {{ html()->label(__('tasks.assignee'), 'assignee') }}
+        {{ html()->label(__('tasks.assignee'), 'assigned_to') }}
         <div class="bg-white p-2 rounded-md outline-solid outline-indigo-100">
-            {{ $task->assignee->name }}
+            {{ $task->assignedTo->name }}
         </div>
         {{ html()->label(__('tasks.labels'), 'labels') }}
         <div class="bg-white p-2 rounded-md outline-solid outline-indigo-100 h-32">
