@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\{User, Task, TaskStatus, Label};
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use App\Services\OrphanCleanupService;
 
@@ -21,11 +21,13 @@ class TaskStatusService
     }
 
     /**
-     * @return Collection<int, TaskStatus>
+     * @return LengthAwarePaginator<int, TaskStatus>
      */
-    public function getTaskStatuses(): Collection
+    public function getTaskStatuses(): LengthAwarePaginator
     {
-        return TaskStatus::all();
+        return TaskStatus::orderBy('id')
+            ->paginate(config('pagination.per_page'))
+            ->withQueryString();
     }
 
     /**

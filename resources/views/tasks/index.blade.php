@@ -95,5 +95,8 @@
             @endforeach
         </tbody>
     </table>
-    <div class="mt-4 px-2">{{ $tasks->links() }}</div>
+@endsection
+
+@section('pagination')
+    <div>{{ $tasks->links() }}</div>
 @endsection

@@ -67,6 +67,11 @@
         </div>
         @yield('label')
         @yield('content')
+        <div>
+            <footer class="fixed flex justify-end w-full items-center bottom-0 h-16 z-10 mt-4 px-2 py-3 bg-indigo-10 border-t border-indigo-200">
+                @yield('pagination')
+            </footer>
+        </div>
         @stack('scripts')
     </body>
 </html>

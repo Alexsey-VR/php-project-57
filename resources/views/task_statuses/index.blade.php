@@ -57,3 +57,7 @@
     </table>
 </div>
 @endsection
+
+@section('pagination')
+    <div>{{ $task_statuses->links() }}</div>
+@endsection

@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\Label;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use App\Services\OrphanCleanupService;
 
 class LabelService
@@ -20,11 +20,13 @@ class LabelService
     }
 
     /**
-     * @return Collection<int, Label>
+     * @return LengthAwarePaginator<int, Label>
      */
-    public function getLabels(): Collection
+    public function getLabels(): LengthAwarePaginator
     {
-        return Label::all();
+        return Label::orderBy('id')
+            ->paginate(config('pagination.per_page'))
+            ->withQueryString();
     }
 
     /**
