@@ -19,7 +19,7 @@
         </script>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="bg-indigo-100" >
+    <body class="bg-indigo-100 pb-16" >
         @include('sweetalert2::index')
         <nav class="bg-white border-b border-gray-200 shadow-md">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
