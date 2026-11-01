@@ -4,7 +4,7 @@
     {{ html()->input('name', 'name')->class('w-full') }}
 </div>
 {{ html()->label(__('tasks.description'), 'description') }}
-<div class="w-full bg-white p-2 rounded-md outline-solid outline-indigo-100">
+<div class="w-full bg-white p-2 overflow-y-auto rounded-md outline-solid outline-indigo-100">
     {{ html()->textarea('description')->class('w-full h-32') }}
 </div>
 {{ html()->label(__('tasks.init_status'), 'status') }}
@@ -25,7 +25,7 @@
         ->class('w-full') }}
 </div>
 {{ html()->label(__('tasks.labels'), 'options[]') }}
-<div class="w-full bg-white p-2 rounded-md outline-solid outline-indigo-100">
+<div class="w-full bg-white p-2 overflow-y-auto rounded-md outline-solid outline-indigo-100">
     {{ html()->select('labels[]', $options['label'])
         ->multiple()
         ->class('w-full h-32') }}

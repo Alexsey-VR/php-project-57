@@ -13,7 +13,7 @@
             {{ $label->name }}
         </div>
         {{ html()->label(__('tasks.label.description'), 'description') }}
-        <div class="bg-white p-2">
+        <div class="bg-white p-2 overflow-y-auto">
             {{ $label->description }}
         </div>
     @endcan

@@ -13,7 +13,7 @@
             {{ $task->name }}
         </div>
         {{ html()->label(__('tasks.description'), 'description') }}
-        <div class="bg-white p-2 rounded-md outline-solid outline-indigo-100 h-32">
+        <div class="bg-white p-2 rounded-md overflow-y-auto outline-solid outline-indigo-100 h-32">
             {{ $task->description }}
         </div>
         {{ html()->label(__('tasks.init_status'), 'init_status') }}
@@ -29,7 +29,7 @@
             {{ $task->assignedTo->name }}
         </div>
         {{ html()->label(__('tasks.labels'), 'labels') }}
-        <div class="bg-white p-2 rounded-md outline-solid outline-indigo-100 h-32">
+        <div class="bg-white p-2 rounded-md overflow-y-auto outline-solid outline-indigo-100 h-32">
             @if ($task->labels && $task->labels->isNotEmpty())
                 <ul>
                     @foreach($task->labels as $label)
