@@ -26,6 +26,7 @@ COPY . .
 RUN cp .env.example .env \
     && echo "APP_KEY=base64:$(php -r 'echo base64_encode(random_bytes(32));')" >> .env
 RUN composer install --no-interaction --no-progress
+RUN npm install --ignore-scripts
 RUN npm run build
 
 RUN > database/database.sqlite
@@ -37,4 +38,4 @@ RUN php artisan config:clear
 RUN php artisan view:clear
 RUN php artisan route:clear
 
-CMD ["bash", "-c", "php artisan key:generate --no-interaction && php artisan migrate:fresh --force && php artisan db:seed --force && PHP_CLI_SERVER_WORKERS=5 php artisan serve --host=0.0.0.0 --port=$PORT"]
+CMD ["bash", "-c", "php artisan migrate:fresh --force && php artisan db:seed --force && PHP_CLI_SERVER_WORKERS=5 php artisan serve --host=0.0.0.0 --port=$PORT"]
