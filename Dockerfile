@@ -24,9 +24,10 @@ RUN npm install --workspaces=false
 
 COPY . .
 
-RUN composer install
+RUN cp .env.example .env \
+    && echo "APP_KEY=$(php artisan key:generate --show --no-ansi)" >> .env
+RUN composer install --no-interaction --no-progress
 RUN npm run build
-# RUN cp .env.example .env
 
 RUN > database/database.sqlite
 
