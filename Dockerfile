@@ -29,8 +29,6 @@ RUN cp .env.example .env \
 RUN composer install --no-interaction --no-progress
 RUN npm run build
 
-RUN make init
-
 RUN > database/database.sqlite
 
 EXPOSE 8080
@@ -40,4 +38,4 @@ RUN php artisan config:clear
 RUN php artisan view:clear
 RUN php artisan route:clear
 
-CMD ["bash", "-c", "PHP_CLI_SERVER_WORKERS=4 php artisan migrate:refresh --seed --force && php artisan serve --host=0.0.0.0 --port=$PORT"]
+CMD ["bash", "-c", "PHP_CLI_SERVER_WORKERS=4 php artisan migrate --force && php artisan db:seed --class=DatabaseSeeder --force && php artisan db:seed --class=TaskStatusSeeder --force && php artisan serve --host=0.0.0.0 --port=$PORT"]
