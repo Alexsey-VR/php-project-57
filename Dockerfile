@@ -23,7 +23,8 @@ RUN npm install --workspaces=false
 
 COPY . .
 
-RUN cp .env.example .env
+RUN cp .env.example .env \
+    && echo "APP_KEY=base64:$(php -r 'echo base64_encode(random_bytes(32));')" >> .env
 RUN composer install --no-interaction --no-progress
 RUN npm run build
 
