@@ -21,7 +21,7 @@ class TaskStatusSeeder extends Seeder
     public function run(): void
     {
         $seedList = collect(self::ALLOWED_OPTIONS)
-            ->map(fn ($value) => TaskStatus::create([
+            ->map(fn ($value) => TaskStatus::firstOrCreate([
                 'name' => trans("tasks.status.options.{$value}")
             ]));
     }
