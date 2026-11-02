@@ -21,7 +21,4 @@ return Application::configure(basePath: dirname(__DIR__))
 
             return new HttpException(500, 'Internal server error');
         });
-        $exceptions->map(Exceptions::class, function (Exceptions $e) {
-            return new HttpException(404, $e->getMessage());
-        });
     })->create();
