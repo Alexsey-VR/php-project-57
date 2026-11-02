@@ -29,6 +29,8 @@ RUN cp .env.example .env \
 RUN composer install --no-interaction --no-progress
 RUN npm run build
 
+RUN make init
+
 RUN > database/database.sqlite
 
 EXPOSE 8080
