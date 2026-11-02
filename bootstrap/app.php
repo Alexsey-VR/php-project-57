@@ -4,7 +4,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Database\QueryException;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -19,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->map(QueryException::class, function (QueryException $e) {
             Log::error($e->getMessage());
+
             return new HttpException(500, 'Internal server error');
         });
     })->create();
