@@ -32,7 +32,6 @@ RUN npm run build
 RUN > database/database.sqlite
 
 EXPOSE 8080
-EXPOSE 5432
 
 RUN php artisan config:clear
 RUN php artisan view:clear
