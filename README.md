@@ -19,17 +19,25 @@ docker build . --tag php-project-57:v1
 
 
 Define PostgreSQL connection parameters: \
+export DB_CONNECTION=pgsql \
 export DB_PROVIDER=postgresql \
-export DB_USER=... \
-export DB_PASS=... \
+export DB_USERNAME=... \
+export DB_PASSWORD=... \
 export DB_HOST=... \
 export DB_PORT=... \
-export DB_NAME=...
+export DB_DATABASE=...
 
 
 Run container: \
 docker run -it \\ \
-    -e DATABASE_URL="${DB_PROVIDER}://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}" \\ \
+    -e DB_CONNECTION="${DB_CONNECTION}" \\ \
+    -e DB_PROVIDER="${DB_PROVIDER}" \\ \
+    -e DB_USERNAME="${DB_USERNAME}" \\ \
+    -e DB_PASSWORD="${DB_PASSWORD}" \\ \
+    -e DB_HOST="${DB_HOST}" \\ \
+    -e DB_PORT="${DB_PORT}" \\ \
+    -e DB_DATABASE="${DB_DATABASE}" \\ \
+    -e PORT=8080 \\ \
     -p 8000:8000 \\ \
     php-project-57:v1
 

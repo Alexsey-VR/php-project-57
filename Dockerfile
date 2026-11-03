@@ -38,4 +38,4 @@ RUN php artisan config:clear
 RUN php artisan view:clear
 RUN php artisan route:clear
 
-CMD ["bash", "-c", "php artisan migrate:fresh --force && php artisan db:seed --force && PHP_CLI_SERVER_WORKERS=5 php artisan serve --host=0.0.0.0 --port=$PORT"]
+CMD ["bash", "-c", "php artisan migrate:fresh --force && php artisan db:seed --class DatabaseSeeder --force && php artisan db:seed --class TaskStatusSeeder --force && PHP_CLI_SERVER_WORKERS=5 php artisan serve --host=0.0.0.0 --port=$PORT --no-reload"]
