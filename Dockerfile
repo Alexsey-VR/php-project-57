@@ -25,7 +25,7 @@ COPY . .
 
 RUN cp .env.deploy .env \
     && echo "APP_KEY=base64:$(php -r 'echo base64_encode(random_bytes(32));')" >> .env
-RUN composer install --no-interaction --no-progress
+RUN composer install --no-interaction --no-progress --no-dev
 RUN npm install --ignore-scripts
 RUN npm run build
 
