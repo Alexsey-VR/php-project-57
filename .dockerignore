@@ -17,4 +17,3 @@ storage/logs/*.log
 
 reports
 .phpunit.cache
-coverage.xml
