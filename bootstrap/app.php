@@ -15,6 +15,10 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->redirectGuestsTo('/login');
     })
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->trustProxies(at: '*');
+        $middleware->redirectGuestsTo('/login');
+    })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->map(QueryException::class, function (QueryException $e) {
             Log::error($e->getMessage());
