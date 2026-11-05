@@ -1,3 +1,4 @@
+/*
 import Swal from 'sweetalert2'
  
 export function confirmDelete(event, name, formId) {
@@ -74,3 +75,4 @@ export function confirmDelete(event, name, formId) {
         }
     });
 }
+*/

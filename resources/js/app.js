@@ -1,3 +1,5 @@
+/*
 import { confirmDelete } from "./sweetalert2";
 
-window.confirmDelete = confirmDelete;   
+window.confirmDelete = confirmDelete;  
+*/
