@@ -18,15 +18,14 @@ COPY package.json ./
 COPY package-lock.json ./
 
 RUN npm cache clean --force
-RUN npm install -g npm@latest
-RUN npm install --workspaces=false
+RUN npm install -g npm@11.9.0
+RUN npm ci --ignore-scripts --workspaces=false
 
 COPY . .
 
 RUN cp .env.deploy .env \
     && echo "APP_KEY=base64:$(php -r 'echo base64_encode(random_bytes(32));')" >> .env
 RUN composer install --no-interaction --no-progress --no-dev
-RUN npm install --ignore-scripts
 RUN npm run build
 
 RUN > database/database.sqlite

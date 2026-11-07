@@ -5,7 +5,7 @@ setup:
 	php artisan migrate:fresh --force
 	php artisan db:seed --class=DatabaseSeeder
 	php artisan db:seed --class=TaskStatusSeeder
-	npm install --ignore-scripts
+	npm ci --ignore-scripts
 	npm run build
 
 update:
