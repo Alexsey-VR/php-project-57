@@ -17,8 +17,8 @@
         </div>
         <div class="grid grid-cols-2 gap-4">
             <a href="{{ route('login') }}" class="underline">{{ __('users.already_registered') }}</a>
-            <div class="shadow-md bg-indigo-100 p-2 rounded-md outline-indigo-100 text-center font-medium">
-                {{ html()->submit(__('users.create')) }}
+            <div class="shadow-md bg-indigo-100 p-2 rounded-md outline-indigo-100 text-center font-medium cursor-pointer">
+                {{ html()->submit(__('users.create'))->class('cursor-pointer') }}
             </div>
         </div>
     </div>

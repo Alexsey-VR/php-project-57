@@ -6,8 +6,8 @@
     <div class="grid gap-4 rounded-md">
         @include('auth.form')
 
-        <div class="shadow-md bg-indigo-100 p-2 rounded-md outline-indigo-100 text-center font-medium">
-            {{ html()->submit(__('app.signin')) }}
+        <div class="shadow-md bg-indigo-100 p-2 rounded-md outline-indigo-100 text-center font-medium cursor-pointer">
+            {{ html()->submit(__('app.signin'))->class('cursor-pointer') }}
         </div>
     </div>
 {{ html()->closeModelForm() }}

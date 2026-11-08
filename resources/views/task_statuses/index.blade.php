@@ -5,7 +5,7 @@
     <h1 class="text-2xl font-bold px-4 py-4 text">{{ __('tasks.statuses') }}</h1>
     <div class="p-2">
         @can('create', App\Models\TaskStatus::class)
-            <button class="rounded-md text-sm text-center font-semibold text-white h-10 w-auto px-4 bg-indigo-600">
+            <button class="rounded-md text-sm text-center font-semibold text-white h-10 w-auto px-4 bg-indigo-600 cursor-pointer">
                 <a href="{{ route('task_statuses.create') }}">
                     {{ __('tasks.status.header.create') }}
                 </a>

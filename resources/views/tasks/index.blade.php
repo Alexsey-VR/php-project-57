@@ -18,7 +18,7 @@
                             ->attribute('hidden', 'hidden')
                             ->selectedIf($placeholders['query_status'] === null)
                     )
-                    ->class('w-32 h-10 p-2 rounded-md outline-solid outline-indigo-100 has-placeholder') }}
+                    ->class('w-32 h-10 p-2 rounded-md outline-solid outline-indigo-100 has-placeholder cursor-pointer') }}
             {{ html()->select('filter[created_by_id]', $options['filter_creator'], $placeholders['query_creator'])
                     ->prependChild(
                         html()->option($placeholders['creator'])
@@ -26,7 +26,7 @@
                             ->attribute('hidden', 'hidden')
                             ->selectedIf($placeholders['query_creator'] === null)
                     )
-                    ->class('w-48 h-10 p-2 rounded-md outline-solid outline-indigo-100') }}
+                    ->class('w-48 h-10 p-2 rounded-md outline-solid outline-indigo-100 cursor-pointer') }}
             {{ html()->select('filter[assigned_to_id]', $options['filter_assignee'], $placeholders['query_assignee'])
                     ->prependChild(
                         html()->option($placeholders['assignee'])
@@ -34,9 +34,9 @@
                             ->attribute('hidden', 'hidden')
                             ->selectedIf($placeholders['query_assignee'] === null)
                     )
-                    ->class('w-48 h-10 p-2 rounded-md outline-solid outline-indigo-100') }}
+                    ->class('w-48 h-10 p-2 rounded-md outline-solid outline-indigo-100 cursor-pointer') }}
             {{ html()->submit(__('tasks.apply'))
-                    ->class("rounded-md text-sm text-center font-semibold text-white h-10 w-32 px-4 bg-indigo-600 justify-center") }}
+                    ->class("rounded-md text-sm text-center font-semibold text-white h-10 w-32 px-4 bg-indigo-600 justify-center cursor-pointer") }}
         {{ html()->form()->close() }}
         @can('create', App\Models\Task::class)
             <a href="{{ route('tasks.create') }}" 
