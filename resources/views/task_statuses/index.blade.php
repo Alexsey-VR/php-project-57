@@ -12,24 +12,24 @@
             </button>
         @endcan
     </div>
-    <table class="table-auto">
+    <table class="table-fixed">
         <thead class="border-b bg-gray-100 text-left">
             <tr>
-                <th class="py-2 px-4">ID</th>
-                <th class="py-2 px-4">{{ __('tasks.status.name') }}</th>
-                <th class="py-2 px-4">{{ __('tasks.status.header.date') }}</th>
-                <th class="py-2 px-4">{{ __('tasks.status.actions') }}</th>
+                <th style="padding-left: var(--col-px-id); width: var(--col-w-id)" class="py-2">ID</th>
+                <th style="padding-left: var(--col-px-status); width: var(--col-w-status); min-width: var(--col-min-w-status)" class="py-2">{{ __('tasks.status.name') }}</th>
+                <th style="padding-left: var(--col-px-date); width: var(--col-w-date); min-width: var(--col-min-w-date)" class="py-2">{{ __('tasks.status.header.date') }}</th>
+                <th style="padding-left: var(--col-px-actions); width: var(--col-w-actions); min-width: var(--col-min-w-actions)" class="py-2">{{ __('tasks.status.actions') }}</th>
             </tr>
         </thead>
         <tbody>
             @foreach($task_statuses as $task_status)
                 <tr>
-                    <td class="py-2 px-4">{{ $task_status->id }}</td>
-                    <td class="py-2 px-4">
+                    <td style="padding-left: var(--col-px-id); width: var(--col-w-id)" class="py-2">{{ $task_status->id }}</td>
+                    <td style="padding-left: var(--col-px-status); width: var(--col-w-status); min-width: var(--col-min-w-status)" class="py-2">
                         <a href="{{ route('task_statuses.show', $task_status) }}">{{ $task_status->name }} </a>
                     </td>
-                    <td class="py-2 px-4">{{ $task_status->created_at }}</td>
-                    <td class="py-2 px-4">
+                    <td style="padding-left: var(--col-px-date); width: var(--col-w-date); min-width: var(--col-min-w-date)" class="py-2">{{ $task_status->created_at }}</td>
+                    <td style="padding-left: var(--col-px-actions); width: var(--col-w-actions); min-width: var(--col-min-w-actions)" class="py-2">
                         <div class="flex space-x-4">
                             {{ html()->modelForm($task_status, 'DELETE', route('task_statuses.destroy', $task_status))
                                     ->attribute('id', "form-status-{$task_status->id}")

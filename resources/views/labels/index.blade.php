@@ -12,26 +12,26 @@
             </button>
         @endcan
     </div>
-    <table class="table-auto">
+    <table class="table-fixed">
         <thead class="border-b bg-gray-100 text-left">
             <tr>
-                <th class="py-2 px-4">ID</th>
-                <th class="py-2 px-4">{{ __('tasks.label.name') }}</th>
-                <th class="py-2 px-4">{{ __('tasks.label.description') }}</th>
-                <th class="py-2 px-4">{{ __('tasks.label.header.date') }}</th>
-                <th class="py-2 px-4">{{ __('tasks.label.actions') }}</th>
+                <th style="padding-left: var(--col-px-id); width: var(--col-w-id)" class="py-2">ID</th>
+                <th style="padding-left: var(--col-px-name); width: var(--col-w-name); min-width: var(--col-min-w-name)" class="py-2">{{ __('tasks.label.name') }}</th>
+                <th style="padding-left: var(--col-px-description); width: var(--col-w-description); min-width: var(--col-min-w-description)" class="py-2">{{ __('tasks.label.description') }}</th>
+                <th style="padding-left: var(--col-px-date); width: var(--col-w-date); min-width: var(--col-min-w-date)" class="py-2">{{ __('tasks.label.header.date') }}</th>
+                <th style="padding-left: var(--col-px-actions); width: var(--col-w-actions); min-width: var(--col-min-w-actions)" class="py-2">{{ __('tasks.label.actions') }}</th>
             </tr>
         </thead>
         <tbody>
             @foreach($labels as $label)
                 <tr>
-                    <td class="py-2 px-4">{{ $label->id }}</td>
-                    <td class="py-2 px-4">
+                    <td style="padding-left: var(--col-px-id); width: var(--col-w-id)" class="py-2">{{ $label->id }}</td>
+                    <td style="padding-left: var(--col-px-name); width: var(--col-w-name); min-width: var(--col-min-w-name)" class="py-2">
                         <a href="{{ route('labels.show', $label) }}">{{ $label->name }} </a>
                     </td>
-                    <td class="py-2 px-4">{{ $label->description }}</td>
-                    <td class="py-2 px-4">{{ $label->created_at }}</td>
-                    <td class="py-2 px-4">
+                    <td style="padding-left: var(--col-px-description); width: var(--col-w-description); min-width: var(--col-min-w-description)" class="py-2">{{ $label->description }}</td>
+                    <td style="padding-left: var(--col-px-date); width: var(--col-w-date); min-width: var(--col-min-w-date)" class="py-2">{{ $label->created_at }}</td>
+                    <td style="padding-left: var(--col-px-actions); width: var(--col-w-actions); min-width: var(--col-min-w-actions)" class="py-2">
                         <div class="flex space-x-4">
                             {{ html()->modelForm($label, 'DELETE', route('labels.destroy', $label))
                                     ->attribute('id', "form-label-{$label->id}")

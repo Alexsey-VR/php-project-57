@@ -1,0 +1,68 @@
+:root {
+    --col-w-id: 1.6rem;
+    --col-px-id: 1rem;
+
+    --col-w-status: 10rem;
+    --col-px-status: 0.5rem;
+    --col-ml-status: var(--col-w-id);
+
+    --col-w-name: 20rem;
+    --col-px-name: 0.5rem;
+
+    --col-w-description: 27.5rem;
+    --col-px-description: 0.5rem;
+
+    --col-w-creator: 10rem;
+    --col-fw-creator: calc(var(--col-w-creator) - 1rem);
+    --col-px-creator: 0.5rem;
+    --col-ml-creator: var(--col-w-name);
+
+    --col-w-assignee: 10rem;
+    --col-px-assignee: 0.5rem;
+    --col-ml-assignee: 1rem;
+
+    --col-w-date: 10rem;
+    --col-px-date: 1rem;
+
+    --col-w-actions: 10rem;
+    --col-px-actions: 1rem;
+}
+
+/* For mobile browser */
+@media (max-width: 1024px) {
+    :root {
+        --col-w-id: 1.6rem;
+        --col-px-id: 1rem;
+
+        --col-w-status: 9rem;
+        --col-px-status: 0.5rem;
+        --col-ml-status: var(--col-w-id);
+
+        --col-w-name: 14rem;
+        --col-px-name: 0.5rem;
+
+        --col-w-description: 27.5rem;
+        --col-px-description: 0.5rem;
+
+        --col-w-creator: 9rem;
+        --col-fw-creator: calc(var(--col-w-creator) - 1rem);
+        --col-px-creator: 0.5rem;
+        --col-ml-creator: var(--col-w-name);
+
+        --col-w-assignee: 9rem;
+        --col-px-assignee: 0.5rem;
+        --col-ml-assignee: 1rem;
+
+        --col-w-date: 7rem;
+        --col-px-date: 1rem;
+
+        --col-w-actions: 5rem;
+        --col-px-actions: 1rem;
+
+        --col-min-w-name: 10rem;
+        --col-min-w-status: 6rem;
+        --col-min-w-creator: 6rem;
+        --col-min-w-assignee: 6rem;
+        --col-min-w-date: 6rem;
+    }
+}

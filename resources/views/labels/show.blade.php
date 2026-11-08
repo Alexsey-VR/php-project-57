@@ -2,7 +2,7 @@
 
 @section('label')
     <div class="p-4 text-2xl font-bold text">
-        <h1>{{ __('tasks.label.name') }}:{{ $label->name }}</h1>
+        <h1>{{ __('tasks.label.name') }}: {{ $label->name }}</h1>
     </div>
 @endsection
 
