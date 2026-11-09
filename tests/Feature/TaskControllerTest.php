@@ -92,7 +92,7 @@ class TaskControllerTest extends TestCase
         $taskName = 'Test task';
         Task::factory()->create([
             'name' => $taskName,
-            'created_by_id' => $this->user->id    
+            'created_by_id' => $this->user->id
         ]);
         $response = $this->actingAs($this->user)
             ->withSession(['_token' => $this->token])
