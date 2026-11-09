@@ -30,7 +30,7 @@ test-sonar: init
 init:
 	php artisan migrate:fresh
 	php artisan db:seed --class=DatabaseSeeder
-	php artisan db:seed --class=TaskStatusSeeder
+	php artisan db:seed --class=TaskSeeder
 	npm run build
 
 lint:

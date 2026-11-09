@@ -21,6 +21,7 @@ class TaskFactory extends Factory
         'testing',
         'completed'
     ];
+
     /**
      * Define the model's default state
      * 
@@ -31,12 +32,23 @@ class TaskFactory extends Factory
         return [
             'name'             => $this->faker->text(16),
             'description'      => $this->faker->text(64),
-            'status_id'        => TaskStatus::factory()
-                ->create([
+            'status_id'        => TaskStatus::firstOrCreate([
                     'name' => trans("tasks.status.options.{$this->faker->randomElement(self::TASK_STATUS_ALLOWED_OPTIONS)}")
                 ])->id,
             'created_by_id'    => User::factory()->create()->id,
             'assigned_to_id'   => User::factory()->create()->id
         ];
+    }
+
+    /**
+     * Optional create labels
+     */
+    public function withLabels(int $count = 1): static
+    {
+        return $this->afterCreating(
+            function (Task $task) use ($count) {
+                $task->labels()->attach(Label::factory()->count($count)->create());
+            }
+        );
     }
 }

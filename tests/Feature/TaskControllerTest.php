@@ -90,10 +90,15 @@ class TaskControllerTest extends TestCase
     public function testAuthenticatedUserCanViewTaskList(): void
     {
         $taskName = 'Test task';
-        Task::factory()->create(['name' => $taskName]);
+        Task::factory()->create([
+            'name' => $taskName,
+            'created_by_id' => $this->user->id    
+        ]);
         $response = $this->actingAs($this->user)
             ->withSession(['_token' => $this->token])
-            ->get(route('tasks.index'));
+            ->get(route('tasks.index', [
+                'filter' => ['created_by_id' => $this->user->id]
+            ]));
 
         $response->assertStatus(200);
         $response->assertSee($taskName);
