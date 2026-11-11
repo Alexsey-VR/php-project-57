@@ -5,22 +5,9 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use App\Models\Task;
 
 class TaskFormRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        $task = $this->route('task');
-
-        return $task instanceof Task
-            ? $this->user()?->can('update', $task) ?? false
-            : $this->user()?->can('create', Task::class) ?? false;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
