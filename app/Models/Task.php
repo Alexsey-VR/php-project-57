@@ -59,6 +59,5 @@ class Task extends Model
         $this->labels()->detach();
         $this->delete();
         Label::whereDoesntHave('tasks')->whereIn('id', $labelIds)->delete();
-        TaskStatus::whereDoesntHave('tasks')->delete();
     }
 }
