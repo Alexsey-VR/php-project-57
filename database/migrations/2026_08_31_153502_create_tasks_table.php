@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('description')->nullable();
+            $table->string('name')->unique();
+            $table->string('description')->maxLength(512)->nullable();
             $table->foreignId('status_id')->constrained('task_statuses');
             $table->foreignId('created_by_id')->constrained('users');
             $table->foreignId('assigned_to_id')->constrained('users');
