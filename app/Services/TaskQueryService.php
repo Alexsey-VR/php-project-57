@@ -47,13 +47,13 @@ class TaskQueryService
         $taskQuery = Task::query()
             ->with(['status', 'createdBy', 'assignedTo'])
             ->orderBy('id');
-        if (array_key_exists('status_id', $filter)) {
+        if (!empty($filter['status_id'])) {
             $taskQuery->where('status_id', $filter['status_id']);
         }
-        if (array_key_exists('created_by_id', $filter)) {
+        if (!empty($filter['created_by_id'])) {
             $taskQuery->where('created_by_id', $filter['created_by_id']);
         }
-        if (array_key_exists('assigned_to_id', $filter)) {
+        if (!empty($filter['assigned_to_id'])) {
             $taskQuery->where('assigned_to_id', $filter['assigned_to_id']);
         }
 
