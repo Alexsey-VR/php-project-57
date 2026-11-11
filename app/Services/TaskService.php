@@ -24,9 +24,9 @@ class TaskService
      */
     public function createTask(array $validatedData): Task
     {
-        $validatedData['created_by_id'] = Auth::id();
-        $task = Task::create($validatedData);
-
+        $task = new Task($validatedData);
+        $task->createdBy()->associate(Auth::id());
+        $task->save();
         if (isset($validatedData['labels'])) {
             $task->labels()->attach($validatedData['labels']);
         }
