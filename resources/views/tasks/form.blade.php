@@ -26,7 +26,7 @@
 </div>
 {{ html()->label(__('tasks.labels'), 'options[]') }}
 <div class="w-full bg-white p-2 overflow-y-auto rounded-md outline-solid outline-indigo-100">
-    {{ html()->select('labels[]', $options['label'])
+    {{ html()->select('labels', $options['label'], old('labels', $task->labels->pluck('id')->all()))
         ->multiple()
         ->class('w-full h-32') }}
 </div>
