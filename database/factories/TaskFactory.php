@@ -30,7 +30,7 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'             => $this->faker->text(16),
+            'name'             => 'Task ' . Str::random(16),
             'description'      => $this->faker->text(64),
             'status_id'        => TaskStatus::firstOrCreate([
                     'name' => trans("tasks.status.options.{$this->faker->randomElement(self::TASK_STATUS_ALLOWED_OPTIONS)}")

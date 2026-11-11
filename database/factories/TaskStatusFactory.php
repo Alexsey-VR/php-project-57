@@ -27,7 +27,11 @@ class TaskStatusFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => trans("tasks.status.options.{$this->faker->randomElement(self::ALLOWED_OPTIONS)}")
+            'name' => sprintf(
+                "%s %s",
+                trans("tasks.status.options.{$this->faker->randomElement(self::ALLOWED_OPTIONS)}"),
+                Str::random(8)
+            )
         ];
     }
 }
