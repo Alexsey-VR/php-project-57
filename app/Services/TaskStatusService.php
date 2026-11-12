@@ -2,9 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\{User, Task, TaskStatus, Label};
+use App\Models\TaskStatus;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Auth;
 use App\Services\OrphanCleanupService;
 
 class TaskStatusService

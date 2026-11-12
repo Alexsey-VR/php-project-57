@@ -1,7 +1,7 @@
 @extends('layouts.auth')
 
 @section('content')
-{{ html()->modelForm($user, 'POST', route('login.store'))->open() }}
+{{ html()->modelForm(auth()->user(), 'POST', route('login.store'))->open() }}
     @csrf
     <div class="grid gap-4 rounded-md">
         @include('auth.form')
