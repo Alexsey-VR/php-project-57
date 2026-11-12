@@ -4,7 +4,7 @@ setup:
 	php artisan key:generate --no-interaction
 	php artisan migrate:fresh --force
 	php artisan db:seed --class=DatabaseSeeder
-	php artisan db:seed --class=TaskSeeder
+	php artisan db:seed --class=TaskStatusSeeder
 	npm ci --ignore-scripts
 	npm run build
 
