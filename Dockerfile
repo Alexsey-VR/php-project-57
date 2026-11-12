@@ -32,4 +32,4 @@ RUN > database/database.sqlite
 
 EXPOSE 8080
 
-CMD ["bash", "-c", "php artisan migrate:fresh --force && php artisan db:seed --class DatabaseSeeder --force && php artisan db:seed --class TaskSeeder --force && php artisan optimize:clear && PHP_CLI_SERVER_WORKERS=5 php artisan serve --host=0.0.0.0 --port=$PORT --no-reload"]
+CMD ["bash", "-c", "php artisan migrate:fresh --force && php artisan db:seed --class DatabaseSeeder && php artisan db:seed --class TaskSeeder && php artisan optimize:clear && PHP_CLI_SERVER_WORKERS=5 php artisan serve --host=0.0.0.0 --port=$PORT --no-reload"]
