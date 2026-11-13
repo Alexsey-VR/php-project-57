@@ -42,7 +42,7 @@
                                 {{ __('tasks.labels') }}
                             </a>
                         </div>
-                        <div flex items-center space-x-4>
+                        <div class="flex items-center space-x-4">
                             {{ html()->form('POST', route('logout'))->attribute('id', 'logout-form')->open() }}
                                 @csrf
                             {{ html()->form()->close() }}
@@ -53,7 +53,7 @@
                             </a>
                         </div>
                     @else
-                        <div flex items-center space-x-4>
+                        <div class="flex items-center space-x-4">
                             @yield('login')
                             @yield('register')
                         </div>
