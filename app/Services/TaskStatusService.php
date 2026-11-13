@@ -37,11 +37,6 @@ class TaskStatusService
         TaskStatus::create($validatedData);
     }
 
-    public function getTaskStatusName(TaskStatus $taskStatus): string
-    {
-        return $taskStatus->name;
-    }
-
     /**
      * @param array<string, mixed> $validatedData
      */

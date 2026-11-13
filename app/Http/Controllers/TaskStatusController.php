@@ -33,9 +33,8 @@ class TaskStatusController extends Controller
     public function create(): View
     {
         $task_status = $this->taskStatusService->getTaskStatusInstance();
-        $name = '';
 
-        return view('task_statuses.create', compact('task_status', 'name'));
+        return view('task_statuses.create', compact('task_status'));
     }
 
     /**
@@ -62,9 +61,7 @@ class TaskStatusController extends Controller
      */
     public function edit(TaskStatus $task_status): View
     {
-        $name = $this->taskStatusService->getTaskStatusName($task_status);
-
-        return view('task_statuses.edit', compact('task_status', 'name'));
+        return view('task_statuses.edit', compact('task_status'));
     }
 
     /**
