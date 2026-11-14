@@ -53,6 +53,12 @@
                             </a>
                         </div>
                     @else
+                        <div class="flex flex-1 items-center justify-center gap-8">
+                            <a href="{{ route('tasks.index') }}" 
+                                class="text-sm text-gray-700 hover:text-indigo-600">
+                                {{ __('tasks.tasks') }}
+                            </a>
+                        </div>
                         <div class="flex items-center space-x-4">
                             @yield('login')
                             @yield('register')

@@ -18,7 +18,7 @@ class TaskPolicy
     /**
      * Determine whether the user can view the task list
      */
-    public function viewAny(User $user): bool
+    public function viewAny(?User $user): bool
     {
         return true;
     }
@@ -26,7 +26,7 @@ class TaskPolicy
     /**
      * Deterrmine whether the user can view the task
      */
-    public function view(User $user, Task $task): bool
+    public function view(?User $user, Task $task): bool
     {
         return true;
     }

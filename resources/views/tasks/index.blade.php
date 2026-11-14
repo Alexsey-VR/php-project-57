@@ -1,5 +1,21 @@
 @extends('layouts.app')
 
+@section('login')
+<a href="{{ route('login') }}">
+    <button class="rounded-md text-sm text-center font-semibold text-white h-10 w-24 bg-indigo-600 cursor-pointer">
+        {{ __('app.login') }}
+    </button>
+</a>
+@endsection
+
+@section('register')
+<a href="{{ route('register') }}">
+    <button class="rounded-md text-sm text-center font-semibold text-white h-10 w-48 bg-indigo-600 cursor-pointer">
+        {{ __('app.register') }}
+    </button>
+</a>
+@endsection
+
 @section('label')
     <div class="p-4 text-2xl font-bold">
         <h1>{{ __('tasks.tasks') }}</h1>
