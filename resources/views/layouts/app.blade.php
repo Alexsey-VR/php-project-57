@@ -58,6 +58,10 @@
                                 class="text-sm text-gray-700 hover:text-indigo-600">
                                 {{ __('tasks.tasks') }}
                             </a>
+                            <a href="{{ route('labels.index') }}" 
+                                class="text-sm text-gray-700 hover:text-indigo-600">
+                                {{ __('tasks.labels') }}
+                            </a>
                         </div>
                         <div class="flex items-center space-x-4">
                             @yield('login')
