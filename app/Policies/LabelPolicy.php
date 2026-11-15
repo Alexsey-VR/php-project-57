@@ -18,7 +18,7 @@ class LabelPolicy
     /**
      * Determine whether the user can view the label list
      */
-    public function viewAny(User $user): bool
+    public function viewAny(?User $user): bool
     {
         return true;
     }
@@ -26,7 +26,7 @@ class LabelPolicy
     /**
      * Determine whether the user can show the label
      */
-    public function view(User $user, Label $label): bool
+    public function view(?User $user, Label $label): bool
     {
         return true;
     }

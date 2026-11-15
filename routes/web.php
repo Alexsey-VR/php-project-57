@@ -12,12 +12,16 @@ Route::get('/', function () {
 Route::resource('task_statuses', TaskStatusController::class)
     ->middleware(['auth']);
 
-Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
-Route::get('/show/{task}', [TaskController::class, 'show'])->name('tasks.show');
-
 Route::resource('tasks', TaskController::class)
     ->except(['index', 'show'])
     ->middleware(['auth']);
 
+Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
+Route::get('/show/{task}', [TaskController::class, 'show'])->name('tasks.show');
+
 Route::resource('labels', LabelController::class)
+    ->except(['index', 'show'])
     ->middleware(['auth']);
+
+Route::get('/labels', [LabelController::class, 'index'])->name('labels.index');
+Route::get('/labels/{label}', [LabelController::class, 'show'])->name('labels.show');

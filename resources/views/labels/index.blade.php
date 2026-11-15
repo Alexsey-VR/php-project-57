@@ -1,5 +1,21 @@
 @extends('layouts.app')
 
+@section('login')
+<a href="{{ route('login') }}">
+    <button class="rounded-md text-sm text-center font-semibold text-white h-10 w-24 bg-indigo-600 cursor-pointer">
+        {{ __('app.login') }}
+    </button>
+</a>
+@endsection
+
+@section('register')
+<a href="{{ route('register') }}">
+    <button class="rounded-md text-sm text-center font-semibold text-white h-10 w-48 bg-indigo-600 cursor-pointer">
+        {{ __('app.register') }}
+    </button>
+</a>
+@endsection
+
 @section('content')
 <div>
     <h1 class="text-2xl font-bold px-4 py-4 text">{{ __('tasks.labels') }}</h1>
@@ -33,19 +49,21 @@
                     <td style="padding-left: var(--col-px-date); width: var(--col-w-date); min-width: var(--col-min-w-date)" class="py-2">{{ $label->created_at }}</td>
                     <td style="padding-left: var(--col-px-actions); width: var(--col-w-actions); min-width: var(--col-min-w-actions)" class="py-2">
                         <div class="flex space-x-4">
-                            {{ html()->modelForm($label, 'DELETE', route('labels.destroy', $label))
-                                    ->attribute('id', "form-label-{$label->id}")
-                                    ->open() }}
-                                @csrf
-                                <a href="{{ route('labels.destroy', $label) }}"
-                                        data-confirm="{{ __('tasks.sweetalert.question') }} {{ __('tasks.sweetalert.text', ['name' => $label->name]) }}"
-                                        onclick="event.preventDefault(); if (confirm(this.dataset.confirm)) { this.closest('form').submit(); }"
-                                        class="text-red-500 hover:text-red-700"
-                                        rel="nofollow"
-                                >
-                                    {{ __('tasks.label.delete') }}
-                                </a>
-                            {{ html()->closeModelForm() }}
+                            @auth
+                                {{ html()->modelForm($label, 'DELETE', route('labels.destroy', $label))
+                                        ->attribute('id', "form-label-{$label->id}")
+                                        ->open() }}
+                                    @csrf
+                                    <a href="{{ route('labels.destroy', $label) }}"
+                                            data-confirm="{{ __('tasks.sweetalert.question') }} {{ __('tasks.sweetalert.text', ['name' => $label->name]) }}"
+                                            onclick="event.preventDefault(); if (confirm(this.dataset.confirm)) { this.closest('form').submit(); }"
+                                            class="text-red-500 hover:text-red-700"
+                                            rel="nofollow"
+                                    >
+                                        {{ __('tasks.label.delete') }}
+                                    </a>
+                                {{ html()->closeModelForm() }}
+                            @endauth
                             @can('update', $label)
                                 <a href="{{ route('labels.edit', $label) }}"
                                     class="text-blue-500 hover:text-blue-700">{{ __('tasks.label.edit') }}
