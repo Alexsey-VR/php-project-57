@@ -30,6 +30,7 @@ class FortifyServiceProvider extends ServiceProvider
             public function toResponse($request)
             {
                 flash(__('flash.user.registered'))->success();
+
                 return redirect()->route('index');
             }
         });
@@ -37,7 +38,6 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->instance(LoginResponse::class, new class implements LoginResponse {
             public function toResponse($request)
             {
-                $user = Auth::user();
                 flash(__('flash.user.logged_in'))->success();
 
                 return redirect()->route('index');
@@ -67,6 +67,7 @@ class FortifyServiceProvider extends ServiceProvider
 
         Fortify::registerView(function () {
             $user = new User();
+
             return view('auth.register', compact('user'));
         });
 
