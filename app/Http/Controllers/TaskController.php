@@ -88,10 +88,7 @@ class TaskController extends Controller
      */
     public function update(TaskFormRequest $request, Task $task): RedirectResponse
     {
-        $this->taskService->updateTask(
-            $request->validated(),
-            $task
-        );
+        $this->taskService->updateTask($request->validated(), $task);
         flash(__('flash.task.updated'))->success();
 
         return redirect()->route('tasks.index');

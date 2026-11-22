@@ -22,7 +22,7 @@ class LabelController extends Controller
      */
     public function index(): View
     {
-        $labels = $this->labelService->getLabels();
+        $labels = $this->labelService->getPagedLabels();
 
         return view('labels.index', compact('labels'));
     }
@@ -80,8 +80,7 @@ class LabelController extends Controller
      */
     public function destroy(Label $label): RedirectResponse
     {
-        if (Gate::allows('delete', $label)) {
-            $this->labelService->destroyLabel($label);
+        if (Gate::allows('delete', $label) && $this->labelService->destroyLabel($label)) {
             flash(__('flash.label.deleted'))->success();
         } else {
             flash(__('flash.label.restricted_delete'))->error();

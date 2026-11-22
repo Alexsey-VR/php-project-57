@@ -45,8 +45,8 @@ class TaskStatusService
         $taskStatus->update($validatedData);
     }
 
-    public function destroyTaskStatus(TaskStatus $taskStatus): void
+    public function destroyTaskStatus(TaskStatus $taskStatus): bool
     {
-        $this->cleanupService->cleanupFor($taskStatus);
+        return $this->cleanupService->cleanupFor($taskStatus);
     }
 }

@@ -69,7 +69,7 @@ class TaskQueryService
     {
         $createOptions['status'] = TaskStatus::pluck('name', 'id');
         $createOptions['assignee'] = User::pluck('name', 'id');
-        $createOptions['label'] = Label::pluck('name', 'id');
+        $createOptions['label'] = Label::pluck('name', 'name');
 
         return $createOptions;
     }

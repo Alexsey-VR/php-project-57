@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use App\Services\OrphanCleanupService;
 
 class TaskService
@@ -20,16 +22,39 @@ class TaskService
     }
 
     /**
+     * @param array<int, mixed> $labelNames
+     * @return Collection<int, int>
+     */
+    private function prepareRelatedLabels(array $labelNames, Task $task): Collection
+    {
+        return collect($labelNames)->map(
+            function ($labelName) use ($task) {
+                return $task->labels()->createOrFirst(
+                    ['name' => $labelName],
+                    ['description' => null]
+                );
+            }
+        )->pluck('id');
+    }
+
+    /**
      * @param array<string,mixed> $validatedData
      */
     public function createTask(array $validatedData): Task
     {
-        $task = new Task($validatedData);
-        $task->createdBy()->associate(Auth::id());
-        $task->save();
-        if (isset($validatedData['labels'])) {
-            $task->labels()->attach($validatedData['labels']);
-        }
+        $task = DB::transaction(
+            function () use ($validatedData) {
+                $task = new Task($validatedData);
+                $task->createdBy()->associate(Auth::id());
+                $task->save();
+
+                if (isset($validatedData['labels'])) {
+                    $this->prepareRelatedLabels($validatedData['labels'], $task);
+                }
+
+                return $task;
+            }
+        );
 
         return $task;
     }
@@ -44,17 +69,22 @@ class TaskService
      */
     public function updateTask(array $validatedData, Task $task): void
     {
-        $task->update($validatedData);
+        DB::transaction(
+            function () use ($validatedData, $task) {
+                if (isset($validatedData['labels'])) {
+                    $labels = $this->prepareRelatedLabels($validatedData['labels'], $task);
+                    $task->labels()->sync($labels);
+                } else {
+                    $task->labels()->detach();
+                }
 
-        if (isset($validatedData['labels'])) {
-            $task->labels()->sync($validatedData['labels']);
-        } else {
-            $task->labels()->detach();
-        }
+                $task->update($validatedData);
+            }
+        );
     }
 
-    public function destroyTask(Task $task): void
+    public function destroyTask(Task $task): bool
     {
-        $this->cleanupService->cleanupFor($task);
+        return $this->cleanupService->cleanupFor($task);
     }
 }

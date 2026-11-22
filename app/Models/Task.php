@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\DB;
 
 class Task extends Model
 {
@@ -53,11 +54,17 @@ class Task extends Model
         return $this->belongsToMany(Label::class);
     }
 
-    public function cleanUp(): void
+    public function cleanUp(): bool
     {
-        $labelIds = $this->labels()->pluck('label_id');
-        $this->labels()->detach();
-        $this->delete();
-        Label::whereDoesntHave('tasks')->whereIn('id', $labelIds)->delete();
+        return DB::transaction(
+            function () {
+                $labelIds = $this->labels()->pluck('label_id');
+                $this->labels()->detach();
+                $this->delete();
+                Label::whereDoesntHave('tasks')->whereIn('id', $labelIds)->delete();
+
+                return true;
+            }
+        );
     }
 }

@@ -22,7 +22,7 @@ class LabelService
     /**
      * @return LengthAwarePaginator<int, Label>
      */
-    public function getLabels(): LengthAwarePaginator
+    public function getPagedLabels(): LengthAwarePaginator
     {
         return Label::orderBy('id')
             ->paginate(config('pagination.per_page'))
@@ -45,8 +45,8 @@ class LabelService
         $label->update($validatedData);
     }
 
-    public function destroyLabel(Label $label): void
+    public function destroyLabel(Label $label): bool
     {
-        $this->cleanupService->cleanupFor($label);
+        return $this->cleanupService->cleanupFor($label);
     }
 }

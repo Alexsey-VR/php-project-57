@@ -27,9 +27,4 @@ class Label extends Model
     {
         return $this->belongsToMany(Task::class);
     }
-
-    public function cleanUp(): void
-    {
-        $this->delete();
-    }
 }

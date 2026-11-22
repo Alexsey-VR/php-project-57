@@ -24,7 +24,7 @@ class TaskFormRequest extends FormRequest
             'status_id' => ['required', 'integer', 'exists:task_statuses,id'],
             'assigned_to_id' => ['required', 'integer', 'exists:users,id'],
             'labels' => ['array'],
-            'labels.*' => ['nullable', 'integer', 'exists:labels,id'],
+            'labels.*' => ['nullable', 'string'],
         ];
     }
 

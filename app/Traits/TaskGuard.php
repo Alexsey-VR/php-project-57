@@ -12,4 +12,11 @@ trait TaskGuard
     {
         return $this->tasks()->exists();
     }
+
+    public function cleanUp(): bool
+    {
+        return $this->where('id', $this->id)
+            ->whereDoesntHave('tasks')
+            ->delete() === 1;
+    }
 }
