@@ -18,7 +18,9 @@ PORT ?= 8000
 start: init
 	PHP_CLI_SERVER_WORKERS=5 php artisan serve
 
-test: init
+test:
+	php artisan migrate:fresh --env=testing
+	php artisan db:seed --class=DatabaseSeeder --env=testing
 	XDEBUG_MODE=coverage vendor/bin/paratest tests --coverage-text --processes=auto
 
 test-dev:
