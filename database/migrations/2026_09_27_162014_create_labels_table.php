@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('labels', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->string('description')->maxLength(512)->nullable();
+            $table->string('description')->length(512)->nullable();
             $table->timestamps();
         });
     }

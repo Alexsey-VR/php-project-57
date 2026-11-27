@@ -28,7 +28,7 @@ test-sonar: prepare-database
 	XDEBUG_MODE=coverage vendor/bin/paratest --coverage-clover=coverage.xml tests
 
 prepare-database:
-    php artisan migrate:fresh --env=testing
+	php artisan migrate:fresh --env=testing
 	php artisan db:seed --class=DatabaseSeeder --env=testing
 
 init:
